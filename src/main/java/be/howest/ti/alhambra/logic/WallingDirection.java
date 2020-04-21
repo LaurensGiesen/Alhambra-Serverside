@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum WallingDirection {
 
-    NORTH, EAST, WEST, SOUTH;
+    NORTH, EAST, SOUTH, WEST;
 
     @JsonValue
     @Override
