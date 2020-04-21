@@ -7,18 +7,25 @@ import be.howest.ti.alhambra.logic.sort.SortByCoin;
 
 public class Purse {
 
-    public List<Coin> coins;
+    private List<Coin> coins;
 
     public Purse() {
         coins = new ArrayList<>();
     }
 
-    public boolean addCoin(Coin coin) {
-        return coins.add(coin);
+
+
+    public void addCoin(Coin coin) {
+
+        coins.add(coin);
     }
 
-    public boolean removeCoin(Coin coin) {
-        return coins.remove(coin);
+    public void removeCoin(Coin coin) {
+        if(coins.contains(coin)) {
+            coins.remove(coin);
+        } else {
+            throw new AlhambraEntityNotFoundException("Building not present");
+        }
     }
 
     public List<Coin> getCoins() {
