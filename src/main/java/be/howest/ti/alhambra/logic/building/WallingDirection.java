@@ -1,14 +1,14 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.building;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Currency {
+public enum WallingDirection {
 
-    BLUE, GREEN, ORANGE, YELLOW;
+    NORTH, EAST, SOUTH, WEST;
 
     @JsonValue
     @Override
-    public String toString() {
+    public String toString(){
         return super.toString().toLowerCase();
     }
 }

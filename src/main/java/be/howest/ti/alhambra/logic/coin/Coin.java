@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.coin;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

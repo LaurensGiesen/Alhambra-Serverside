@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.building;
 
 import java.util.HashMap;
 import java.util.Map;

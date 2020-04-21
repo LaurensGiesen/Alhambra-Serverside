@@ -1,7 +1,7 @@
 package be.howest.ti.alhambra.logic.sort;
 
 import java.util.Comparator;
-import be.howest.ti.alhambra.logic.Coin;
+import be.howest.ti.alhambra.logic.coin.Coin;
 
 public class SortByCoin implements Comparator<Coin> {
 

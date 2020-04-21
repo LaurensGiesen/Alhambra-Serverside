@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.coin;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.gamebord;
 
 public class Location {
     private int row;
@@ -8,7 +8,7 @@ public class Location {
         this.row = row;
         this.col = col;
     }
-    
+
     public int getRow() {
         return row;
     }

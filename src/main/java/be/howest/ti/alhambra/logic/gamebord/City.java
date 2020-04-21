@@ -1,4 +1,7 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.gamebord;
+
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.Walling;
 
 public class City {
     private Building[][] grid = new Building[][] {{null, null, null},{null, null, null},{null, null, null}};
