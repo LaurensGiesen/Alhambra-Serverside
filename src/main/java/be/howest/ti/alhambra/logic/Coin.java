@@ -26,13 +26,11 @@ public class Coin {
     }
 
     public Currency getCurrency() {
-
         return currency;
     }
 
     @JsonProperty("amount")
-    int getAmount() {
-
+    public int getAmount() {
         return amount;
     }
 
