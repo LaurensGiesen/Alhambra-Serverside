@@ -5,6 +5,9 @@ import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.building.WallingDirection;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class City {
     private Building[][] grid = new Building[][] {{null, null, null},{null, null, null},{null, null, null}};
 
@@ -53,7 +56,7 @@ public class City {
 
     public boolean isEmpty(Location location) {
         int[] gridLocation = locationToGridLocation(location);
-        if(gridLocation[0] < 0 || grid.length < gridLocation[0] || gridLocation[1] < 0 || grid[0].length < gridLocation[1]){
+        if(gridLocation[0] < 0  || grid.length <= gridLocation[0] || gridLocation[1] < 0 || grid[0].length <= gridLocation[1]){
             return true;
         }
         return grid[gridLocation[0]][gridLocation[1]] == null;
@@ -65,13 +68,63 @@ public class City {
     }
 
     public boolean isValidPlacing(Building building, Location location) {
-        return hasAdjoiningSides(building.getWalls(), location)
-                && isReachableOnFoot(location)
-                && leavesNoEmptySpace(location)
-                && isJoinedOnOneSide(location);
+        return isJoinedOnOneSide(location)
+                && isReachableOnFoot(location, null)
+                && hasAdjoiningSides(building.getWalls(), location)
+                && leavesNoEmptySpace(location);
     }
 
-    private boolean isReachableOnFoot(Location location) {
+    private boolean leavesNoEmptySpace(Location location) {
+        Location locationN = location.getLocation(WallingDirection.NORTH);
+        Location locationS = location.getLocation(WallingDirection.SOUTH);
+        Location locationE = location.getLocation(WallingDirection.EAST);
+        Location locationW = location.getLocation(WallingDirection.WEST);
+
+        return !(
+                    (isEmpty(locationN) && hasThreeNeighbours(locationN))
+                        || (isEmpty(locationS) && hasThreeNeighbours(locationS))
+                        || (isEmpty(locationE) && hasThreeNeighbours(locationE))
+                        || (isEmpty(locationW) && hasThreeNeighbours(locationW))
+        );
+    }
+
+    private boolean hasThreeNeighbours(Location location){
+        int counter = 0;
+
+        if(!isEmpty(location.getLocation(WallingDirection.NORTH))){ counter++; }
+        if(!isEmpty(location.getLocation(WallingDirection.SOUTH))){ counter++; }
+        if(!isEmpty(location.getLocation(WallingDirection.EAST))){ counter++; }
+        if(!isEmpty(location.getLocation(WallingDirection.WEST))){ counter++; }
+
+        return counter == 3;
+    }
+
+    private boolean hasAdjoiningSides(Walling walls, Location location) {
+        Location locationN = location.getLocation(WallingDirection.NORTH);
+        Location locationS = location.getLocation(WallingDirection.SOUTH);
+        Location locationE = location.getLocation(WallingDirection.EAST);
+        Location locationW = location.getLocation(WallingDirection.WEST);
+
+        return (isEmpty(locationN)
+                    || walls.getWallNorth() == getBuilding(locationN).getWalls().getWallSouth())
+                && (isEmpty(locationS)
+                    || walls.getWallSouth() == getBuilding(locationS).getWalls().getWallNorth())
+                && (isEmpty(locationE)
+                    || walls.getWallEast() == getBuilding(locationE).getWalls().getWallWest())
+                && (isEmpty(locationW)
+                    || walls.getWallWest() == getBuilding(locationW).getWalls().getWallEast());
+    }
+
+    private boolean isReachableOnFoot(Location location, Set<Location> prevLocations) {
+        if(prevLocations == null){
+            prevLocations = new HashSet<>();
+        }
+        if(prevLocations.contains(location)){
+            return false;
+        } else {
+            prevLocations.add(location);
+        }
+
         if (location.equals(new Location(0, 0))) {
             return true;
         } else {
@@ -79,24 +132,27 @@ public class City {
             Location locationS = location.getLocation(WallingDirection.SOUTH);
             Location locationE = location.getLocation(WallingDirection.EAST);
             Location locationW = location.getLocation(WallingDirection.WEST);
+            boolean n = false;
+            boolean s = false;
+            boolean e = false;
+            boolean w = false;
+
 
             if(!isEmpty(locationN) && !this.getBuilding(locationN).getWalls().getWallSouth()){
-                isReachableOnFoot(locationN);
+                n = isReachableOnFoot(locationN, prevLocations);
             }
             if(!isEmpty(locationS) && !this.getBuilding(locationS).getWalls().getWallNorth()){
-                isReachableOnFoot(locationS);
+                s = isReachableOnFoot(locationS, prevLocations);
             }
             if(!isEmpty(locationE) && !this.getBuilding(locationE).getWalls().getWallWest()){
-                isReachableOnFoot(locationE);
+                e = isReachableOnFoot(locationE, prevLocations);
             }
             if(!isEmpty(locationW) && !this.getBuilding(locationW).getWalls().getWallEast()){
-                isReachableOnFoot(locationW);
+                w = isReachableOnFoot(locationW,prevLocations);
             }
-            return false;
+            return n || s || e || w;
         }
     }
-
-
 
     private boolean isJoinedOnOneSide(Location location) {
         return !(isEmpty(location.getLocation(WallingDirection.NORTH))
@@ -104,5 +160,4 @@ public class City {
                     && isEmpty(location.getLocation(WallingDirection.SOUTH))
                     && isEmpty(location.getLocation(WallingDirection.WEST)));
     }
-
 }
