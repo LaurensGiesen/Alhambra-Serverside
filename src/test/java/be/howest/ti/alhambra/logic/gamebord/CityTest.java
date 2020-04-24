@@ -66,6 +66,5 @@ class CityTest {
         assertFalse(c.isValidPlacing(bS, new Location(-2,0)));
         assertFalse(c.isValidPlacing(bN, new Location(-1,2)));
         assertFalse(c.isValidPlacing(bS, new Location(1,0)));
-
     }
 }

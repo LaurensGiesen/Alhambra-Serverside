@@ -118,12 +118,11 @@ public class City {
     private boolean isReachableOnFoot(Location location, Set<Location> prevLocations) {
         if(prevLocations == null){
             prevLocations = new HashSet<>();
-        }
-        if(prevLocations.contains(location)){
+        } else if(prevLocations.contains(location)){
             return false;
-        } else {
-            prevLocations.add(location);
         }
+
+        prevLocations.add(location);
 
         if (location.equals(new Location(0, 0))) {
             return true;
@@ -132,25 +131,11 @@ public class City {
             Location locationS = location.getLocation(WallingDirection.SOUTH);
             Location locationE = location.getLocation(WallingDirection.EAST);
             Location locationW = location.getLocation(WallingDirection.WEST);
-            boolean n = false;
-            boolean s = false;
-            boolean e = false;
-            boolean w = false;
 
-
-            if(!isEmpty(locationN) && !this.getBuilding(locationN).getWalls().getWallSouth()){
-                n = isReachableOnFoot(locationN, prevLocations);
-            }
-            if(!isEmpty(locationS) && !this.getBuilding(locationS).getWalls().getWallNorth()){
-                s = isReachableOnFoot(locationS, prevLocations);
-            }
-            if(!isEmpty(locationE) && !this.getBuilding(locationE).getWalls().getWallWest()){
-                e = isReachableOnFoot(locationE, prevLocations);
-            }
-            if(!isEmpty(locationW) && !this.getBuilding(locationW).getWalls().getWallEast()){
-                w = isReachableOnFoot(locationW,prevLocations);
-            }
-            return n || s || e || w;
+            return (!isEmpty(locationN) && !this.getBuilding(locationN).getWalls().getWallSouth() && isReachableOnFoot(locationN, prevLocations))
+                    || (!isEmpty(locationS) && !this.getBuilding(locationS).getWalls().getWallNorth() && isReachableOnFoot(locationS, prevLocations))
+                    || (!isEmpty(locationE) && !this.getBuilding(locationE).getWalls().getWallWest() && isReachableOnFoot(locationE, prevLocations))
+                    || (!isEmpty(locationW) && !this.getBuilding(locationW).getWalls().getWallEast() && isReachableOnFoot(locationW,prevLocations));
         }
     }
 
