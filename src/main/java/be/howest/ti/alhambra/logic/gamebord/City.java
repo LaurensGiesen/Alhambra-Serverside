@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic.gamebord;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walling;
+import be.howest.ti.alhambra.logic.building.WallingDirection;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 
 public class City {
@@ -18,6 +19,14 @@ public class City {
         //End temporary fix
     }
 
+    private Building getBuilding(Location location) {
+        int[] gridLocation = locationToGridLocation(location);
+        if(grid.length < gridLocation[0] || grid[0].length < gridLocation[1]){
+            return null;
+        } else {
+            return grid[gridLocation[0]][gridLocation[1]];
+        }
+    }
 
     public void addBuilding(Building building, Location location) {
         //Temporary fix
@@ -51,29 +60,49 @@ public class City {
     }
 
     public boolean isReplaceable(Location location) {
-        return false;
+        int[] gridLocation = locationToGridLocation(location);
+        return !isEmpty(location) && grid[gridLocation[0]][gridLocation[1]].getType() != null;
     }
 
     public boolean isValidPlacing(Building building, Location location) {
-        return false;
+        return hasAdjoiningSides(building.getWalls(), location)
+                && isReachableOnFoot(location)
+                && leavesNoEmptySpace(location)
+                && isJoinedOnOneSide(location);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder();
+    private boolean isReachableOnFoot(Location location) {
+        if (location.equals(new Location(0, 0))) {
+            return true;
+        } else {
+            Location locationN = location.getLocation(WallingDirection.NORTH);
+            Location locationS = location.getLocation(WallingDirection.SOUTH);
+            Location locationE = location.getLocation(WallingDirection.EAST);
+            Location locationW = location.getLocation(WallingDirection.WEST);
 
-        for (Building[] buildings : grid) {
-            for (Building building : buildings) {
-                if (building == null) {
-                    str.append(" --- ");
-                } else {
-                    str.append(" ").append(building.toString()).append(" ");
-                }
-
+            if(!isEmpty(locationN) && !this.getBuilding(locationN).getWalls().getWallSouth()){
+                isReachableOnFoot(locationN);
             }
-            str.append("\n");
+            if(!isEmpty(locationS) && !this.getBuilding(locationS).getWalls().getWallNorth()){
+                isReachableOnFoot(locationS);
+            }
+            if(!isEmpty(locationE) && !this.getBuilding(locationE).getWalls().getWallWest()){
+                isReachableOnFoot(locationE);
+            }
+            if(!isEmpty(locationW) && !this.getBuilding(locationW).getWalls().getWallEast()){
+                isReachableOnFoot(locationW);
+            }
+            return false;
         }
-
-        return str.toString();
     }
+
+
+
+    private boolean isJoinedOnOneSide(Location location) {
+        return !(isEmpty(location.getLocation(WallingDirection.NORTH))
+                    && isEmpty(location.getLocation(WallingDirection.EAST))
+                    && isEmpty(location.getLocation(WallingDirection.SOUTH))
+                    && isEmpty(location.getLocation(WallingDirection.WEST)));
+    }
+
 }
