@@ -13,8 +13,6 @@ public class Purse {
         coins = new ArrayList<>();
     }
 
-
-
     public void addCoin(Coin coin) {
 
         coins.add(coin);
