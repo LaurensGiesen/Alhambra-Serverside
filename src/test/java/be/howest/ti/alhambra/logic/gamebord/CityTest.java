@@ -59,13 +59,12 @@ class CityTest {
         City c = createCity();
 
         assertTrue(c.isValidPlacing(bS, new Location(-1, -1)));
-        assertTrue(c.isValidPlacing(bS, new Location(1, 0)));
+        assertTrue(c.isValidPlacing(bS, new Location(-1, 1)));
         assertTrue(c.isValidPlacing(bS, new Location(3, -2)));
 
         assertFalse(c.isValidPlacing(bN, new Location(-1,-1)));
         assertFalse(c.isValidPlacing(bS, new Location(-2,0)));
         assertFalse(c.isValidPlacing(bN, new Location(-1,2)));
         assertFalse(c.isValidPlacing(bS, new Location(1,0)));
-
     }
 }

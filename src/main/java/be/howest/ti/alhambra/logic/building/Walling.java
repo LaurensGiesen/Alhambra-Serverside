@@ -13,4 +13,20 @@ public class Walling {
         this.walls.put(WallingDirection.SOUTH, south);
         this.walls.put(WallingDirection.WEST, west);
     }
+
+    public boolean getWallNorth() {
+        return walls.get(WallingDirection.NORTH);
+    }
+
+    public boolean getWallEast() {
+        return walls.get(WallingDirection.EAST);
+    }
+
+    public boolean getWallSouth() {
+        return walls.get(WallingDirection.SOUTH);
+    }
+
+    public boolean getWallWest() {
+        return walls.get(WallingDirection.WEST);
+    }
 }
