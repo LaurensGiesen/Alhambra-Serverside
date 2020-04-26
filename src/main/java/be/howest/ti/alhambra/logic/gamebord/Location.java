@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic.gamebord;
 
+import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.WallingDirection;
 
 import java.util.Objects;
@@ -7,10 +8,12 @@ import java.util.Objects;
 public class Location {
     private int row;
     private int col;
+    private Building building;
 
     public Location(int row, int col) {
         this.row = row;
         this.col = col;
+        this.building = null;
     }
 
     public int getRow() {
@@ -21,8 +24,25 @@ public class Location {
         return col;
     }
 
-    public Location getLocation(WallingDirection direction){
-        switch(direction){
+    public Building getBuilding() {
+        return null;
+    }
+
+    public void setBuilding(Building b1) {
+        //
+    }
+
+
+    public boolean isEmpty() {
+        return false;
+    }
+
+    public boolean isFountain() {
+        return false;
+    }
+
+    public Location getLocation(WallingDirection direction) {
+        switch (direction) {
             case NORTH:
                 return new Location(row - 1, col);
             case SOUTH:
@@ -48,4 +68,5 @@ public class Location {
     public int hashCode() {
         return Objects.hash(row, col);
     }
+
 }
