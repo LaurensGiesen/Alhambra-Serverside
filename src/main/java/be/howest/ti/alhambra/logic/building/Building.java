@@ -70,4 +70,8 @@ public class Building {
         return buildings;
     }
 
+    public boolean isFountain(){
+        return type == null;
+    }
+
 }
