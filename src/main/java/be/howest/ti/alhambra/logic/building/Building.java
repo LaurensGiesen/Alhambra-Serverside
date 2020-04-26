@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic.building;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Building {
@@ -70,4 +71,19 @@ public class Building {
         return buildings;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Building building = (Building) o;
+        return cost == building.cost &&
+                type == building.type &&
+                Objects.equals(walls, building.walls);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, cost, walls);
+    }
 }
