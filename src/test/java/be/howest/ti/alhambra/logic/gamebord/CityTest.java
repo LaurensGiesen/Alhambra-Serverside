@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CityTest {
     Building bN = new Building(Buildingtype.ARCADES, 1, new Walling(true, false, false, false));
-    Building bE = new Building(Buildingtype.ARCADES, 3, new Walling(false, true, false, false));
-    Building bS = new Building(Buildingtype.ARCADES, 2, new Walling(false, false, true, false));
-    Building bW = new Building(Buildingtype.ARCADES, 4, new Walling(false, false, false, true));
-    Building b = new Building(Buildingtype.ARCADES, 1, new Walling(false, false, false, false));
+    Building bE = new Building(Buildingtype.GARDEN, 3, new Walling(false, true, false, false));
+    Building bS = new Building(Buildingtype.PAVILION, 2, new Walling(false, false, true, false));
+    Building bW = new Building(Buildingtype.SERAGLIO, 4, new Walling(false, false, false, true));
+    Building b = new Building(Buildingtype.TOWER, 1, new Walling(false, false, false, false));
 
     City c;
 
@@ -108,5 +108,15 @@ class CityTest {
         assertFalse(c.isRemovable(new Location(0, 0))); //Fountain
         assertFalse(c.isRemovable(new Location(1,-2))); //Leaves empty space
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.isRemovable(new Location(1, 0))); //No building present
+    }
+
+    @Test
+    void getAmountBuildings() {
+        createCity();
+
+        assertEquals(3, c.getAmountOfBuildings(Buildingtype.SERAGLIO));
+        assertEquals(0, c.getAmountOfBuildings(Buildingtype.TOWER));
+        assertEquals(2, c.getAmountOfBuildings(Buildingtype.ARCADES));
+        assertEquals(1, c.getAmountOfBuildings(Buildingtype.PAVILION));
     }
 }
