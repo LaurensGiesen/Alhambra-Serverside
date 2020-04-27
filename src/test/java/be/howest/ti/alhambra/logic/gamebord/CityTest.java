@@ -83,6 +83,23 @@ class CityTest {
         assertDoesNotThrow(()->c.replaceBuilding(bNS, new Location(3, -2)));
     }
 
+    @Test
+    void isValidPlacing() {
+        createCity();
+
+        assertTrue(c.isValidPlacing(bS, new Location(-1, -1)));
+        assertTrue(c.isValidPlacing(bS, new Location(-1, 1)));
+        assertTrue(c.isValidPlacing(bS, new Location(3, -2)));
+
+        assertFalse(c.isValidPlacing(bN, new Location(-1,-1))); //No adjoining sides
+        assertFalse(c.isValidPlacing(bN, new Location(1,-1))); //No adjoining sides
+        assertFalse(c.isValidPlacing(bS, new Location(-2,0))); //Not reachable on foot
+        assertFalse(c.isValidPlacing(bN, new Location(-1,2))); //Not joined
+        assertFalse(c.isValidPlacing(bS, new Location(1,0))); //Leaves empty space
+    }
+
+
+
     //    @Test
 //    void isEmpty() {
 //        City c = createCity();
@@ -106,21 +123,5 @@ class CityTest {
 //        assertFalse(c.isReplaceable(new Location(7,0)));
 //        assertFalse(c.isReplaceable(new Location(0,7)));
 //    }
-//
-//    @Test
-//    void isValidPlacing() {
-//        Building bN = new Building(Buildingtype.ARCADES, 1, new Walling(true, false, false, false));
-//        Building bS = new Building(Buildingtype.ARCADES, 2, new Walling(false, false, true, false));
-//
-//        City c = createCity();
-//
-//        assertTrue(c.isValidPlacing(bS, new Location(-1, -1)));
-//        assertTrue(c.isValidPlacing(bS, new Location(-1, 1)));
-//        assertTrue(c.isValidPlacing(bS, new Location(3, -2)));
-//
-//        assertFalse(c.isValidPlacing(bN, new Location(-1,-1)));
-//        assertFalse(c.isValidPlacing(bS, new Location(-2,0)));
-//        assertFalse(c.isValidPlacing(bN, new Location(-1,2)));
-//        assertFalse(c.isValidPlacing(bS, new Location(1,0)));
-//    }
+
 }
