@@ -97,5 +97,16 @@ class CityTest {
         assertFalse(c.isValidPlacing(bN, new Location(-1,2))); //Not joined
         assertFalse(c.isValidPlacing(bS, new Location(1,0))); //Leaves empty space
     }
-    
+
+    @Test
+    void isRemovable() {
+        createCity();
+
+        assertTrue(c.isRemovable(new Location(-1, 0)));
+        assertTrue(c.isRemovable(new Location(2, -1)));
+
+        assertFalse(c.isRemovable(new Location(0, 0))); //Fountain
+        assertFalse(c.isRemovable(new Location(1,-2))); //Leaves empty space
+        assertThrows(AlhambraEntityNotFoundException.class, ()->c.isRemovable(new Location(1, 0))); //No building present
+    }
 }
