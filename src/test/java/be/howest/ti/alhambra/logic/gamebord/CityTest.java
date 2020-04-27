@@ -97,31 +97,5 @@ class CityTest {
         assertFalse(c.isValidPlacing(bN, new Location(-1,2))); //Not joined
         assertFalse(c.isValidPlacing(bS, new Location(1,0))); //Leaves empty space
     }
-
-
-
-    //    @Test
-//    void isEmpty() {
-//        City c = createCity();
-//
-//        assertTrue(c.isEmpty(new Location(1, -1)));
-//        assertTrue(c.isEmpty(new Location(7, -1)));
-//        assertTrue(c.isEmpty(new Location(0, -7)));
-//        assertFalse(c.isEmpty(new Location(0, 0)));
-//        assertFalse(c.isEmpty(new Location(-1, 0)));
-//        assertFalse(c.isEmpty(new Location(1, -2)));
-//    }
-//
-//    @Test
-//    void isReplaceable() {
-//        City c = createCity();
-//
-//        assertTrue(c.isReplaceable(new Location(-1, 0)));
-//        assertTrue(c.isReplaceable(new Location(0, -2)));
-//        assertFalse(c.isReplaceable(new Location(0,0)));
-//        assertFalse(c.isReplaceable(new Location(1,-1)));
-//        assertFalse(c.isReplaceable(new Location(7,0)));
-//        assertFalse(c.isReplaceable(new Location(0,7)));
-//    }
-
+    
 }
