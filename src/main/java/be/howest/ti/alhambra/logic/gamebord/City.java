@@ -149,7 +149,12 @@ public class City {
     }
 
     public Building removeBuilding(Location location) {
-        return null;
+        if(!isRemovable(location)){
+            throw new AlhambraGameRuleException("The building on this location cannot be removed");
+        }
+        Building building = this.getLocation(location).getBuilding();
+        locations.remove(location);
+        return building;
     }
 
     public Building replaceBuilding(Building b, Location location) {
