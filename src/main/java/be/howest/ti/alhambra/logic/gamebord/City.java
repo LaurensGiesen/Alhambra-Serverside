@@ -183,8 +183,24 @@ public class City {
         return 0;
     }
 
-    public List<Location> getAvailableLocations(Walling wN) {
-        return null;
+    public List<Location> getAvailableLocations(Walling walls) {
+        List<Location> availableLocations = new ArrayList<>();
+        Building b = new Building(Buildingtype.ARCADES, 0, walls);
+
+        for(Location l : locations){
+            addAvailableLocation(availableLocations, b, l);
+            addAvailableLocation(availableLocations, b, l.getNeighbourLocation(WallingDirection.NORTH));
+            addAvailableLocation(availableLocations, b, l.getNeighbourLocation(WallingDirection.EAST));
+            addAvailableLocation(availableLocations, b, l.getNeighbourLocation(WallingDirection.SOUTH));
+            addAvailableLocation(availableLocations, b, l.getNeighbourLocation(WallingDirection.WEST));
+        }
+
+        return availableLocations;
     }
 
+    private void addAvailableLocation(List<Location> availableLocations, Building b, Location l) {
+        if(isValidPlacing(b, l) && this.getLocation(l).isEmpty() && !availableLocations.contains(l)){
+            availableLocations.add(l);
+        }
+    }
 }
