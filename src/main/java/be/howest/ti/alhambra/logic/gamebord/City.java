@@ -173,10 +173,14 @@ public class City {
         return b;
     }
 
-
-
     public int getAmountOfBuildings(Buildingtype type) {
-        return 0;
+        int c = 0;
+        for(Location l : locations){
+            if(!l.isEmpty() && l.getBuilding().getType() == type){
+                c++;
+            }
+        }
+        return c;
     }
 
     public int getLengthWall() {
