@@ -63,7 +63,7 @@ class CityTest {
         c.addBuilding(b, new Location(3, -2));
 
         assertDoesNotThrow(()->c.removeBuilding(new Location(3, -2)));
-        assertNull(c.getLocation(new Location(3, -2)));
+        assertTrue(c.getLocation(new Location(3, -2)).isEmpty());
 
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.removeBuilding(new Location(7, -7))); //Off grid location
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.removeBuilding(new Location(3, -3))); //No building present
