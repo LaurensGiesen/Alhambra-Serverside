@@ -1,21 +1,13 @@
 package be.howest.ti.alhambra.logic.Game;
 
 public class Game {
-    private int GameId;
+
+    private static int numberOfGames = 0;
+    private int gameId;
 
 
-
-
-    public Game(int gameId) {
-        GameId = 21575;
-
+    public Game() {
+        gameId = numberOfGames + 21575;
+        numberOfGames ++;
     }
-    public void setGameId(int gameId) {
-        GameId = gameId + 1;
-    }
-
-    public int getGameId() {
-        return GameId;
-    }
-
 }
