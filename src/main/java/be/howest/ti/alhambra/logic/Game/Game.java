@@ -4,20 +4,33 @@ public class Game {
 
     private static int numberOfGames = 0;
     private int gameId;
-
-
-
     private boolean started;
     private boolean ended;
 
-    public Game(boolean started, boolean ended) {
-        this.started = started;
-        this.ended = ended;
+    public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames ++;
     }
-    public String getTheStateOfTheGame(){
-        return "started =" + started + ",ended =" + ended;
 
+    public boolean isStarted() {
+        return started;
+    }
+
+    public boolean isEnded() {
+        return ended;
+    }
+
+
+    public void startGame(){
+        this.started = true;
+    }
+
+    public void endGame(){
+        this.ended = true;
     }
 }
+
+
+
+
+
