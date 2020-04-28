@@ -6,8 +6,18 @@ public class Game {
     private int gameId;
 
 
-    public Game() {
+
+    private boolean started;
+    private boolean ended;
+
+    public Game(boolean started, boolean ended) {
+        this.started = started;
+        this.ended = ended;
         gameId = numberOfGames + 21575;
         numberOfGames ++;
+    }
+    public String getTheStateOfTheGame(){
+        return "started =" + started + ",ended =" + ended;
+
     }
 }
