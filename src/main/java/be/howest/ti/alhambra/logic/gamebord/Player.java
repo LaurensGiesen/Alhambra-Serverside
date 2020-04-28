@@ -27,15 +27,15 @@ public class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return ready == player.ready;
+        return Objects.equals(playerName, player.playerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ready);
+        return Objects.hash(playerName);
     }
 
-//    @Override
+    //    @Override
 //    public String toString() {
 //        return "Player{" +
 //                "playerName='" + playerName + '\'' +
