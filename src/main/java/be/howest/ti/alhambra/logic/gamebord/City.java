@@ -75,10 +75,40 @@ public class City {
     }
 
     private boolean leavesNoEmptySpace(Location location) {
-        return false;
+        Location lN = this.getLocation(location.getNeighbourLocation(WallingDirection.NORTH));
+        Location lE = this.getLocation(location.getNeighbourLocation(WallingDirection.EAST));
+        Location lS = this.getLocation(location.getNeighbourLocation(WallingDirection.SOUTH));
+        Location lW = this.getLocation(location.getNeighbourLocation(WallingDirection.WEST));
+
+        return  !((lN == null
+                        && this.getLocation(lN.getNeighbourLocation(WallingDirection.NORTH)) != null
+                        && !this.getLocation(lN.getNeighbourLocation(WallingDirection.NORTH)).isEmpty()
+                        && this.getLocation(lN.getNeighbourLocation(WallingDirection.EAST)) != null
+                        && !this.getLocation(lN.getNeighbourLocation(WallingDirection.EAST)).isEmpty()
+                        && this.getLocation(lN.getNeighbourLocation(WallingDirection.WEST)) != null
+                        && !this.getLocation(lN.getNeighbourLocation(WallingDirection.WEST)).isEmpty())
+                || (lE == null
+                        && this.getLocation(lE.getNeighbourLocation(WallingDirection.NORTH)) != null
+                        && !this.getLocation(lE.getNeighbourLocation(WallingDirection.NORTH)).isEmpty()
+                        && this.getLocation(lE.getNeighbourLocation(WallingDirection.EAST)) != null
+                        && !this.getLocation(lE.getNeighbourLocation(WallingDirection.EAST)).isEmpty()
+                        && this.getLocation(lE.getNeighbourLocation(WallingDirection.SOUTH)) != null
+                        && !this.getLocation(lE.getNeighbourLocation(WallingDirection.SOUTH)).isEmpty())
+                || (lS == null
+                        && this.getLocation(lS.getNeighbourLocation(WallingDirection.EAST)) != null
+                        && !this.getLocation(lS.getNeighbourLocation(WallingDirection.EAST)).isEmpty()
+                        && this.getLocation(lS.getNeighbourLocation(WallingDirection.SOUTH)) != null
+                        && !this.getLocation(lS.getNeighbourLocation(WallingDirection.SOUTH)).isEmpty()
+                        && this.getLocation(lS.getNeighbourLocation(WallingDirection.WEST)) != null
+                        && !this.getLocation(lS.getNeighbourLocation(WallingDirection.WEST)).isEmpty())
+                || (lW == null
+                        && this.getLocation(lW.getNeighbourLocation(WallingDirection.NORTH)) != null
+                        && !this.getLocation(lW.getNeighbourLocation(WallingDirection.NORTH)).isEmpty()
+                        && this.getLocation(lW.getNeighbourLocation(WallingDirection.SOUTH)) != null
+                        && !this.getLocation(lW.getNeighbourLocation(WallingDirection.SOUTH)).isEmpty()
+                        && this.getLocation(lW.getNeighbourLocation(WallingDirection.WEST)) != null
+                        && !this.getLocation(lW.getNeighbourLocation(WallingDirection.WEST)).isEmpty()));
     }
-
-
 
     public boolean isRemovable(Location location) {
         return false;

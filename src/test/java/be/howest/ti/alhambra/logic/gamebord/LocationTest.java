@@ -55,8 +55,8 @@ class LocationTest {
     void isFountain() {
         createLocations();
 
-        assertFalse(l1.isFountain());
-        assertTrue(l2.isFountain());
-        assertFalse(l3.isFountain());
+        assertFalse(l1.containsFountain());
+        assertTrue(l2.containsFountain());
+        assertFalse(l3.containsFountain());
     }
 }
