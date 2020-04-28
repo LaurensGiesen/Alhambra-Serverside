@@ -7,7 +7,9 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -151,7 +153,7 @@ class CityTest {
         Walling wS = new Walling(false, false, true, false);
         Walling wA = new Walling(true, true, true, true); 
 
-        Set<Location> locationsN = new HashSet<>();
+        List<Location> locationsN = new ArrayList<>();
         locationsN.add(new Location(0,1));
         locationsN.add(new Location(-1,1));
         locationsN.add(new Location(-1,2));
@@ -159,7 +161,7 @@ class CityTest {
 
         assertEquals(locationsN, c.getAvailableLocations(wN));
 
-        Set<Location> locationsS = new HashSet<>();
+        List<Location> locationsS = new ArrayList<>();
         locationsS.add(new Location(0,1));
         locationsS.add(new Location(-1,1));
         locationsS.add(new Location(-1,-1));
