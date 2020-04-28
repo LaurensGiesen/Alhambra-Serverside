@@ -4,6 +4,7 @@ import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.building.WallingDirection;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 
 
@@ -105,7 +106,27 @@ public class City {
     }
 
     public boolean isRemovable(Location location) {
-        return false;
+        //there is a building present
+        // all tiles are still reachable on foot
+        // it's not the fountain
+
+        if(this.getLocation(location).getBuilding() == null){
+            throw new AlhambraEntityNotFoundException("There is no building in this location");
+        }
+
+        Location lN = this.getLocation(location.getNeighbourLocation(WallingDirection.NORTH));
+        Location lE = this.getLocation(location.getNeighbourLocation(WallingDirection.EAST));
+        Location lS = this.getLocation(location.getNeighbourLocation(WallingDirection.SOUTH));
+        Location lW = this.getLocation(location.getNeighbourLocation(WallingDirection.WEST));
+
+        Set<Location> prevLocations = new HashSet<>();
+        prevLocations.add(location);
+
+        return !this.getLocation(location).containsFountain()
+                && (lN.isEmpty() || isReachableOnFoot(lN, prevLocations))
+                && (lE.isEmpty() || isReachableOnFoot(lE, prevLocations))
+                && (lS.isEmpty() || isReachableOnFoot(lS, prevLocations))
+                && (lW.isEmpty() || isReachableOnFoot(lW, prevLocations));
     }
 
     public void addBuilding(Building building, Location location) {
