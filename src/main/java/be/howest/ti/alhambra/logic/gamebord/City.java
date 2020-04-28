@@ -75,10 +75,10 @@ public class City {
     }
 
     private boolean leavesNoEmptySpace(Location location) {
-        Location locationN = location.getLocation(WallingDirection.NORTH);
-        Location locationS = location.getLocation(WallingDirection.SOUTH);
-        Location locationE = location.getLocation(WallingDirection.EAST);
-        Location locationW = location.getLocation(WallingDirection.WEST);
+        Location locationN = location.getNeighbourLocation(WallingDirection.NORTH);
+        Location locationS = location.getNeighbourLocation(WallingDirection.SOUTH);
+        Location locationE = location.getNeighbourLocation(WallingDirection.EAST);
+        Location locationW = location.getNeighbourLocation(WallingDirection.WEST);
 
         return !(
                     (isEmpty(locationN) && hasThreeNeighbours(locationN))
@@ -91,19 +91,19 @@ public class City {
     private boolean hasThreeNeighbours(Location location){
         int counter = 0;
 
-        if(!isEmpty(location.getLocation(WallingDirection.NORTH))){ counter++; }
-        if(!isEmpty(location.getLocation(WallingDirection.SOUTH))){ counter++; }
-        if(!isEmpty(location.getLocation(WallingDirection.EAST))){ counter++; }
-        if(!isEmpty(location.getLocation(WallingDirection.WEST))){ counter++; }
+        if(!isEmpty(location.getNeighbourLocation(WallingDirection.NORTH))){ counter++; }
+        if(!isEmpty(location.getNeighbourLocation(WallingDirection.SOUTH))){ counter++; }
+        if(!isEmpty(location.getNeighbourLocation(WallingDirection.EAST))){ counter++; }
+        if(!isEmpty(location.getNeighbourLocation(WallingDirection.WEST))){ counter++; }
 
         return counter == 3;
     }
 
     private boolean hasAdjoiningSides(Walling walls, Location location) {
-        Location locationN = location.getLocation(WallingDirection.NORTH);
-        Location locationS = location.getLocation(WallingDirection.SOUTH);
-        Location locationE = location.getLocation(WallingDirection.EAST);
-        Location locationW = location.getLocation(WallingDirection.WEST);
+        Location locationN = location.getNeighbourLocation(WallingDirection.NORTH);
+        Location locationS = location.getNeighbourLocation(WallingDirection.SOUTH);
+        Location locationE = location.getNeighbourLocation(WallingDirection.EAST);
+        Location locationW = location.getNeighbourLocation(WallingDirection.WEST);
 
         return (isEmpty(locationN)
                     || walls.getWallNorth() == getBuilding(locationN).getWalls().getWallSouth())
@@ -127,10 +127,10 @@ public class City {
         if (location.equals(new Location(0, 0))) {
             return true;
         } else {
-            Location locationN = location.getLocation(WallingDirection.NORTH);
-            Location locationS = location.getLocation(WallingDirection.SOUTH);
-            Location locationE = location.getLocation(WallingDirection.EAST);
-            Location locationW = location.getLocation(WallingDirection.WEST);
+            Location locationN = location.getNeighbourLocation(WallingDirection.NORTH);
+            Location locationS = location.getNeighbourLocation(WallingDirection.SOUTH);
+            Location locationE = location.getNeighbourLocation(WallingDirection.EAST);
+            Location locationW = location.getNeighbourLocation(WallingDirection.WEST);
 
             return (!isEmpty(locationN) && !this.getBuilding(locationN).getWalls().getWallSouth() && isReachableOnFoot(locationN, prevLocations))
                     || (!isEmpty(locationS) && !this.getBuilding(locationS).getWalls().getWallNorth() && isReachableOnFoot(locationS, prevLocations))
@@ -140,9 +140,9 @@ public class City {
     }
 
     private boolean isJoinedOnOneSide(Location location) {
-        return !(isEmpty(location.getLocation(WallingDirection.NORTH))
-                    && isEmpty(location.getLocation(WallingDirection.EAST))
-                    && isEmpty(location.getLocation(WallingDirection.SOUTH))
-                    && isEmpty(location.getLocation(WallingDirection.WEST)));
+        return !(isEmpty(location.getNeighbourLocation(WallingDirection.NORTH))
+                    && isEmpty(location.getNeighbourLocation(WallingDirection.EAST))
+                    && isEmpty(location.getNeighbourLocation(WallingDirection.SOUTH))
+                    && isEmpty(location.getNeighbourLocation(WallingDirection.WEST)));
     }
 }
