@@ -31,23 +31,22 @@ public class Location {
     }
 
     public Building getBuilding() {
-        return null;
+        return building;
     }
 
-    public void setBuilding(Building b1) {
-        //
+    public void setBuilding(Building b) {
+        building = b;
     }
-
 
     public boolean isEmpty() {
-        return false;
+        return building == null;
     }
 
-    public boolean isFountain() {
-        return false;
+    public boolean containsFountain() {
+        return building != null && building.isFountain();
     }
 
-    public Location getLocation(WallingDirection direction) {
+    public Location getNeighbourLocation(WallingDirection direction) {
         switch (direction) {
             case NORTH:
                 return new Location(row - 1, col);

@@ -1,16 +1,16 @@
 package be.howest.ti.alhambra.logic.building;
 
-import be.howest.ti.alhambra.logic.building.Building;
+
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Buildingplace {
+public class BuildingPlace {
 
     private List<Building> buildings;
 
-    public Buildingplace() {
+    public BuildingPlace() {
 
        buildings = new ArrayList<>();
     }

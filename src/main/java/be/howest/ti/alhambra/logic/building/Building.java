@@ -72,6 +72,10 @@ public class Building {
     }
 
 
+    public boolean isFountain(){
+        return type == null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,4 +90,5 @@ public class Building {
     public int hashCode() {
         return Objects.hash(type, cost, walls);
     }
+
 }
