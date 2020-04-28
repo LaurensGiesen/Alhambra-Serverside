@@ -16,6 +16,12 @@ public class Location {
         this.building = null;
     }
 
+    public Location(int row, int col, Building building) {
+        this.row = row;
+        this.col = col;
+        this.building = building;
+    }
+
     public int getRow() {
         return row;
     }
