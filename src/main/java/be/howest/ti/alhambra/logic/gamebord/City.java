@@ -157,8 +157,20 @@ public class City {
         return building;
     }
 
-    public Building replaceBuilding(Building b, Location location) {
-        return null;
+    public Building replaceBuilding(Building building, Location location) {
+        if(this.getLocation(location).isEmpty()){
+            throw new AlhambraEntityNotFoundException("No building in this location");
+        }
+        if(this.getLocation(location).containsFountain()){
+            throw new AlhambraGameRuleException("Fountain cannot be replaced");
+        }
+        if(!isValidPlacing(building, location)){
+            throw new AlhambraGameRuleException("The tile cannot be placed here");
+        }
+        Building b = removeBuilding(location);
+        addBuilding(building, location);
+
+        return b;
     }
 
 
