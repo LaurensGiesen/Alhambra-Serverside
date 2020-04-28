@@ -78,16 +78,12 @@ class CityTest {
         c.addBuilding(bS, new Location(-1, -1));
 
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.replaceBuilding(b, new Location(3, -2))); //No building present
-        assertThrows(AlhambraEntityNotFoundException.class, ()->c.replaceBuilding(b, new Location(0, 0))); //Replace fountain
-        assertThrows(AlhambraEntityNotFoundException.class, ()->c.replaceBuilding(b, new Location(-1, -1))); //No adjoining sides
+        assertThrows(AlhambraGameRuleException.class, ()->c.replaceBuilding(b, new Location(0, 0))); //Replace fountain
+        assertThrows(AlhambraGameRuleException.class, ()->c.replaceBuilding(b, new Location(-1, -1))); //No adjoining sides
 
         c.addBuilding(b, new Location(3, -2));
         assertDoesNotThrow(()->c.replaceBuilding(bS, new Location(3, -2)));
         assertEquals(bS, c.getLocation(new Location(3, -2)).getBuilding());
-
-        c.addBuilding(bN, new Location(3, -1));
-        Building bNS = new Building(Buildingtype.ARCADES, 1, new Walling(true, false, true, false));
-        assertDoesNotThrow(()->c.replaceBuilding(bNS, new Location(3, -2)));
     }
 
     @Test
