@@ -7,6 +7,9 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CityTest {
@@ -138,5 +141,33 @@ class CityTest {
 
         c.addBuilding(bESW, new Location(3, -2));
         assertEquals(7, c.getLengthWall()); //Test for normal in many directions
+    }
+
+    @Test
+    void getAvailableLocations() {
+        createCity();
+
+        Walling wN = new Walling(true, false, false, false);
+        Walling wS = new Walling(false, false, true, false);
+        Walling wA = new Walling(true, true, true, true); 
+
+        Set<Location> locationsN = new HashSet<>();
+        locationsN.add(new Location(0,1));
+        locationsN.add(new Location(-1,1));
+        locationsN.add(new Location(-1,2));
+        locationsN.add(new Location(2,0));
+
+        assertEquals(locationsN, c.getAvailableLocations(wN));
+
+        Set<Location> locationsS = new HashSet<>();
+        locationsS.add(new Location(0,1));
+        locationsS.add(new Location(-1,1));
+        locationsS.add(new Location(-1,-1));
+        locationsS.add(new Location(3,-2));
+        locationsS.add(new Location(2,0));
+
+        assertEquals(locationsS, c.getAvailableLocations(wS));
+
+        assertNull(c.getAvailableLocations(wA));
     }
 }
