@@ -62,6 +62,24 @@ public class City {
         }
     }
 
+    private boolean hasAdjoiningSides(Walling walls, Location location) {
+        Location lN = this.getLocation(location.getNeighbourLocation(WallingDirection.NORTH));
+        Location lE = this.getLocation(location.getNeighbourLocation(WallingDirection.EAST));
+        Location lS = this.getLocation(location.getNeighbourLocation(WallingDirection.SOUTH));
+        Location lW = this.getLocation(location.getNeighbourLocation(WallingDirection.WEST));
+
+        return (lN == null || lN.isEmpty() || lN.getBuilding().getWalls().getWallNorth() == walls.getWallNorth())
+                && (lE == null || lE.isEmpty() || lE.getBuilding().getWalls().getWallEast() == walls.getWallEast())
+                && (lS == null || lS.isEmpty() || lS.getBuilding().getWalls().getWallSouth() == walls.getWallSouth())
+                && (lW == null || lW.isEmpty() || lW.getBuilding().getWalls().getWallWest() == walls.getWallWest());
+    }
+
+    private boolean leavesNoEmptySpace(Location location) {
+        return false;
+    }
+
+
+
     public boolean isRemovable(Location location) {
         return false;
     }
