@@ -152,7 +152,7 @@ class CityTest {
         List<Location> locationsN = new ArrayList<>();
         locationsN.add(new Location(0,1));
         locationsN.add(new Location(-1,1));
-        locationsN.add(new Location(-1,2));
+        locationsN.add(new Location(-1,-2));
         locationsN.add(new Location(2,0));
 
         assertEquals(locationsN, c.getAvailableLocations(wN));
@@ -166,6 +166,8 @@ class CityTest {
 
         assertEquals(locationsS, c.getAvailableLocations(wS));
 
-        assertNull(c.getAvailableLocations(wA));
+        List<Location> locationsA = new ArrayList<>();
+
+        assertEquals(locationsA, c.getAvailableLocations(wA));
     }
 }
