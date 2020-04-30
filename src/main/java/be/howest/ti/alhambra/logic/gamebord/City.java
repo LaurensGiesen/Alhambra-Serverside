@@ -149,25 +149,62 @@ public class City {
     }
 
     public Building removeBuilding(Location location) {
-        return null;
+        if(!isRemovable(location)){
+            throw new AlhambraGameRuleException("The building on this location cannot be removed");
+        }
+        Building building = this.getLocation(location).getBuilding();
+        locations.remove(location);
+        return building;
     }
 
-    public Building replaceBuilding(Building b, Location location) {
-        return null;
+    public Building replaceBuilding(Building building, Location location) {
+        if(this.getLocation(location).isEmpty()){
+            throw new AlhambraEntityNotFoundException("No building in this location");
+        }
+        if(this.getLocation(location).containsFountain()){
+            throw new AlhambraGameRuleException("Fountain cannot be replaced");
+        }
+        if(!isValidPlacing(building, location)){
+            throw new AlhambraGameRuleException("The tile cannot be placed here");
+        }
+        Building b = removeBuilding(location);
+        addBuilding(building, location);
+
+        return b;
     }
-
-
 
     public int getAmountOfBuildings(Buildingtype type) {
-        return 0;
+        int c = 0;
+        for(Location l : locations){
+            if(!l.isEmpty() && l.getBuilding().getType() == type){
+                c++;
+            }
+        }
+        return c;
     }
 
     public int getLengthWall() {
         return 0;
     }
 
-    public List<Location> getAvailableLocations(Walling wN) {
-        return null;
+    public List<Location> getAvailableLocations(Walling walls) {
+        List<Location> availableLocations = new ArrayList<>();
+        Building b = new Building(Buildingtype.ARCADES, 0, walls);
+
+        for(Location l : locations){
+            addAvailableLocation(availableLocations, b, l);
+            addAvailableLocation(availableLocations, b, l.getNeighbourLocation(WallingDirection.NORTH));
+            addAvailableLocation(availableLocations, b, l.getNeighbourLocation(WallingDirection.EAST));
+            addAvailableLocation(availableLocations, b, l.getNeighbourLocation(WallingDirection.SOUTH));
+            addAvailableLocation(availableLocations, b, l.getNeighbourLocation(WallingDirection.WEST));
+        }
+
+        return availableLocations;
     }
 
+    private void addAvailableLocation(List<Location> availableLocations, Building b, Location l) {
+        if(isValidPlacing(b, l) && this.getLocation(l).isEmpty() && !availableLocations.contains(l)){
+            availableLocations.add(l);
+        }
+    }
 }

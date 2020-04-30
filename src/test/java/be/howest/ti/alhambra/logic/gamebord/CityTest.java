@@ -63,7 +63,7 @@ class CityTest {
         c.addBuilding(b, new Location(3, -2));
 
         assertDoesNotThrow(()->c.removeBuilding(new Location(3, -2)));
-        assertNull(c.getLocation(new Location(3, -2)));
+        assertTrue(c.getLocation(new Location(3, -2)).isEmpty());
 
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.removeBuilding(new Location(7, -7))); //Off grid location
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.removeBuilding(new Location(3, -3))); //No building present
@@ -78,16 +78,12 @@ class CityTest {
         c.addBuilding(bS, new Location(-1, -1));
 
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.replaceBuilding(b, new Location(3, -2))); //No building present
-        assertThrows(AlhambraEntityNotFoundException.class, ()->c.replaceBuilding(b, new Location(0, 0))); //Replace fountain
-        assertThrows(AlhambraEntityNotFoundException.class, ()->c.replaceBuilding(b, new Location(-1, -1))); //No adjoining sides
+        assertThrows(AlhambraGameRuleException.class, ()->c.replaceBuilding(b, new Location(0, 0))); //Replace fountain
+        assertThrows(AlhambraGameRuleException.class, ()->c.replaceBuilding(b, new Location(-1, -1))); //No adjoining sides
 
         c.addBuilding(b, new Location(3, -2));
         assertDoesNotThrow(()->c.replaceBuilding(bS, new Location(3, -2)));
         assertEquals(bS, c.getLocation(new Location(3, -2)).getBuilding());
-
-        c.addBuilding(bN, new Location(3, -1));
-        Building bNS = new Building(Buildingtype.ARCADES, 1, new Walling(true, false, true, false));
-        assertDoesNotThrow(()->c.replaceBuilding(bNS, new Location(3, -2)));
     }
 
     @Test
@@ -156,7 +152,7 @@ class CityTest {
         List<Location> locationsN = new ArrayList<>();
         locationsN.add(new Location(0,1));
         locationsN.add(new Location(-1,1));
-        locationsN.add(new Location(-1,2));
+        locationsN.add(new Location(-1,-2));
         locationsN.add(new Location(2,0));
 
         assertEquals(locationsN, c.getAvailableLocations(wN));
@@ -170,6 +166,8 @@ class CityTest {
 
         assertEquals(locationsS, c.getAvailableLocations(wS));
 
-        assertNull(c.getAvailableLocations(wA));
+        List<Location> locationsA = new ArrayList<>();
+
+        assertEquals(locationsA, c.getAvailableLocations(wA));
     }
 }
