@@ -2,7 +2,7 @@ package be.howest.ti.alhambra.logic.gamebord;
 
 import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Purse;
-import be.howest.ti.alhambra.logic.coin.Coin;
+
 
 import java.util.Objects;
 
@@ -55,4 +55,31 @@ public class Player {
         this.score += amount;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public Purse getMoney() {
+        return money;
+    }
+
+    public BuildingPlace getReserve() {
+        return reserve;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public BuildingPlace getBuildingInHand() {
+        return buildingInHand;
+    }
 }
