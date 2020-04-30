@@ -207,4 +207,8 @@ public class City {
             availableLocations.add(l);
         }
     }
+
+    public Building[][] cityToGrid() {
+        return new Building[0][];
+    }
 }
