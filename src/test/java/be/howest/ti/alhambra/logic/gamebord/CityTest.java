@@ -7,10 +7,7 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -170,4 +167,15 @@ class CityTest {
 
         assertEquals(locationsA, c.getAvailableLocations(wA));
     }
+
+    @Test
+    void cityToGrid(){
+        createCity();
+        Building fountain = new Building(null, 0, new Walling(false, false, false, false));
+
+        Building[][] grid = {{null, null, null, null, null}, {null, null, null, bN, null}, {null, bW, bN, fountain, null}, {null, bW, null, null, null}, {null, bW, bS, null, null}, {null, null, null, null, null}};
+
+        assertEquals(grid, c.cityToGrid());
+    }
+    
 }
