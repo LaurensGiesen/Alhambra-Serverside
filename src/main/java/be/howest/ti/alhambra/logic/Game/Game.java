@@ -20,11 +20,11 @@ public class Game {
     private boolean ended;
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
-    //private String currentPlayer;
-    //private Purse bank;
-    //private Map<Currency, Building> market;
-    //private Array<> scoringRound;
- 
+    private String currentPlayer;
+    private Purse bank;
+    private Map<Currency, Building> market;
+//    private Array<> scoringRound;
+
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames ++;
