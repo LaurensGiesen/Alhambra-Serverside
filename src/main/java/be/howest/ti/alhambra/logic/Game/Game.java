@@ -6,6 +6,7 @@ public class Game {
     private int gameId;
     private boolean started;
     private boolean ended;
+    
 
     public Game() {
         gameId = numberOfGames + 21575;
