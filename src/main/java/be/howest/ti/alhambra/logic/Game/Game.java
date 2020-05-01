@@ -28,15 +28,19 @@ public class Game {
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames ++;
+
         players = new HashSet<>();
         //shuffle coinStack//
         List<Coin> allCoins = new ArrayList<>(Coin.allCoins());
         Collections.shuffle(allCoins);
         coinStack = new LinkedList<>(allCoins);
+
         //shuffle Buildings//
         List<Building> allBuildings = new ArrayList<>(Building.allBuilding());
         Collections.shuffle(allBuildings);
         buildingStack = new LinkedList<>(allBuildings);
+        Purse bank = new Purse();
+
     }
 
 
@@ -74,6 +78,7 @@ public class Game {
         } else {
             throw new AlhambraGameRuleException("Get some friends!");
         };
+
     }
 
     public void endGame(){
