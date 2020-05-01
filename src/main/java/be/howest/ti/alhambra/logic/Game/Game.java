@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic.Game;
 
+import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.gamebord.Player;
@@ -14,12 +15,22 @@ public class Game {
     private boolean started;
     private boolean ended;
 
-    
+
+
+
+    private Queue<Coin> coinStack;
+
+
+
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames ++;
         players = new HashSet<>();
+        List<Coin> allCoins = new ArrayList<>(Coin.allCoins());
+        Collections.shuffle(allCoins);
+        coinStack = new LinkedList<>(allCoins);
     }
+
 
     public Set<Player> getPlayers() {
         return players;
@@ -65,6 +76,7 @@ public class Game {
         };
 
     }
+
 
 
 }
