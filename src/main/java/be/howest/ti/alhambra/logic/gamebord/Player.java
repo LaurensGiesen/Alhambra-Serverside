@@ -3,7 +3,7 @@ package be.howest.ti.alhambra.logic.gamebord;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Purse;
-import be.howest.ti.alhambra.logic.coin.Coin;
+
 
 import java.util.Objects;
 
@@ -24,6 +24,10 @@ public class Player {
         this.playerName = playerName;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,12 +41,20 @@ public class Player {
         return Objects.hash(playerName);
     }
 
+    public boolean isReady() {
+        return ready;
+    }
+
     public void setReady(boolean ready) {
         this.ready = ready;
     }
 
     public boolean isValidToken(String token) {
         return this.token.equals(token);
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public void addScore(int amount) {
@@ -66,6 +78,5 @@ public class Player {
                 reserve.addBuilding(b1);
             }
         }
-
     }
 }
