@@ -8,6 +8,6 @@ public class Game {
 
     public Game() {
         gameId = numberOfGames + 21575;
-        numberOfGames ++;
+        numberOfGames ++; 
     }
 }
