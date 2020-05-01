@@ -10,6 +10,9 @@ public class Game {
     private static int numberOfGames = 0;
     private int gameId;
     private Set<Player> players;
+    private boolean started;
+    private boolean ended;
+
 
 
     public Game() {
@@ -35,6 +38,32 @@ public class Game {
         }else {
             throw new AlhambraEntityNotFoundException("Player not present");
         }
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public boolean isEnded() {
+        return ended;
+    }
+
+
+    public void startGame(){
+        if (players.size() >= 2) {
+            this.started = true;
+        } else {
+            throw new AlhambraEntityNotFoundException("Get some friends!");
+        };
+    }
+
+    public void endGame(){
+        if (started = true){
+            this.ended = true;
+        } else {
+            throw new AlhambraEntityNotFoundException("The game hasn't even started yet");
+        }
+
     }
 
 
