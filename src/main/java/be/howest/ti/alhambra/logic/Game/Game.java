@@ -15,7 +15,7 @@ public class Game {
     private boolean ended;
 
 
-
+ 
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames ++;
