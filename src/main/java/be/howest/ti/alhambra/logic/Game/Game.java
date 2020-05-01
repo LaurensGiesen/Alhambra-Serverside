@@ -17,7 +17,7 @@ public class Game {
     private boolean ended;
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
-
+    
  
     public Game() {
         gameId = numberOfGames + 21575;
