@@ -7,10 +7,7 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,7 +60,7 @@ class CityTest {
         c.addBuilding(b, new Location(3, -2));
 
         assertDoesNotThrow(()->c.removeBuilding(new Location(3, -2)));
-        assertNull(c.getLocation(new Location(3, -2)));
+        assertTrue(c.getLocation(new Location(3, -2)).isEmpty());
 
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.removeBuilding(new Location(7, -7))); //Off grid location
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.removeBuilding(new Location(3, -3))); //No building present
@@ -78,16 +75,12 @@ class CityTest {
         c.addBuilding(bS, new Location(-1, -1));
 
         assertThrows(AlhambraEntityNotFoundException.class, ()->c.replaceBuilding(b, new Location(3, -2))); //No building present
-        assertThrows(AlhambraEntityNotFoundException.class, ()->c.replaceBuilding(b, new Location(0, 0))); //Replace fountain
-        assertThrows(AlhambraEntityNotFoundException.class, ()->c.replaceBuilding(b, new Location(-1, -1))); //No adjoining sides
+        assertThrows(AlhambraGameRuleException.class, ()->c.replaceBuilding(b, new Location(0, 0))); //Replace fountain
+        assertThrows(AlhambraGameRuleException.class, ()->c.replaceBuilding(b, new Location(-1, -1))); //No adjoining sides
 
         c.addBuilding(b, new Location(3, -2));
         assertDoesNotThrow(()->c.replaceBuilding(bS, new Location(3, -2)));
         assertEquals(bS, c.getLocation(new Location(3, -2)).getBuilding());
-
-        c.addBuilding(bN, new Location(3, -1));
-        Building bNS = new Building(Buildingtype.ARCADES, 1, new Walling(true, false, true, false));
-        assertDoesNotThrow(()->c.replaceBuilding(bNS, new Location(3, -2)));
     }
 
     @Test
@@ -156,7 +149,7 @@ class CityTest {
         List<Location> locationsN = new ArrayList<>();
         locationsN.add(new Location(0,1));
         locationsN.add(new Location(-1,1));
-        locationsN.add(new Location(-1,2));
+        locationsN.add(new Location(-1,-2));
         locationsN.add(new Location(2,0));
 
         assertEquals(locationsN, c.getAvailableLocations(wN));
@@ -170,6 +163,19 @@ class CityTest {
 
         assertEquals(locationsS, c.getAvailableLocations(wS));
 
-        assertNull(c.getAvailableLocations(wA));
+        List<Location> locationsA = new ArrayList<>();
+
+        assertEquals(locationsA, c.getAvailableLocations(wA));
     }
+
+    @Test
+    void cityToGrid(){
+        createCity();
+        Building fountain = new Building(null, 0, new Walling(false, false, false, false));
+
+        Building[][] grid = {{null, null, null, null, null}, {null, null, null, bN, null}, {null, bW, bN, fountain, null}, {null, bW, null, null, null}, {null, bW, bS, null, null}, {null, null, null, null, null}};
+
+        assertEquals(grid, c.cityToGrid());
+    }
+    
 }
