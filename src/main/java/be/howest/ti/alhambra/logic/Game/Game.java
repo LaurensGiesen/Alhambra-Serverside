@@ -5,7 +5,7 @@ public class Game {
     private static int numberOfGames = 0;
     private int gameId;
     private boolean started;
-    private boolean ended;
+    private boolean ended; 
     
 
     public Game() {
