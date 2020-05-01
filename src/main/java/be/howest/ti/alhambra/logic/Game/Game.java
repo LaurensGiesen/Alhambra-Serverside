@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 
 import java.util.*;
@@ -53,7 +54,7 @@ public class Game {
         if (players.size() >= 2) {
             this.started = true;
         } else {
-            throw new AlhambraEntityNotFoundException("Get some friends!");
+            throw new AlhambraGameRuleException("Get some friends!");
         };
     }
 
@@ -61,8 +62,8 @@ public class Game {
         if (started = true){
             this.ended = true;
         } else {
-            throw new AlhambraEntityNotFoundException("The game hasn't even started yet");
-        }
+            throw new AlhambraGameRuleException("The game hasn't even started yet");
+        };
 
     }
 
