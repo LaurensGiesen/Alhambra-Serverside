@@ -11,6 +11,9 @@ public class Game {
     private static int numberOfGames = 0;
     private int gameId;
     private Set<Player> players;
+
+
+
     private Queue<Coin> coinStack;
 
 
