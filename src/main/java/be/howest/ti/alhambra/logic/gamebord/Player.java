@@ -25,6 +25,10 @@ public class Player {
         this.playerName = playerName;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,12 +42,9 @@ public class Player {
         return Objects.hash(playerName);
     }
 
-    //    @Override
-//    public String toString() {
-//        return "Player{" +
-//                "playerName='" + playerName + '\'' +
-//                '}';
-//    }
+    public boolean isReady() {
+        return ready;
+    }
 
     public void setReady(boolean ready) {
         this.ready = ready;
@@ -51,6 +52,10 @@ public class Player {
 
     public boolean isValidToken(String token) {
         return this.token.equals(token);
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public void addScore(int amount) {
