@@ -1,11 +1,14 @@
 package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.coin.Coin;
+import be.howest.ti.alhambra.logic.coin.*;
+import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Game {
@@ -17,7 +20,10 @@ public class Game {
     private boolean ended;
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
-
+    //private String currentPlayer;
+    //private Purse bank;
+    //private Map<Currency, Building> market;
+    //private Array<> scoringRound;
  
     public Game() {
         gameId = numberOfGames + 21575;
