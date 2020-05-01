@@ -1,8 +1,10 @@
 package be.howest.ti.alhambra.logic.gamebord;
 
+import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.coin.Coin;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 
 import java.util.Objects;
 
@@ -55,4 +57,30 @@ public class Player {
         this.score += amount;
     }
 
+    public void redesignCity(Building building, Location location) {
+        if (building == null) {
+            //if from board to reserve
+            Building b = city.removeBuilding(location);
+            reserve.addBuilding(b);
+        } else {
+            if (city.getLocation(location).getBuilding() == null) {
+//            if from reserve to board
+                reserve.removeBuilding(building);
+                city.addBuilding(building, location);
+            } else {
+                //if from reserve to replaceOnBoard
+                reserve.removeBuilding(building);
+                Building b1 = city.replaceBuilding(building, location);
+                reserve.addBuilding(b1);
+            }
+        }
+    }
+
+    public void buildBuilding(Building building, Location location) {
+        if (!buildingInHand.getBuildings().contains(building)) {
+            throw new AlhambraEntityNotFoundException("selected building not in hand");
+        }
+        city.addBuilding(building, location);
+        buildingInHand.removeBuilding(building);
+    }
 }
