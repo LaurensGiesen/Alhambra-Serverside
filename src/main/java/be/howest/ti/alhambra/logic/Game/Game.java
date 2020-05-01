@@ -1,37 +1,41 @@
 package be.howest.ti.alhambra.logic.Game;
 
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.gamebord.Player;
+
+import java.util.*;
+
 public class Game {
 
     private static int numberOfGames = 0;
     private int gameId;
-    private boolean started;
-    private boolean ended; 
-    
+    private Set<Player> players;
+
 
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames ++;
+        players = new HashSet<>();
     }
 
-    public boolean isStarted() {
-        return started;
+    public Set<Player> getPlayers() {
+        return players;
     }
 
-    public boolean isEnded() {
-        return ended;
+    public void addPlayer(Player player) {
+        if (players.size() < 6) {
+            players.add(player);
+        } else {
+            throw new AlhambraEntityNotFoundException("There's no available space left for more players");
+        } ;
+    }
+    public void removePlayer(Player player) {
+        if(players.contains(player)) {
+            players.remove(player);
+        }else {
+            throw new AlhambraEntityNotFoundException("Player not present");
+        }
     }
 
 
-    public void startGame(){
-        this.started = true;
-    }
-
-    public void endGame(){
-        this.ended = true;
-    }
 }
-
-
-
-
-
