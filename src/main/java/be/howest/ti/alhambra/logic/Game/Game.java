@@ -23,14 +23,17 @@ public class Game {
     }
 
     public void addPlayer(Player player) {
-        players.add(player);
+        if (players.size() < 6) {
+            players.add(player);
+        } else {
+            throw new AlhambraEntityNotFoundException("There's no available space left for more players");
+        } ;
     }
-
     public void removePlayer(Player player) {
         if(players.contains(player)) {
             players.remove(player);
         }else {
-            throw new AlhambraEntityNotFoundException("Player nog present");
+            throw new AlhambraEntityNotFoundException("Player not present");
         }
     }
 
