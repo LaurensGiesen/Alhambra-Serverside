@@ -39,8 +39,6 @@ public class Game {
         List<Building> allBuildings = new ArrayList<>(Building.allBuilding());
         Collections.shuffle(allBuildings);
         buildingStack = new LinkedList<>(allBuildings);
-        Purse bank = new Purse();
-
     }
 
 
@@ -71,10 +69,15 @@ public class Game {
         return ended;
     }
 
+    public Purse populateBank() {
+        Purse bank = new Purse();
+        return null;
+    }
 
     public void startGame(){
         if (players.size() >= 2) {
             this.started = true;
+            populateBank();
         } else {
             throw new AlhambraGameRuleException("Get some friends!");
         };
