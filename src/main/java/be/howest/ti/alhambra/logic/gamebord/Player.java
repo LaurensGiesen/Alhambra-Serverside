@@ -3,8 +3,8 @@ package be.howest.ti.alhambra.logic.gamebord;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Purse;
-import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+
 
 import java.util.Objects;
 
@@ -23,10 +23,38 @@ public class Player {
 
     public Player(String playerName) {
         this.playerName = playerName;
+        this.money = new Purse();
+        this.reserve = new BuildingPlace();
+        this.city = new City();
+        this.buildingInHand = new BuildingPlace();
     }
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public int getVirtualScore() {
+        return virtualScore;
+    }
+
+    public Purse getMoney() {
+        return money;
+    }
+
+    public BuildingPlace getReserve() {
+        return reserve;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public BuildingPlace getBuildingInHand() {
+        return buildingInHand;
     }
 
     @Override
@@ -65,27 +93,40 @@ public class Player {
     public void redesignCity(Building building, Location location) {
         if (building == null) {
             //if from board to reserve
-            Building b = city.removeBuilding(location);
-            reserve.addBuilding(b);
+            boardToReserve(location);
         } else {
             if (city.getLocation(location).getBuilding() == null) {
-//            if from reserve to board
-                reserve.removeBuilding(building);
-                city.addBuilding(building, location);
+            //if from reserve to board
+                reserveToBoard(building, location);
             } else {
                 //if from reserve to replaceOnBoard
-                reserve.removeBuilding(building);
-                Building b1 = city.replaceBuilding(building, location);
-                reserve.addBuilding(b1);
+                reserveToReplace(building, location);
             }
         }
     }
 
-    public void buildBuilding(Building building, Location location) {
-        if (!buildingInHand.getBuildings().contains(building)) {
-            throw new AlhambraEntityNotFoundException("selected building not in hand");
+    private void boardToReserve(Location location) {
+        if (location == null) {
+            throw new AlhambraEntityNotFoundException("Remove building from location null cannot be done");
         }
+        Building b = city.removeBuilding(location);
+        reserve.addBuilding(b);
+    }
+
+    private void reserveToBoard(Building building, Location location) {
+        if (!reserve.getBuildings().contains(building)) {
+            throw new AlhambraEntityNotFoundException("No such building in reserve");
+        }
+        reserve.removeBuilding(building);
         city.addBuilding(building, location);
-        buildingInHand.removeBuilding(building);
+    }
+
+    private void reserveToReplace(Building building, Location location) {
+        if (!reserve.getBuildings().contains(building)) {
+            throw new AlhambraEntityNotFoundException("No such building in reserve");
+        }
+        reserve.removeBuilding(building);
+        Building b1 = city.replaceBuilding(building, location);
+        reserve.addBuilding(b1);
     }
 }
