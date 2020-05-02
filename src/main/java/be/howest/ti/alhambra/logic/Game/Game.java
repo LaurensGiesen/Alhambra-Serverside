@@ -23,7 +23,6 @@ public class Game {
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
     private int[] scoringRound;
-
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames++;
@@ -114,9 +113,7 @@ public class Game {
             createMarket();
         }
         for (Currency c : market.keySet()) {
-             if (market.get(c) == null) {
-                 
-            }
+            market.computeIfAbsent(c, k -> buildingStack.poll());
 
         }
 
@@ -145,13 +142,13 @@ public class Game {
                 else if (coinStack.size() == scoringRound[1]) {
                     score();
                 }
-            }
+            } 
         }
     }
 
     public void endOfTurn(){
 //        populateBank();
-        //populateMarket
+        populateMarket();
         //set currentPlayer to next
 
     }
