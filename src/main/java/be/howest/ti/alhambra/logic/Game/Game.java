@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.coin.Currency;
@@ -100,42 +101,56 @@ public class Game {
         //enough coins for building
         //building from market to buildingInHand of player
     }
-
+    private void createMarket() {
+        market.put(Currency.BLUE, buildingStack.poll());
+        market.put(Currency.GREEN, buildingStack.poll());
+        market.put(Currency.YELLOW, buildingStack.poll());
+        market.put(Currency.ORANGE, buildingStack.poll());
+    }
     private void populateMarket(){
         //buildingStack is not empty -> end of game
         //buildings van stack to market
+        if (market == null) {
+            createMarket();
+        }
+        for (Currency c : market.keySet()) {
+             if (market.get(c) == null) {
+                 
+            }
+
+        }
+
 
     }
 
-    private  void populateCoinStack(Coin coin) {
+    private  void populateCoinStack() {
         for (int i = 0; i<108; i++) {
-            coinStack.add(coin);
+            coinStack = new LinkedList<>(Coin.allCoins());
         }
     }
 
-    private void populateBank(Coin coin) {
+    private void populateBank() {
         //coinStack is not empty -> replenish coinStack
         //coins van stack to bank
         //check for scoringRound
         if (coinStack.size() == 0) {
-            populateCoinStack(coin);
+            populateCoinStack();
         };
         if (bank.getCoins().size() < 4) {
             for (int i = bank.getCoins().size(); i < 4; i++) {
-                bank.addCoin(coin);
+                bank.addCoin(coinStack.poll());
                 if (coinStack.size() == scoringRound[0]) {
                     score();
                 }
                 else if (coinStack.size() == scoringRound[1]) {
                     score();
-
                 }
             }
         }
     }
 
     public void endOfTurn(){
-//        populateBank(coin);
+//        populateBank();
         //populateMarket
         //set currentPlayer to next
 
@@ -178,7 +193,15 @@ public class Game {
     }
 
     private void addStartMoney(){
-        //each player to >20 coins
+        //each player to <20 coins
+        for (Player p : players) {
+            if (p.getMoney().getTotalAmount() < 20) {
+                p.getMoney().addCoin(coinStack.poll());
+            }
+            
+
+        }
+
     }
 
     private void determineStarter(){
