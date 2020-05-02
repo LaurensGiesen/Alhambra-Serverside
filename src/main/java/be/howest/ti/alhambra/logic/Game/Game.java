@@ -1,7 +1,8 @@
 package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.coin.*;
+import be.howest.ti.alhambra.logic.coin.Coin;
+import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
@@ -106,14 +107,35 @@ public class Game {
 
     }
 
-    private void populateBank(){
+    private  void populateCoinStack(Coin coin) {
+        for (int i = 0; i<108; i++) {
+            coinStack.add(coin);
+        }
+    }
+
+    private void populateBank(Coin coin) {
         //coinStack is not empty -> replenish coinStack
         //coins van stack to bank
         //check for scoringRound
+        if (coinStack.size() == 0) {
+            populateCoinStack(coin);
+        };
+        if (bank.getCoins().size() < 4) {
+            for (int i = bank.getCoins().size(); i < 4; i++) {
+                bank.addCoin(coin);
+                if (coinStack.size() == scoringRound[0]) {
+                    score();
+                }
+                else if (coinStack.size() == scoringRound[1]) {
+                    score();
+
+                }
+            }
+        }
     }
 
     public void endOfTurn(){
-        //populateBank
+//        populateBank(coin);
         //populateMarket
         //set currentPlayer to next
 

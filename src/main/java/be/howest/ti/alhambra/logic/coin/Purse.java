@@ -27,8 +27,6 @@ public class Purse {
     }
 
     public List<Coin> getCoins() {
-
-        coins.sort(new SortByCoin());
         return coins;
 
     }
