@@ -12,35 +12,37 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class Game {
-
-    private static int numberOfGames = 0;
     private int gameId;
+    private static int numberOfGames = 0;
     private Set<Player> players;
     private boolean started;
     private boolean ended;
-    private Queue<Coin> coinStack;
-    private Queue<Building> buildingStack;
     private String currentPlayer;
     private Purse bank;
     private Map<Currency, Building> market;
-//    private Array<> scoringRound;
+    private Queue<Coin> coinStack;
+    private Queue<Building> buildingStack;
+    private int[] scoringRound;
 
     public Game() {
         gameId = numberOfGames + 21575;
-        numberOfGames ++;
+        numberOfGames++;
 
         players = new HashSet<>();
-        //shuffle coinStack//
+
+        bank = new Purse();
+        market = new HashMap<>();
+
         List<Coin> allCoins = new ArrayList<>(Coin.allCoins());
         Collections.shuffle(allCoins);
         coinStack = new LinkedList<>(allCoins);
 
-        //shuffle Buildings//
         List<Building> allBuildings = new ArrayList<>(Building.allBuilding());
         Collections.shuffle(allBuildings);
         buildingStack = new LinkedList<>(allBuildings);
-        Purse bank = new Purse();
 
+        Random rand = new Random();
+        scoringRound = new int[]{rand.nextInt(21)+23, rand.nextInt(21)+67};
     }
 
 
