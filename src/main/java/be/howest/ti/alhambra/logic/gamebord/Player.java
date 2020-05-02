@@ -1,7 +1,9 @@
 package be.howest.ti.alhambra.logic.gamebord;
 
+import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Purse;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 
 
 import java.util.Objects;
@@ -21,50 +23,22 @@ public class Player {
 
     public Player(String playerName) {
         this.playerName = playerName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return Objects.equals(playerName, player.playerName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(playerName);
-    }
-
-    //    @Override
-//    public String toString() {
-//        return "Player{" +
-//                "playerName='" + playerName + '\'' +
-//                '}';
-//    }
-
-    public void setReady(boolean ready) {
-        this.ready = ready;
-    }
-
-    public boolean isValidToken(String token) {
-        return this.token.equals(token);
-    }
-
-    public void addScore(int amount) {
-        this.score += amount;
+        this.money = new Purse();
+        this.reserve = new BuildingPlace();
+        this.city = new City();
+        this.buildingInHand = new BuildingPlace();
     }
 
     public String getPlayerName() {
         return playerName;
     }
 
-    public int getScore() {
-        return score;
+    public String getToken() {
+        return token;
     }
 
-    public boolean isReady() {
-        return ready;
+    public int getVirtualScore() {
+        return virtualScore;
     }
 
     public Purse getMoney() {
@@ -81,5 +55,78 @@ public class Player {
 
     public BuildingPlace getBuildingInHand() {
         return buildingInHand;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(playerName, player.playerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playerName);
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
+
+    public boolean isValidToken(String token) {
+        return this.token.equals(token);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void addScore(int amount) {
+        this.score += amount;
+    }
+
+    public void redesignCity(Building building, Location location) {
+        if (building == null) {
+            //if from board to reserve
+            boardToReserve(location);
+        } else {
+            if (city.getLocation(location).getBuilding() == null) {
+            //if from reserve to board
+                reserveToBoard(building, location);
+            } else {
+                //if from reserve to replaceOnBoard
+                reserveToReplace(building, location);
+            }
+        }
+    }
+
+    private void boardToReserve(Location location) {
+        if (location == null) {
+            throw new AlhambraEntityNotFoundException("Remove building from location null cannot be done");
+        }
+        Building b = city.removeBuilding(location);
+        reserve.addBuilding(b);
+    }
+
+    private void reserveToBoard(Building building, Location location) {
+        if (!reserve.getBuildings().contains(building)) {
+            throw new AlhambraEntityNotFoundException("No such building in reserve");
+        }
+        reserve.removeBuilding(building);
+        city.addBuilding(building, location);
+    }
+
+    private void reserveToReplace(Building building, Location location) {
+        if (!reserve.getBuildings().contains(building)) {
+            throw new AlhambraEntityNotFoundException("No such building in reserve");
+        }
+        reserve.removeBuilding(building);
+        Building b1 = city.replaceBuilding(building, location);
+        reserve.addBuilding(b1);
     }
 }

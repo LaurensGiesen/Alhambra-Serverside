@@ -207,4 +207,40 @@ public class City {
             availableLocations.add(l);
         }
     }
+
+    public Building[][] cityToGrid() {
+        int rowMin = getEdgeOfCity(WallingDirection.NORTH);
+        int rowMax = getEdgeOfCity(WallingDirection.SOUTH);
+        int colMin = getEdgeOfCity(WallingDirection.WEST);
+        int colMax = getEdgeOfCity(WallingDirection.EAST);
+        Building[][] grid = new Building[rowMax - rowMin  + 3][colMax - colMin  + 3];
+
+
+        for(Location l : locations){
+            grid[l.getRow() - rowMin + 1][l.getCol() - colMin + 1] = l.getBuilding();
+        }
+
+        return grid;
+    }
+
+    private int getEdgeOfCity(WallingDirection direction){
+        int res = 0;
+        for(Location l : locations){
+            switch(direction){
+                case NORTH:
+                    res = Math.min(res, l.getRow());
+                    break;
+                case SOUTH:
+                    res = Math.max(res, l.getRow());
+                    break;
+                case EAST:
+                    res = Math.max(res, l.getCol());
+                    break;
+                case WEST:
+                default:
+                    res = Math.min(res, l.getCol());
+            }
+        }
+        return res;
+    }
 }
