@@ -27,8 +27,6 @@ public class Purse {
     }
 
     public List<Coin> getCoins() {
-
-        coins.sort(new SortByCoin());
         return coins;
 
     }
@@ -44,4 +42,5 @@ public class Purse {
             throw new AlhambraEntityNotFoundException("exceptional situation");
         }
     }
+
 }
