@@ -5,9 +5,6 @@ import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 
-import be.howest.ti.alhambra.logic.coin.Coin;
-import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
-
 import java.util.Objects;
 
 public class Player {
@@ -138,5 +135,9 @@ public class Player {
         }
         city.addBuilding(building, location);
         buildingInHand.removeBuilding(building);
+    }
+
+    public void addBuildingToHand(Building b1) {
+        //
     }
 }
