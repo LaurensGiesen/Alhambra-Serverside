@@ -35,13 +35,12 @@ class GameTest {
         assertThrows(AlhambraGameRuleException.class, ()->g2.addPlayer("G")); //Max 6 players
     }
 
-
     @Test
     void removePlayer() {
         assertDoesNotThrow(()->g1.removePlayer("A"));
         assertNull(g1.getPlayerByName("A"));
 
         assertThrows(AlhambraEntityNotFoundException.class, ()->g1.removePlayer("D")); //Player not present
-                      
     }
+    
 }
