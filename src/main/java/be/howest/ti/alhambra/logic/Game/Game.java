@@ -71,7 +71,7 @@ public class Game {
 
     public Purse populateBank() {
         Purse bank = new Purse();
-        return null;
+        return null; 
     }
 
     public void startGame(){
