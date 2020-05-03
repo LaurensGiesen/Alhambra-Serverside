@@ -1,7 +1,14 @@
 package be.howest.ti.alhambra.logic.Game;
 
+<<<<<<< src/test/java/be/howest/ti/alhambra/logic/Game/GameTest.java
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+=======
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.Buildingtype;
+import be.howest.ti.alhambra.logic.building.Walling;
+>>>>>>> src/test/java/be/howest/ti/alhambra/logic/Game/GameTest.java
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
+
     Game g1; // 2 player game;
     Game g2; //empty game
+    Game g3;
+
 
     @BeforeEach
     private void createGame(){
@@ -43,4 +53,32 @@ class GameTest {
         assertThrows(AlhambraEntityNotFoundException.class, ()->g1.removePlayer("D")); //Player not present
     }
     
+    @Test
+    void setCurrentPlayer() {
+        Player p1 = new Player("player1");
+        Player p2 = new Player("player2");
+        Building b1 = new Building(Buildingtype.TOWER, 7, new Walling(false,false,false,false));
+        Building b2 = new Building(Buildingtype.GARDEN, 9, new Walling(false,false,false,false));
+
+        g3.addPlayer(p1.getPlayerName());
+        g3.addPlayer(p2.getPlayerName());
+
+        p1.getReserve().addBuilding(b1);
+        p2.getCity().addBuilding(b2, new Location(1,0));
+
+        setCurrentPlayer();
+
+//        assertEquals(p1, getCurrentPlayer());
+//        assertEquals("player1", getCurrentPlayer().getPlayerName());
+
+        p1.redesignCity(b1, new Location(1, 0));
+
+//        assertEquals(p2, getCurrentPlayer());
+//        assertEquals("player2", getCurrentPlayer().getPlayerName());
+
+        p2.redesignCity(null, new Location(1, 0));
+
+//        assertEquals(p1, getCurrentPlayer());
+//        assertEquals("player1", getCurrentPlayer().getPlayerName());
+    }
 }
