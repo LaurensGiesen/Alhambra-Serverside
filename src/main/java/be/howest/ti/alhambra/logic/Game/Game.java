@@ -1,7 +1,6 @@
 package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.coin.Currency;
@@ -41,7 +40,7 @@ public class Game {
         buildingStack = new LinkedList<>(allBuildings);
 
         Random rand = new Random();
-        scoringRound = new int[]{rand.nextInt(21)+23, rand.nextInt(21)+67};
+        scoringRound = new int[]{rand.nextInt(21) + 23, rand.nextInt(21) + 67};
     }
 
     public boolean isStarted() {
@@ -63,7 +62,7 @@ public class Game {
         //Max 6 players
         //Unique player necessary!
 
-        if(players.size() > 6){
+        if (players.size() > 6) {
             throw new AlhambraGameRuleException("There's no available space left for more players");
         }
 
@@ -76,23 +75,50 @@ public class Game {
         //if current player -> end round
 
         Player player = getPlayerByName(playerName);
-        if(player == null){
+        if (player == null) {
             throw new AlhambraEntityNotFoundException("Player not present");
         }
 
         players.remove(player);
 
     }
-
-    public void takeMoney(String playerName, Purse coins){
+    public void takeMoney(String playerName, Purse coins, Coin coin1) {
         //player is present
         //player is currentPlayer
         //coins are available in bank
         //if more as 2 coins, value lower as 5
+        setCurrentPlayer();
+        if (!coinStack.contains(coin1)) {
+            throw new AlhambraGameRuleException("the Coin is not available anymore");
+        }
+        else {
+            coinStack.remove(coin1);
+            coins.addCoin(coin1);
+        }
+    }
+    public void takeMoney(String playerName, Purse coins, Coin coin1, Coin coin2) {
+        //player is present
+        //player is currentPlayer
+        //coins are available in bank
+        //if more as 2 coins, value lower as 5
+        setCurrentPlayer();
+        List<Coin> coinList = new ArrayList<Coin>();
+        coinList.add(coin1);
+        coinList.add(coin2);
+        if (!((coinList.get(0).getAmount() + coinList.get(1).getAmount()) < 5)) {
+            throw new AlhambraGameRuleException("The sum of the two values of the Coins are not lower than 5");
 
+        } else {
+            for (int i = 0; i < 2; i++) {
+                if (coinStack.contains(coinList.get(i))) {
+                    coinStack.remove(coinList.get(i));
+                    coins.addCoin(coinList.get(i));
+                }
+            }
+        }
     }
 
-    public void buyBuilding(String playerName, Currency currency, Purse coins){
+    public void buyBuilding(String playerName, Currency currency, Purse coins) {
         //player is present
         //player is currentPlayer
         //coins from 1 color
@@ -106,7 +132,7 @@ public class Game {
         market.put(Currency.YELLOW, buildingStack.poll());
         market.put(Currency.ORANGE, buildingStack.poll());
     }
-    private void populateMarket(){
+    private void populateMarket() {
         //buildingStack is not empty -> end of game
         //buildings van stack to market
         if (market == null) {
@@ -120,8 +146,8 @@ public class Game {
 
     }
 
-    private  void populateCoinStack() {
-        for (int i = 0; i<108; i++) {
+    private void populateCoinStack() {
+        for (int i = 0; i < 108; i++) {
             coinStack = new LinkedList<>(Coin.allCoins());
         }
     }
@@ -132,34 +158,34 @@ public class Game {
         //check for scoringRound
         if (coinStack.size() == 0) {
             populateCoinStack();
-        };
+        }
+        ;
         if (bank.getCoins().size() < 4) {
             for (int i = bank.getCoins().size(); i < 4; i++) {
                 bank.addCoin(coinStack.poll());
                 if (coinStack.size() == scoringRound[0]) {
                     score();
-                }
-                else if (coinStack.size() == scoringRound[1]) {
+                } else if (coinStack.size() == scoringRound[1]) {
                     score();
                 }
-            } 
+            }
         }
     }
 
-    public void endOfTurn(){
+    public void endOfTurn() {
 //        populateBank();
         populateMarket();
         //set currentPlayer to next
 
     }
 
-    private void score(){
+    private void score() {
         //get correct scoreTable
         //most buildings of kind
         //Longest wall
     }
 
-    public void startGame(){
+    public void startGame() {
         //min 2 players
         //all players ready
         //populateBank
@@ -176,20 +202,20 @@ public class Game {
 
     }
 
-    public void endGame(){
+    public void endGame() {
         //calculate score 3
         //set game to ended
-        if(!started) {
+        if (!started) {
             throw new AlhambraGameRuleException("The game hasn't even started yet");
         }
         this.ended = true;
     }
 
-    private void setCurrentPlayer(){
+    private void setCurrentPlayer() {
         //next player of List
     }
 
-    private void addStartMoney(){
+    private void addStartMoney() {
         //each player to <20 coins
         for (Player p : players) {
             if (p.getMoney().getTotalAmount() < 20) {
@@ -201,7 +227,7 @@ public class Game {
 
     }
 
-    private void determineStarter(){
+    private void determineStarter() {
         //get player with minimum cards
         //if equal, get player with min value
         //if equal, take highest in list
