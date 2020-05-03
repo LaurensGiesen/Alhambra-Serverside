@@ -105,14 +105,16 @@ public class Game {
             throw new AlhambraEntityNotFoundException("Building is already used");
         } else {
             int total = 0;
-            for (int i = selectedCoins.size(); i >= 0; i--) {
+            for (int i=selectedCoins.size()-1; i >= 0; i--) {
                 if (selectedCoins.get(i).getCurrency() == currency) {
                     total += selectedCoins.get(i).getAmount();
                 }
             }
             if (total >= building.getCost()) {
-                for (int i = selectedCoins.size(); i >= 0; i--) {
-                    coins.removeCoin(selectedCoins.get(i));
+                for (int i = selectedCoins.size()-1; i >= 0; i--) {
+                    if(selectedCoins.get(i).getCurrency() == currency) {
+                        coins.removeCoin(selectedCoins.get(i));
+                    }
                 }
             }
             buildingStack.remove(building);
