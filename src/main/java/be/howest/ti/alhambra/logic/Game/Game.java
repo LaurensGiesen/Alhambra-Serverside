@@ -17,7 +17,7 @@ public class Game {
     private List<Player> players;
     private boolean started;
     private boolean ended;
-    private String currentPlayer;
+    private Player currentPlayer;
     private Purse bank;
     private Map<Currency, Building> market;
     private Queue<Coin> coinStack;
@@ -212,23 +212,23 @@ public class Game {
             int number = p.getMoney().getCoins().size();
             if (number < smallest) {
                 smallest = number;
-                playerName = p.getPlayerName();
                 totalAmount = p.getMoney().getTotalAmount();
+                currentPlayer = p;
             }else if (number == smallest){
                 if (totalAmount > p.getMoney().getTotalAmount()){
-                    playerName = p.getPlayerName();
+                    currentPlayer = p;
                 } else if (totalAmount == p.getMoney().getTotalAmount()) {
                     ArrayList<String> players = new ArrayList<>();
                     players.add(playerName);
                     players.add(p.getPlayerName());
                     playerName = players.get(name.nextInt(players.size()));
+                    currentPlayer = p;
                 }
-
 
             }
 
-
-        } currentPlayer = playerName;
+      
+        }
 
     }
 
