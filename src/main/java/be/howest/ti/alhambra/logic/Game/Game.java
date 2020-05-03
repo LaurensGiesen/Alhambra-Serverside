@@ -81,7 +81,6 @@ public class Game {
         }
 
         players.remove(player);
-
     }
 
     public void takeMoney(String playerName, Purse coins){
@@ -162,10 +161,10 @@ public class Game {
     public void startGame(){
         //min 2 players
         //all players ready
-        //populateBank
-        //populateMarket
-        //addStartMoney
-        //determineStarter
+//        populateBank();
+//        populateMarket();
+        addStartMoney();
+        determineStarter();
         //set game to started
 
         if (players.size() >= 2) {
@@ -182,21 +181,21 @@ public class Game {
         if(!started) {
             throw new AlhambraGameRuleException("The game hasn't even started yet");
         }
-        this.ended = true; 
+        this.ended = true;
     }
 
     private void setCurrentPlayer(){
         //next player of List
     }
 
-    private void addStartMoney(){
+    public void addStartMoney(){
         //each player to <20 coins
         for (Player p : players) {
-            if (p.getMoney().getTotalAmount() < 20) {
+            if (p.getMoney().getTotalAmount() > 20) {
+                throw new AlhambraGameRuleException("Te veel is te veel manneke!");
+            }else {
                 p.getMoney().addCoin(coinStack.poll());
             }
-
-
         }
 
     }
@@ -205,6 +204,31 @@ public class Game {
         //get player with minimum cards
         //if equal, get player with min value
         //if equal, take highest in list
+        int smallest = 20;
+        int totalAmount = 0;
+        String playerName = null;
+        Random name = new Random();
+        for (Player p : players) {
+            int number = p.getMoney().getCoins().size();
+            if (number < smallest) {
+                smallest = number;
+                playerName = p.getPlayerName();
+                totalAmount = p.getMoney().getTotalAmount();
+            }else if (number == smallest){
+                if (totalAmount > p.getMoney().getTotalAmount()){
+                    playerName = p.getPlayerName();
+                } else if (totalAmount == p.getMoney().getTotalAmount()) {
+                    ArrayList<String> players = new ArrayList<>();
+                    players.add(playerName);
+                    players.add(p.getPlayerName());
+                    playerName = players.get(name.nextInt(players.size()));
+                }
+
+
+            }
+
+
+        } currentPlayer = playerName;
 
     }
 
