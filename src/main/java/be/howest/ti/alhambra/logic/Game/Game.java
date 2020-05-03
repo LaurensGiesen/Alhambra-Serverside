@@ -144,7 +144,7 @@ public class Game {
                 }
             } 
         }
-    } 
+    }
 
     public void endOfTurn(){
         populateBank();
@@ -162,7 +162,7 @@ public class Game {
     public void startGame(){
         //min 2 players
         //all players ready
-        //populateBank
+        populateBank();
         //populateMarket
         //addStartMoney
         //determineStarter
