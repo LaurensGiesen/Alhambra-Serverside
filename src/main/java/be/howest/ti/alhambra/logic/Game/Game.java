@@ -182,7 +182,7 @@ public class Game {
         if(!started) {
             throw new AlhambraGameRuleException("The game hasn't even started yet");
         }
-        this.ended = true;
+        this.ended = true; 
     }
 
     private void setCurrentPlayer(){
