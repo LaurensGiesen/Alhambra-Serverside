@@ -14,7 +14,7 @@ import java.util.*;
 public class Game {
     private int gameId;
     private static int numberOfGames = 0;
-    private List<Player> players;
+    public List<Player> players;
     private boolean started;
     private boolean ended;
     private String currentPlayer;
@@ -190,7 +190,7 @@ public class Game {
         //next player of List
     }
 
-    private void addStartMoney(){
+    public void addStartMoney(){
         //each player to <20 coins
         for (Player p : players) {
             if (p.getMoney().getTotalAmount() < 20) {
