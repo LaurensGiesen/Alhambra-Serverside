@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic.Game;
 
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
@@ -13,13 +14,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
-    Game g1;
-    Game g2;
+
+    Game g1; // 2 player game;
+    Game g2; //empty game
     Game g3;
+
 
     @BeforeEach
     private void createGame(){
         g1 = new Game();
+        g2 = new Game();
+        g3 = new Game();
 
         g1.addPlayer("A");
         g1.addPlayer("B");
@@ -40,6 +45,14 @@ class GameTest {
     }
 
     @Test
+    void removePlayer() {
+        assertDoesNotThrow(()->g1.removePlayer("A"));
+        assertNull(g1.getPlayerByName("A"));
+
+        assertThrows(AlhambraEntityNotFoundException.class, ()->g1.removePlayer("D")); //Player not present
+    }
+    
+    @Test
     void setCurrentPlayer() {
         Player p1 = new Player("player1");
         Player p2 = new Player("player2");
@@ -51,8 +64,6 @@ class GameTest {
 
         p1.getReserve().addBuilding(b1);
         p2.getCity().addBuilding(b2, new Location(1,0));
-
-        setCurrentPlayer();
 
 //        assertEquals(p1, getCurrentPlayer());
 //        assertEquals("player1", getCurrentPlayer().getPlayerName());
@@ -67,4 +78,6 @@ class GameTest {
 //        assertEquals(p1, getCurrentPlayer());
 //        assertEquals("player1", getCurrentPlayer().getPlayerName());
     }
+
+
 }

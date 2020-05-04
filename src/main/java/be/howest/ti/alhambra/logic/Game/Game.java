@@ -1,7 +1,6 @@
 package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.coin.Currency;
@@ -17,7 +16,7 @@ public class Game {
     private List<Player> players;
     private boolean started;
     private boolean ended;
-    private String currentPlayer;
+    private Player currentPlayer;
     private Purse bank;
     private Map<Currency, Building> market;
     private Queue<Coin> coinStack;
@@ -53,9 +52,9 @@ public class Game {
         return ended;
     }
 
-    public Player getPlayerByName(String playerName) {
-        if (players.contains(new Player(playerName))) {
-            players.get(players.indexOf(new Player(playerName)));
+    public Player getPlayerByName(String playerName){
+        if(players.contains(new Player(playerName))){
+            return players.get(players.indexOf(new Player(playerName)));
         }
         return null;
     }
@@ -64,8 +63,11 @@ public class Game {
         //Max 6 players
         //Unique player necessary!
 
-        if (players.size() > 6) {
+        if(players.size() >= 6){
             throw new AlhambraGameRuleException("There's no available space left for more players");
+        }
+        if(players.contains(new Player(playerName))){
+            throw new AlhambraGameRuleException("No unique name!");
         }
 
         players.add(new Player(playerName));
@@ -82,56 +84,47 @@ public class Game {
         }
 
         players.remove(player);
-
     }
-
     public void takeMoney(String playerName, Purse coins) {
         //player is present
         //player is currentPlayer
         //coins are available in bank
         //if more as 2 coins, value lower as 5
+        if(this.getPlayerByName(playerName) == null){
+            throw new AlhambraEntityNotFoundException("No such player in the game");
+        }
+        if(this.getPlayerByName(playerName) != currentPlayer){
+            throw new AlhambraGameRuleException("Not the current player");
+        }
+        for(Coin coin : coins.getCoins()){
+            if(!bank.getCoins().contains(coin)){
+                throw new AlhambraEntityNotFoundException("No such coin in Bank");
+            }
+        }
+        if(coins.getNumberOfCoins() > 1 && coins.getTotalAmount() > 5){
+            throw new AlhambraGameRuleException("2 coins with a value higher as 5");
+        }
 
+        for(Coin coin : coins.getCoins()){
+            bank.removeCoin(coin);
+            this.getPlayerByName(playerName).getMoney().addCoin(coin);
+        }
     }
 
-    public void buyBuilding(String playerName, Currency currency, Purse coins, Building building, List<Coin> selectedCoins) {
+    public void buyBuilding(String playerName, Currency currency, Purse coins) {
         //player is present
         //player is currentPlayer
         //coins from 1 color
         //building present in currency
         //enough coins for building
         //building from market to buildingInHand of player
-        setCurrentPlayer();
-        if (!buildingStack.contains(building)) {
-            throw new AlhambraEntityNotFoundException("Building is already used");
-        } else {
-            int total = 0;
-            for (int i=selectedCoins.size()-1; i >= 0; i--) {
-                if (selectedCoins.get(i).getCurrency() == currency) {
-                    total += selectedCoins.get(i).getAmount();
-                }
-            }
-            if (total >= building.getCost()) {
-                for (int i = selectedCoins.size()-1; i >= 0; i--) {
-                    if(selectedCoins.get(i).getCurrency() == currency) {
-                        coins.removeCoin(selectedCoins.get(i));
-                    }
-                }
-            }
-            buildingStack.remove(building);
-            Player player = getPlayerByName(playerName);
-            player.addBuildingToHand(building);
-        }
-
-
     }
-
     private void createMarket() {
         market.put(Currency.BLUE, buildingStack.poll());
         market.put(Currency.GREEN, buildingStack.poll());
         market.put(Currency.YELLOW, buildingStack.poll());
         market.put(Currency.ORANGE, buildingStack.poll());
     }
-
     private void populateMarket() {
         //buildingStack is not empty -> end of game
         //buildings van stack to market
@@ -140,7 +133,6 @@ public class Game {
         }
         for (Currency c : market.keySet()) {
             market.computeIfAbsent(c, k -> buildingStack.poll());
-
         }
 
 
@@ -156,26 +148,23 @@ public class Game {
         //coinStack is not empty -> replenish coinStack
         //coins van stack to bank
         //check for scoringRound
-        if (coinStack.size() == 0) {
+        if (coinStack.isEmpty()) {
             populateCoinStack();
         }
-        ;
         if (bank.getCoins().size() < 4) {
             for (int i = bank.getCoins().size(); i < 4; i++) {
                 bank.addCoin(coinStack.poll());
-                if (coinStack.size() == scoringRound[0]) {
-                    score();
-                } else if (coinStack.size() == scoringRound[1]) {
+                if (coinStack.size() == scoringRound[0] || coinStack.size() == scoringRound[1]) {
                     score();
                 }
-            }
+            } 
         }
     }
 
-    public void endOfTurn() {
-//        populateBank();
+    public void endOfTurn(){
+        populateBank();
         populateMarket();
-        //set currentPlayer to next
+        setCurrentPlayer();
 
     }
 
@@ -187,11 +176,16 @@ public class Game {
 
     public void startGame() {
         //min 2 players
+        if (players.size() >= 2) {
+            this.started = true;
+        } else {
+            throw new AlhambraGameRuleException("Get some friends!");
+        }
         //all players ready
-        //populateBank
-        //populateMarket
-        //addStartMoney
-        //determineStarter
+//        populateBank();
+//        populateMarket();
+        addStartMoney();
+        determineStarter();
         //set game to started
 
         if (players.size() >= 2) {
@@ -199,7 +193,6 @@ public class Game {
         } else {
             throw new AlhambraGameRuleException("Get some friends!");
         }
-
     }
 
     public void endGame() {
@@ -215,14 +208,14 @@ public class Game {
         //next player of List
     }
 
-    private void addStartMoney() {
+    public void addStartMoney(){
         //each player to <20 coins
         for (Player p : players) {
-            if (p.getMoney().getTotalAmount() < 20) {
+            if (p.getMoney().getTotalAmount() > 20) {
+                throw new AlhambraGameRuleException("Te veel is te veel manneke!");
+            }else {
                 p.getMoney().addCoin(coinStack.poll());
             }
-
-
         }
 
     }
@@ -231,7 +224,40 @@ public class Game {
         //get player with minimum cards
         //if equal, get player with min value
         //if equal, take highest in list
+        int smallestNumberOfCards = 20;
+        int totalAmountOfCoins = 0;
+        for (Player p : players) {
+            int numberOfCoins = p.getMoney().getCoins().size();
+            if (numberOfCoins < smallestNumberOfCards) {
+                smallestNumberOfCards = numberOfCoins;
+                totalAmountOfCoins = p.getMoney().getTotalAmount();
+                currentPlayer = p;
+            }else if (numberOfCoins == smallestNumberOfCards && totalAmountOfCoins > p.getMoney().getTotalAmount()){
+                    currentPlayer = p;
+                    totalAmountOfCoins = p.getMoney().getTotalAmount();
+
+            }
+
+      
+        }
 
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        int indexOfCurrentPlayer = players.indexOf(currentPlayer);
+        if (indexOfCurrentPlayer == players.size() - 1) {
+            this.currentPlayer = players.get(0);
+        } else {
+            this.currentPlayer = players.get(indexOfCurrentPlayer + 1);
+        }
+
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
