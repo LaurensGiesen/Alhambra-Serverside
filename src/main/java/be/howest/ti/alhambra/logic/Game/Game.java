@@ -265,11 +265,9 @@ public class Game {
         //each player to > 20 coins
 
         for (Player p : players) {
-
-            for (int i=0; p.getMoney().getTotalAmount() < 20 ; i++) {
+            while(p.getMoney().getTotalAmount() < 20){
                 p.getMoney().addCoin(coinStack.poll());
             }
-
         }
 
     }  
@@ -297,10 +295,6 @@ public class Game {
 
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
     public void setCurrentPlayer(Player currentPlayer) {
         int indexOfCurrentPlayer = players.indexOf(currentPlayer);
         if (indexOfCurrentPlayer == players.size() - 1) {
@@ -311,7 +305,4 @@ public class Game {
 
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
 }
