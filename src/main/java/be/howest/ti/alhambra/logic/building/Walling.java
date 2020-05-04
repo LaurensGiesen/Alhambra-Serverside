@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Walling {
-    
+
     private Map<WallingDirection, Boolean> walls = new HashMap<>();
 
     public Walling(boolean north, boolean east, boolean south, boolean west) {
@@ -12,6 +12,10 @@ public class Walling {
         this.walls.put(WallingDirection.EAST, east);
         this.walls.put(WallingDirection.SOUTH, south);
         this.walls.put(WallingDirection.WEST, west);
+    }
+
+    public Map<WallingDirection, Boolean> getWalls() {
+        return walls;
     }
 
     public boolean getWallNorth() {

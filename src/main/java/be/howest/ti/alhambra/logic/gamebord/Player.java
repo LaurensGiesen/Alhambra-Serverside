@@ -5,11 +5,8 @@ import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
-
 import java.util.Objects;
 import java.util.Random;
-
-import static java.lang.Math.random;
 
 public class Player {
 
@@ -24,15 +21,6 @@ public class Player {
     private BuildingPlace buildingInHand;
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static Random r = new Random();
-
-    public static String randomAlphaNumeric(int count) {
-        StringBuilder builder = new StringBuilder();
-        while (count-- != 0) {
-            int character = (r.nextInt(ALPHA_NUMERIC_STRING.length()));
-            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
-        }
-        return builder.toString();
-    }
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -70,17 +58,12 @@ public class Player {
         return buildingInHand;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return Objects.equals(playerName, player.playerName);
+    public boolean isValidToken(String token) {
+        return this.token.equals(token);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(playerName);
+    public int getScore() {
+        return score;
     }
 
     public boolean isReady() {
@@ -91,12 +74,16 @@ public class Player {
         this.ready = ready;
     }
 
-    public boolean isValidToken(String token) {
-        return this.token.equals(token);
+    public void buildBuilding(Building building, Location location) {
+        if (location == null) {
+            placeBuildingInReserve(building);
+        } else {
+            buildBuildingOnAlhambra(building, location);
+        }
     }
 
-    public int getScore() {
-        return score;
+    public void addBuildingToHand(Building building) {
+        buildingInHand.addBuilding(building);
     }
 
     public void addScore(int amount) {
@@ -112,7 +99,7 @@ public class Player {
             boardToReserve(location);
         } else {
             if (city.getLocation(location).getBuilding() == null) {
-            //if from reserve to board
+                //if from reserve to board
                 reserveToBoard(building, location);
             } else {
                 //if from reserve to replaceOnBoard
@@ -121,12 +108,13 @@ public class Player {
         }
     }
 
-    private void boardToReserve(Location location) {
-        if (location == null) {
-            throw new AlhambraEntityNotFoundException("Remove building from location null cannot be done");
+    public static String randomAlphaNumeric(int count) {
+        StringBuilder builder = new StringBuilder();
+        while (count-- != 0) {
+            int character = (r.nextInt(ALPHA_NUMERIC_STRING.length()));
+            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
         }
-        Building b = city.removeBuilding(location);
-        reserve.addBuilding(b);
+        return builder.toString();
     }
 
     private void reserveToBoard(Building building, Location location) {
@@ -146,14 +134,6 @@ public class Player {
         reserve.addBuilding(b1);
     }
 
-    public void buildBuilding(Building building, Location location) {
-        if (location == null) {
-            placeBuildingInReserve(building);
-        } else {
-            buildBuildingOnAlhambra(building, location);
-        }
-    }
-
     private void buildBuildingOnAlhambra(Building building, Location location) {
         if (!buildingInHand.getBuildings().contains(building)) {
             throw new AlhambraEntityNotFoundException("selected building not in hand");
@@ -170,7 +150,24 @@ public class Player {
         buildingInHand.removeBuilding(building);
     }
 
-    public void addBuildingToHand(Building building) {
-        buildingInHand.addBuilding(building);
+    private void boardToReserve(Location location) {
+        if (location == null) {
+            throw new AlhambraEntityNotFoundException("Remove building from location null cannot be done");
+        }
+        Building b = city.removeBuilding(location);
+        reserve.addBuilding(b);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(playerName, player.playerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playerName);
     }
 }
