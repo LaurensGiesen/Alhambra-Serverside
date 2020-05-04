@@ -19,7 +19,7 @@ public class Game {
     private boolean ended;
     private Player currentPlayer;
     private Purse bank;
-    private Map<Currency, Building> market;
+    public Map<Currency, Building> market;
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
     private int[] scoringRound;
@@ -99,7 +99,7 @@ public class Game {
         //enough coins for building
         //building from market to buildingInHand of player
     }
-    private void createMarket() {
+    public void createMarket() {
         market.put(Currency.BLUE, buildingStack.poll());
         market.put(Currency.GREEN, buildingStack.poll());
         market.put(Currency.YELLOW, buildingStack.poll());
@@ -160,6 +160,11 @@ public class Game {
 
     public void startGame(){
         //min 2 players
+        if (players.size() >= 2) {
+            this.started = true;
+        } else {
+            throw new AlhambraGameRuleException("Get some friends!");
+        }
         //all players ready
 //        populateBank();
 //        populateMarket();
@@ -167,11 +172,7 @@ public class Game {
         determineStarter();
         //set game to started
 
-        if (players.size() >= 2) {
-            this.started = true;
-        } else {
-            throw new AlhambraGameRuleException("Get some friends!");
-        }
+
 
     }
 
@@ -195,6 +196,7 @@ public class Game {
                 throw new AlhambraGameRuleException("Te veel is te veel manneke!");
             }else {
                 p.getMoney().addCoin(coinStack.poll());
+                System.out.println(coinStack.poll());
             }
         }
 
@@ -204,26 +206,17 @@ public class Game {
         //get player with minimum cards
         //if equal, get player with min value
         //if equal, take highest in list
-        int smallest = 20;
-        int totalAmount = 0;
-        String playerName = null;
-        Random name = new Random();
+        int smallestNumberOfCards = 20;
+        int totalAmountOfCoins = 0;
         for (Player p : players) {
-            int number = p.getMoney().getCoins().size();
-            if (number < smallest) {
-                smallest = number;
-                totalAmount = p.getMoney().getTotalAmount();
+            int numberOfCoins = p.getMoney().getCoins().size();
+            if (numberOfCoins < smallestNumberOfCards) {
+                smallestNumberOfCards = numberOfCoins;
+                totalAmountOfCoins = p.getMoney().getTotalAmount();
                 currentPlayer = p;
-            }else if (number == smallest){
-                if (totalAmount > p.getMoney().getTotalAmount()){
+            }else if (numberOfCoins == smallestNumberOfCards && totalAmountOfCoins > p.getMoney().getTotalAmount()){
                     currentPlayer = p;
-                } else if (totalAmount == p.getMoney().getTotalAmount()) {
-                    ArrayList<String> players = new ArrayList<>();
-                    players.add(playerName);
-                    players.add(p.getPlayerName());
-                    playerName = players.get(name.nextInt(players.size()));
-                    currentPlayer = p;
-                }
+                    totalAmountOfCoins = p.getMoney().getTotalAmount();
 
             }
 
@@ -231,5 +224,5 @@ public class Game {
         }
 
     }
-
 }
+
