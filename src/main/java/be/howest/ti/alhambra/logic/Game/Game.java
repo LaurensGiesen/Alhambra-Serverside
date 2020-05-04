@@ -44,6 +44,42 @@ public class Game {
         scoringRound = new int[]{rand.nextInt(21) + 23, rand.nextInt(21) + 67};
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public static int getNumberOfGames() {
+        return numberOfGames;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public Purse getBank() {
+        return bank;
+    }
+
+    public Map<Currency, Building> getMarket() {
+        return market;
+    }
+
+    public Queue<Coin> getCoinStack() {
+        return coinStack;
+    }
+
+    public Queue<Building> getBuildingStack() {
+        return buildingStack;
+    }
+
+    public int[] getScoringRound() {
+        return scoringRound;
+    }
+
     public boolean isStarted() {
         return started;
     }
@@ -51,6 +87,7 @@ public class Game {
     public boolean isEnded() {
         return ended;
     }
+
 
     public Player getPlayerByName(String playerName){
         if(players.contains(new Player(playerName))){
@@ -198,8 +235,8 @@ public class Game {
             throw new AlhambraGameRuleException("Get some friends!");
         }
         //all players ready
-//        populateBank();
-//        populateMarket();
+        populateBank();
+        populateMarket();
         addStartMoney();
         determineStarter();
         //set game to started
@@ -225,16 +262,17 @@ public class Game {
     }
 
     public void addStartMoney(){
-        //each player to <20 coins
+        //each player to > 20 coins
+
         for (Player p : players) {
-            if (p.getMoney().getTotalAmount() > 20) {
-                throw new AlhambraGameRuleException("Te veel is te veel manneke!");
-            }else {
+
+            for (int i=0; p.getMoney().getTotalAmount() < 20 ; i++) {
                 p.getMoney().addCoin(coinStack.poll());
             }
+
         }
 
-    }
+    }  
 
     private void determineStarter() {
         //get player with minimum cards
