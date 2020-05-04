@@ -22,6 +22,7 @@ public class Game {
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
     private int[] scoringRound;
+
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames++;
@@ -62,8 +63,11 @@ public class Game {
         //Max 6 players
         //Unique player necessary!
 
-        if (players.size() > 6) {
+        if(players.size() >= 6){
             throw new AlhambraGameRuleException("There's no available space left for more players");
+        }
+        if(players.contains(new Player(playerName))){
+            throw new AlhambraGameRuleException("No unique name!");
         }
 
         players.add(new Player(playerName));
@@ -80,7 +84,6 @@ public class Game {
         }
 
         players.remove(player);
-
     }
     public void takeMoney(String playerName, Purse coins) {
         //player is present
@@ -145,24 +148,23 @@ public class Game {
         //coinStack is not empty -> replenish coinStack
         //coins van stack to bank
         //check for scoringRound
-        if (coinStack.size() == 0) {
+        if (coinStack.isEmpty()) {
             populateCoinStack();
         }
-
         if (bank.getCoins().size() < 4) {
             for (int i = bank.getCoins().size(); i < 4; i++) {
                 bank.addCoin(coinStack.poll());
                 if (coinStack.size() == scoringRound[0] || coinStack.size() == scoringRound[1]) {
                     score();
                 }
-            }
+            } 
         }
     }
 
-    public void endOfTurn() {
-//        populateBank();
+    public void endOfTurn(){
+        populateBank();
         populateMarket();
-        //set currentPlayer to next
+        setCurrentPlayer();
 
     }
 
@@ -174,11 +176,16 @@ public class Game {
 
     public void startGame() {
         //min 2 players
+        if (players.size() >= 2) {
+            this.started = true;
+        } else {
+            throw new AlhambraGameRuleException("Get some friends!");
+        }
         //all players ready
-        //populateBank
-        //populateMarket
-        //addStartMoney
-        //determineStarter
+//        populateBank();
+//        populateMarket();
+        addStartMoney();
+        determineStarter();
         //set game to started
 
         if (players.size() >= 2) {
@@ -201,14 +208,14 @@ public class Game {
         //next player of List
     }
 
-    private void addStartMoney() {
+    public void addStartMoney(){
         //each player to <20 coins
         for (Player p : players) {
-            if (p.getMoney().getTotalAmount() < 20) {
+            if (p.getMoney().getTotalAmount() > 20) {
+                throw new AlhambraGameRuleException("Te veel is te veel manneke!");
+            }else {
                 p.getMoney().addCoin(coinStack.poll());
             }
-
-
         }
 
     }
@@ -217,7 +224,40 @@ public class Game {
         //get player with minimum cards
         //if equal, get player with min value
         //if equal, take highest in list
+        int smallestNumberOfCards = 20;
+        int totalAmountOfCoins = 0;
+        for (Player p : players) {
+            int numberOfCoins = p.getMoney().getCoins().size();
+            if (numberOfCoins < smallestNumberOfCards) {
+                smallestNumberOfCards = numberOfCoins;
+                totalAmountOfCoins = p.getMoney().getTotalAmount();
+                currentPlayer = p;
+            }else if (numberOfCoins == smallestNumberOfCards && totalAmountOfCoins > p.getMoney().getTotalAmount()){
+                    currentPlayer = p;
+                    totalAmountOfCoins = p.getMoney().getTotalAmount();
+
+            }
+
+      
+        }
 
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        int indexOfCurrentPlayer = players.indexOf(currentPlayer);
+        if (indexOfCurrentPlayer == players.size() - 1) {
+            this.currentPlayer = players.get(0);
+        } else {
+            this.currentPlayer = players.get(indexOfCurrentPlayer + 1);
+        }
+
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

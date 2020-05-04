@@ -38,7 +38,7 @@ class PlayerTest {
         String token = p1.getToken();
 
         assertTrue(p1.isValidToken(token));
-        assertFalse(p1.isValidToken(token + 1));
+        assertFalse(p1.isValidToken(token + "aaa"));
         assertFalse(p1.isValidToken(null));
     }
 
