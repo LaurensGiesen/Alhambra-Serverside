@@ -111,13 +111,29 @@ public class Game {
         }
     }
 
-    public void buyBuilding(String playerName, Currency currency, Purse coins) {
+    public void buyBuilding(String playerName, Purse coins) {
         //player is present
         //player is currentPlayer
         //coins from 1 color
         //building present in currency
         //enough coins for building
         //building from market to buildingInHand of player
+        if(this.getPlayerByName(playerName) == null){
+            throw new AlhambraEntityNotFoundException("No such player in the game");
+        }
+        if(this.getPlayerByName(playerName) != currentPlayer){
+            throw new AlhambraGameRuleException("Not the current player");
+        }
+        Currency currency = coins.getCurrency();
+        Building building = market.get(currency);
+        if(building == null){
+            throw new AlhambraEntityNotFoundException("No building in that currency");
+        }
+        if(building.getCost() > coins.getTotalAmount()){
+            throw new AlhambraGameRuleException("Not enough money to buy");
+        }
+        market.put(currency, null);
+        getPlayerByName(playerName).addBuildingToHand(building);
     }
     private void createMarket() {
         market.put(Currency.BLUE, buildingStack.poll());
