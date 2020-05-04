@@ -1,8 +1,12 @@
 package be.howest.ti.alhambra.logic.Game;
 
+<<<<<<< src/test/java/be/howest/ti/alhambra/logic/Game/GameTest.java
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+=======
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
+>>>>>>> src/test/java/be/howest/ti/alhambra/logic/Game/GameTest.java
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
@@ -13,9 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
-    Game g1;
-    Game g2;
+
+    Game g1; // 2 player game;
+    Game g2; //empty game
     Game g3;
+
 
     @BeforeEach
     private void createGame(){
@@ -39,6 +45,14 @@ class GameTest {
         assertThrows(AlhambraGameRuleException.class, ()->g2.addPlayer("G")); //Max 6 players
     }
 
+    @Test
+    void removePlayer() {
+        assertDoesNotThrow(()->g1.removePlayer("A"));
+        assertNull(g1.getPlayerByName("A"));
+
+        assertThrows(AlhambraEntityNotFoundException.class, ()->g1.removePlayer("D")); //Player not present
+    }
+    
     @Test
     void setCurrentPlayer() {
         Player p1 = new Player("player1");
