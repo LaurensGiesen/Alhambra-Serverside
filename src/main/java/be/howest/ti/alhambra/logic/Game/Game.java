@@ -178,10 +178,10 @@ public class Game {
         market.put(Currency.YELLOW, buildingStack.poll());
         market.put(Currency.ORANGE, buildingStack.poll());
     }
-    private void populateMarket() {
+    public void populateMarket() {
         //buildingStack is not empty -> end of game
         //buildings van stack to market
-        if (market == null) {
+        if (market.size() == 0) {
             createMarket();
         }
         for (Currency c : market.keySet()) {
@@ -297,9 +297,6 @@ public class Game {
 
     }
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
 
     public void setCurrentPlayer(Player currentPlayer) {
         int indexOfCurrentPlayer = players.indexOf(currentPlayer);
@@ -311,7 +308,4 @@ public class Game {
 
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
 }
