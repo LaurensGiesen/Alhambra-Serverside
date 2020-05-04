@@ -18,7 +18,7 @@ public class Game {
     private boolean started;
     private boolean ended;
     private Player currentPlayer;
-    private Purse bank;
+    public Purse bank;
     private Map<Currency, Building> market;
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
@@ -43,6 +43,10 @@ public class Game {
 
         Random rand = new Random();
         scoringRound = new int[]{rand.nextInt(21)+23, rand.nextInt(21)+67};
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 
     public boolean isStarted() {
@@ -167,17 +171,11 @@ public class Game {
             throw new AlhambraGameRuleException("Get some friends!");
         }
         //all players ready
-//        populateBank();
-//        populateMarket();
+        populateBank();
+        populateMarket();
         addStartMoney();
         determineStarter();
         //set game to started
-
-        if (players.size() >= 2) {
-            this.started = true;
-        } else {
-            throw new AlhambraGameRuleException("Get some friends!");
-        }
 
     }
 
@@ -195,13 +193,14 @@ public class Game {
     }
 
     public void addStartMoney(){
-        //each player to <20 coins
+        //each player to > 20 coins
+
         for (Player p : players) {
-            if (p.getMoney().getTotalAmount() > 20) {
-                throw new AlhambraGameRuleException("Te veel is te veel manneke!");
-            }else {
+
+            for (int i=0; p.getMoney().getTotalAmount() < 20 ; i++) {
                 p.getMoney().addCoin(coinStack.poll());
             }
+
         }
 
     }  
