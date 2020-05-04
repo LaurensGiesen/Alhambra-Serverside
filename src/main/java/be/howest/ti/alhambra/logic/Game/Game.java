@@ -44,9 +44,9 @@ public class Game {
         scoringRound = new int[]{rand.nextInt(21) + 23, rand.nextInt(21) + 67};
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
+//    public List<Player> getPlayers() {
+//        return players;
+//    }
 
     public int getGameId() {
         return gameId;
@@ -55,10 +55,10 @@ public class Game {
     public static int getNumberOfGames() {
         return numberOfGames;
     }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
+//
+//    public Player getCurrentPlayer() {
+//        return currentPlayer;
+//    }
 
     public Purse getBank() {
         return bank;
