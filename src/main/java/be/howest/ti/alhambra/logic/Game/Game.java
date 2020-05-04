@@ -14,7 +14,7 @@ import java.util.*;
 public class Game {
     private int gameId;
     private static int numberOfGames = 0;
-    public List<Player> players;
+    private List<Player> players;
     private boolean started;
     private boolean ended;
     private String currentPlayer;
