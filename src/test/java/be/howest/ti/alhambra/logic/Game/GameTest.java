@@ -22,7 +22,6 @@ class GameTest {
     Game g2; //empty game
     Game g3;
 
-
     @BeforeEach
     private void createGame() {
         g1 = new Game();
@@ -31,6 +30,7 @@ class GameTest {
 
         g1.addPlayer("A");
         g1.addPlayer("B");
+        g1.addPlayer("C");
     }
 
     @Test
@@ -118,6 +118,27 @@ class GameTest {
 
     }
 
+
+    @Test
+    void determineStarter() {
+        g1.addStartMoney();
+        g1.determineStarter();
+
+        Player curr = g1.getCurrentPlayer();
+
+        int currNr = curr.getMoney().getNumberOfCoins();
+        int currAmount = curr.getMoney().getTotalAmount();
+        int aNr = g1.getPlayerByName("A").getMoney().getNumberOfCoins();
+        int bNr = g1.getPlayerByName("B").getMoney().getNumberOfCoins();
+        int cNr = g1.getPlayerByName("C").getMoney().getNumberOfCoins();
+        int aAmount = g1.getPlayerByName("A").getMoney().getTotalAmount();
+        int bAmount = g1.getPlayerByName("B").getMoney().getTotalAmount();
+        int cAmount = g1.getPlayerByName("C").getMoney().getTotalAmount();
+
+        assertTrue(currNr < aNr || (currNr == aNr && currAmount <= aAmount));
+        assertTrue(currNr < bNr || (currNr == bNr && currAmount <= bAmount));
+        assertTrue(currNr < cNr || (currNr == cNr && currAmount <= cAmount));
+    }
 //    @Test
 //    void populateMarket() {
 //
