@@ -149,7 +149,7 @@ public class Game {
     public void endOfTurn(){
         populateBank();
         populateMarket();
-        //set currentPlayer to next
+        setCurrentPlayer();
 
     }
 
