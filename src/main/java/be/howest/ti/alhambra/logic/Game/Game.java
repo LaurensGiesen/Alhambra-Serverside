@@ -195,7 +195,7 @@ public class Game {
             if (p.getMoney().getTotalAmount() < 20) {
                 p.getMoney().addCoin(coinStack.poll());
             }
-
+ 
 
         }
 
