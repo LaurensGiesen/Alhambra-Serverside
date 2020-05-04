@@ -14,7 +14,7 @@ import java.util.*;
 public class Game {
     private int gameId;
     private static int numberOfGames = 0;
-    private List<Player> players;
+    public List<Player> players;
     private boolean started;
     private boolean ended;
     private String currentPlayer;
@@ -54,7 +54,7 @@ public class Game {
 
     public Player getPlayerByName(String playerName){
         if(players.contains(new Player(playerName))){
-            players.get(players.indexOf(new Player(playerName)));
+            return players.get(players.indexOf(new Player(playerName)));
         }
         return null;
     }
@@ -66,7 +66,6 @@ public class Game {
         if(players.size() > 6){
             throw new AlhambraGameRuleException("There's no available space left for more players");
         }
-
         players.add(new Player(playerName));
     }
 
@@ -189,7 +188,7 @@ public class Game {
         //next player of List
     }
 
-    private void addStartMoney(){
+    public void addStartMoney(){
         //each player to <20 coins
         for (Player p : players) {
             if (p.getMoney().getTotalAmount() < 20) {
