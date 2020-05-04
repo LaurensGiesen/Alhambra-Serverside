@@ -2,7 +2,6 @@ package be.howest.ti.alhambra.logic.gamebord;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.WallingDirection;
-
 import java.util.Objects;
 
 public class Location {
@@ -34,10 +33,6 @@ public class Location {
         return building;
     }
 
-    public void setBuilding(Building b) {
-        building = b;
-    }
-
     public boolean isEmpty() {
         return building == null;
     }
@@ -60,6 +55,10 @@ public class Location {
         }
     }
 
+    public void setBuilding(Building b) {
+        building = b;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,5 +72,4 @@ public class Location {
     public int hashCode() {
         return Objects.hash(row, col);
     }
-
 }
