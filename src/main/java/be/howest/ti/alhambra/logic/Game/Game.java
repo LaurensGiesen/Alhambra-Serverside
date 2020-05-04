@@ -18,7 +18,7 @@ public class Game {
     private boolean started;
     private boolean ended;
     private String currentPlayer;
-    private Purse bank;
+    public Purse bank;
     private Map<Currency, Building> market;
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
@@ -145,7 +145,7 @@ public class Game {
     }
 
     public void endOfTurn(){
-//        populateBank();
+        populateBank();
         populateMarket();
         //set currentPlayer to next
 
@@ -160,7 +160,7 @@ public class Game {
     public void startGame(){
         //min 2 players
         //all players ready
-        //populateBank
+        populateBank();
         //populateMarket
         //addStartMoney
         //determineStarter
