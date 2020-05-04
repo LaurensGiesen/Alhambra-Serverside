@@ -140,7 +140,7 @@ class GameTest {
         assertTrue(currNr < cNr || (currNr == cNr && currAmount <= cAmount));
     }
 //    @Test
-//    void populateMarket() {
+//    void populateMarket() { 
 //
 //        Game g1 = new Game();
 //
