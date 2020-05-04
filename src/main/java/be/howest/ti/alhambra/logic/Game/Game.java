@@ -16,7 +16,7 @@ public class Game {
     private List<Player> players;
     private boolean started;
     private boolean ended;
-    private String currentPlayer;
+    private Player currentPlayer;
     private Purse bank;
     private Map<Currency, Building> market;
     private Queue<Coin> coinStack;
@@ -53,7 +53,7 @@ public class Game {
 
     public Player getPlayerByName(String playerName){
         if(players.contains(new Player(playerName))){
-            players.get(players.indexOf(new Player(playerName)));
+            return players.get(players.indexOf(new Player(playerName)));
         }
         return null;
     }
@@ -82,39 +82,29 @@ public class Game {
         players.remove(player);
 
     }
-    public void takeMoney(String playerName, Purse coins, Coin coin1) {
+    public void takeMoney(String playerName, Purse coins) {
         //player is present
         //player is currentPlayer
         //coins are available in bank
         //if more as 2 coins, value lower as 5
-        setCurrentPlayer();
-        if (!coinStack.contains(coin1)) {
-            throw new AlhambraGameRuleException("the Coin is not available anymore");
+        if(this.getPlayerByName(playerName) == null){
+            throw new AlhambraEntityNotFoundException("No such player in the game");
         }
-        else {
-            coinStack.remove(coin1);
-            coins.addCoin(coin1);
+        if(this.getPlayerByName(playerName) != currentPlayer){
+            throw new AlhambraGameRuleException("Not the current player");
         }
-    }
-    public void takeMoney(String playerName, Purse coins, Coin coin1, Coin coin2) {
-        //player is present
-        //player is currentPlayer
-        //coins are available in bank
-        //if more as 2 coins, value lower as 5
-        setCurrentPlayer();
-        List<Coin> coinList = new ArrayList<Coin>();
-        coinList.add(coin1);
-        coinList.add(coin2);
-        if (!((coinList.get(0).getAmount() + coinList.get(1).getAmount()) < 5)) {
-            throw new AlhambraGameRuleException("The sum of the two values of the Coins are not lower than 5");
-
-        } else {
-            for (int i = 0; i < 2; i++) {
-                if (coinStack.contains(coinList.get(i))) {
-                    coinStack.remove(coinList.get(i));
-                    coins.addCoin(coinList.get(i));
-                }
+        for(Coin coin : coins.getCoins()){
+            if(!bank.getCoins().contains(coin)){
+                throw new AlhambraEntityNotFoundException("No such coin in Bank");
             }
+        }
+        if(coins.getNumberOfCoins() > 1 && coins.getTotalAmount() > 5){
+            throw new AlhambraGameRuleException("2 coins with a value higher as 5");
+        }
+
+        for(Coin coin : coins.getCoins()){
+            bank.removeCoin(coin);
+            this.getPlayerByName(playerName).getMoney().addCoin(coin);
         }
     }
 
@@ -158,13 +148,11 @@ public class Game {
         if (coinStack.size() == 0) {
             populateCoinStack();
         }
-        ;
+
         if (bank.getCoins().size() < 4) {
             for (int i = bank.getCoins().size(); i < 4; i++) {
                 bank.addCoin(coinStack.poll());
-                if (coinStack.size() == scoringRound[0]) {
-                    score();
-                } else if (coinStack.size() == scoringRound[1]) {
+                if (coinStack.size() == scoringRound[0] || coinStack.size() == scoringRound[1]) {
                     score();
                 }
             }

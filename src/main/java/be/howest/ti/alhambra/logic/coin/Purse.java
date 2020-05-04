@@ -3,7 +3,6 @@ package be.howest.ti.alhambra.logic.coin;
 import java.util.ArrayList;
 import java.util.List;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
-import be.howest.ti.alhambra.logic.sort.SortByCoin;
 
 public class Purse {
 
@@ -41,6 +40,10 @@ public class Purse {
         }else {
             throw new AlhambraEntityNotFoundException("exceptional situation");
         }
+    }
+
+    public int getNumberOfCoins() {
+        return coins.size();
     }
 
 }
