@@ -14,7 +14,7 @@ import java.util.*;
 public class Game {
     private int gameId;
     private static int numberOfGames = 0;
-    public List<Player> players;
+    private List<Player> players;
     private boolean started;
     private boolean ended;
     private String currentPlayer;
@@ -131,16 +131,13 @@ public class Game {
         //coinStack is not empty -> replenish coinStack
         //coins van stack to bank
         //check for scoringRound
-        if (coinStack.size() == 0) {
+        if (coinStack.isEmpty()) {
             populateCoinStack();
-        };
+        }
         if (bank.getCoins().size() < 4) {
             for (int i = bank.getCoins().size(); i < 4; i++) {
                 bank.addCoin(coinStack.poll());
-                if (coinStack.size() == scoringRound[0]) {
-                    score();
-                }
-                else if (coinStack.size() == scoringRound[1]) {
+                if (coinStack.size() == scoringRound[0] || coinStack.size() == scoringRound[1]) {
                     score();
                 }
             } 
