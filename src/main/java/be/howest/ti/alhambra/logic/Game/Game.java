@@ -17,21 +17,19 @@ public class Game {
     private List<Player> players;
     private boolean started;
     private boolean ended;
-    private Player currentPlayer;
-    private Purse bank;
+    private String currentPlayer;
+    public Purse bank;
     private Map<Currency, Building> market;
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
     private int[] scoringRound;
+
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames++;
-
         players = new LinkedList<>();
-
         bank = new Purse();
         market = new HashMap<>();
-
         List<Coin> allCoins = new ArrayList<>(Coin.allCoins());
         Collections.shuffle(allCoins);
         coinStack = new LinkedList<>(allCoins);
@@ -54,7 +52,7 @@ public class Game {
 
     public Player getPlayerByName(String playerName){
         if(players.contains(new Player(playerName))){
-            players.get(players.indexOf(new Player(playerName)));
+            return players.get(players.indexOf(new Player(playerName)));
         }
         return null;
     }
@@ -63,9 +61,13 @@ public class Game {
         //Max 6 players
         //Unique player necessary!
 
-        if(players.size() > 6){
+        if(players.size() >= 6){
             throw new AlhambraGameRuleException("There's no available space left for more players");
         }
+        if(players.contains(new Player(playerName))){
+            throw new AlhambraGameRuleException("No unique name!");
+        }
+
         players.add(new Player(playerName));
     }
 
@@ -78,7 +80,9 @@ public class Game {
         if(player == null){
             throw new AlhambraEntityNotFoundException("Player not present");
         }
+
         players.remove(player);
+
     }
 
     public void takeMoney(String playerName, Purse coins){
@@ -86,6 +90,7 @@ public class Game {
         //player is currentPlayer
         //coins are available in bank
         //if more as 2 coins, value lower as 5
+
     }
 
     public void buyBuilding(String playerName, Currency currency, Purse coins){
@@ -96,14 +101,12 @@ public class Game {
         //enough coins for building
         //building from market to buildingInHand of player
     }
-
     private void createMarket() {
         market.put(Currency.BLUE, buildingStack.poll());
         market.put(Currency.GREEN, buildingStack.poll());
         market.put(Currency.YELLOW, buildingStack.poll());
         market.put(Currency.ORANGE, buildingStack.poll());
     }
-
     private void populateMarket(){
         //buildingStack is not empty -> end of game
         //buildings van stack to market
@@ -112,7 +115,10 @@ public class Game {
         }
         for (Currency c : market.keySet()) {
             market.computeIfAbsent(c, k -> buildingStack.poll());
+
         }
+
+
     }
 
     private  void populateCoinStack() {
@@ -125,16 +131,13 @@ public class Game {
         //coinStack is not empty -> replenish coinStack
         //coins van stack to bank
         //check for scoringRound
-        if (coinStack.size() == 0) {
+        if (coinStack.isEmpty()) {
             populateCoinStack();
-        };
+        }
         if (bank.getCoins().size() < 4) {
             for (int i = bank.getCoins().size(); i < 4; i++) {
                 bank.addCoin(coinStack.poll());
-                if (coinStack.size() == scoringRound[0]) {
-                    score();
-                }
-                else if (coinStack.size() == scoringRound[1]) {
+                if (coinStack.size() == scoringRound[0] || coinStack.size() == scoringRound[1]) {
                     score();
                 }
             } 
@@ -142,9 +145,10 @@ public class Game {
     }
 
     public void endOfTurn(){
-//        populateBank();
+        populateBank();
         populateMarket();
         //set currentPlayer to next
+
     }
 
     private void score(){
@@ -156,7 +160,7 @@ public class Game {
     public void startGame(){
         //min 2 players
         //all players ready
-        //populateBank
+        populateBank();
         //populateMarket
         //addStartMoney
         //determineStarter
@@ -167,6 +171,7 @@ public class Game {
         } else {
             throw new AlhambraGameRuleException("Get some friends!");
         }
+
     }
 
     public void endGame(){
@@ -182,34 +187,23 @@ public class Game {
         //next player of List
     }
 
-    private void addStartMoney(){
+    public void addStartMoney(){
         //each player to <20 coins
         for (Player p : players) {
             if (p.getMoney().getTotalAmount() < 20) {
                 p.getMoney().addCoin(coinStack.poll());
             }
+
+
         }
+
     }
 
     private void determineStarter(){
         //get player with minimum cards
         //if equal, get player with min value
         //if equal, take highest in list
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        determineStarter();
-
 
     }
-
-    public String getCurrentPlayer() {
-        return currentPlayer;
-    }
-
 
 }
