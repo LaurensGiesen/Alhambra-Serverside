@@ -19,10 +19,11 @@ public class Game {
     private boolean ended;
     private Player currentPlayer;
     private Purse bank;
-    public Map<Currency, Building> market;
+    private Map<Currency, Building> market;
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
     private int[] scoringRound;
+
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames++;
@@ -54,7 +55,7 @@ public class Game {
 
     public Player getPlayerByName(String playerName){
         if(players.contains(new Player(playerName))){
-            players.get(players.indexOf(new Player(playerName)));
+            return players.get(players.indexOf(new Player(playerName)));
         }
         return null;
     }
@@ -63,8 +64,11 @@ public class Game {
         //Max 6 players
         //Unique player necessary!
 
-        if(players.size() > 6){
+        if(players.size() >= 6){
             throw new AlhambraGameRuleException("There's no available space left for more players");
+        }
+        if(players.contains(new Player(playerName))){
+            throw new AlhambraGameRuleException("No unique name!");
         }
 
         players.add(new Player(playerName));
@@ -99,7 +103,7 @@ public class Game {
         //enough coins for building
         //building from market to buildingInHand of player
     }
-    public void createMarket() {
+    private void createMarket() {
         market.put(Currency.BLUE, buildingStack.poll());
         market.put(Currency.GREEN, buildingStack.poll());
         market.put(Currency.YELLOW, buildingStack.poll());
@@ -129,16 +133,13 @@ public class Game {
         //coinStack is not empty -> replenish coinStack
         //coins van stack to bank
         //check for scoringRound
-        if (coinStack.size() == 0) {
+        if (coinStack.isEmpty()) {
             populateCoinStack();
-        };
+        }
         if (bank.getCoins().size() < 4) {
             for (int i = bank.getCoins().size(); i < 4; i++) {
                 bank.addCoin(coinStack.poll());
-                if (coinStack.size() == scoringRound[0]) {
-                    score();
-                }
-                else if (coinStack.size() == scoringRound[1]) {
+                if (coinStack.size() == scoringRound[0] || coinStack.size() == scoringRound[1]) {
                     score();
                 }
             } 
@@ -146,7 +147,7 @@ public class Game {
     }
 
     public void endOfTurn(){
-//        populateBank();
+        populateBank();
         populateMarket();
         //set currentPlayer to next
 
@@ -172,7 +173,11 @@ public class Game {
         determineStarter();
         //set game to started
 
-
+        if (players.size() >= 2) {
+            this.started = true;
+        } else {
+            throw new AlhambraGameRuleException("Get some friends!");
+        }
 
     }
 
@@ -196,7 +201,6 @@ public class Game {
                 throw new AlhambraGameRuleException("Te veel is te veel manneke!");
             }else {
                 p.getMoney().addCoin(coinStack.poll());
-                System.out.println(coinStack.poll());
             }
         }
 
@@ -224,5 +228,5 @@ public class Game {
         }
 
     }
-}
 
+}
