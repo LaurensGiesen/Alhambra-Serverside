@@ -140,7 +140,6 @@ public class Game {
         }
         for (Currency c : market.keySet()) {
             market.computeIfAbsent(c, k -> buildingStack.poll());
-
         }
 
 
@@ -199,7 +198,6 @@ public class Game {
         } else {
             throw new AlhambraGameRuleException("Get some friends!");
         }
-
     }
 
     public void endGame() {
