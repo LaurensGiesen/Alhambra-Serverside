@@ -17,7 +17,7 @@ public class Game {
     private List<Player> players;
     private boolean started;
     private boolean ended;
-    private String currentPlayer;
+    private Player currentPlayer;
     public Purse bank;
     private Map<Currency, Building> market;
     private Queue<Coin> coinStack;
@@ -206,4 +206,21 @@ public class Game {
 
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        int indexOfCurrentPlayer = players.indexOf(currentPlayer);
+        if (indexOfCurrentPlayer == players.size() - 1) {
+            this.currentPlayer = players.get(0);
+        } else {
+            this.currentPlayer = players.get(indexOfCurrentPlayer + 1);
+        }
+
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
