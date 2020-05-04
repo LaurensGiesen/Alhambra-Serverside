@@ -28,7 +28,6 @@ public class Game {
         numberOfGames++;
 
         players = new LinkedList<>();
-
         bank = new Purse();
         market = new HashMap<>();
 
@@ -44,9 +43,6 @@ public class Game {
         scoringRound = new int[]{rand.nextInt(21) + 23, rand.nextInt(21) + 67};
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
 
     public int getGameId() {
         return gameId;
@@ -54,10 +50,6 @@ public class Game {
 
     public static int getNumberOfGames() {
         return numberOfGames;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
     }
 
     public Purse getBank() {
@@ -74,6 +66,10 @@ public class Game {
 
     public Queue<Building> getBuildingStack() {
         return buildingStack;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public int[] getScoringRound() {

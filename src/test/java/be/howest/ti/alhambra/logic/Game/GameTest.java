@@ -53,7 +53,7 @@ class GameTest {
 
         assertThrows(AlhambraEntityNotFoundException.class, ()->g1.removePlayer("D")); //Player not present
     }
-    
+
     @Test
     void setCurrentPlayer() {
         Player p1 = new Player("player1");
@@ -134,16 +134,8 @@ class GameTest {
         int bAmount = g1.getPlayerByName("B").getMoney().getTotalAmount();
         int cAmount = g1.getPlayerByName("C").getMoney().getTotalAmount();
 
-        assertTrue(currNr > aNr || (currNr == aNr && currAmount >= aAmount));
-        assertTrue(currNr > bNr || (currNr == bNr && currAmount >= bAmount));
-        System.out.println(currNr);
-        System.out.println(cNr);
-        System.out.println(cAmount);
-        assertTrue(currNr > cNr || (currNr == cNr && currAmount >= cAmount));
-
-
-
-
-
+        assertTrue(currNr < aNr || (currNr == aNr && currAmount <= aAmount));
+        assertTrue(currNr < bNr || (currNr == bNr && currAmount <= bAmount));
+        assertTrue(currNr < cNr || (currNr == cNr && currAmount <= cAmount));
     }
 }
