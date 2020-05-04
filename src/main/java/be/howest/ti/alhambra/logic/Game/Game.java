@@ -14,7 +14,7 @@ import java.util.*;
 public class Game {
     private int gameId;
     private static int numberOfGames = 0;
-    private List<Player> players;
+    public List<Player> players;
     private boolean started;
     private boolean ended;
     private String currentPlayer;
@@ -23,15 +23,13 @@ public class Game {
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
     private int[] scoringRound;
+
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames++;
-
         players = new LinkedList<>();
-
         bank = new Purse();
         market = new HashMap<>();
-
         List<Coin> allCoins = new ArrayList<>(Coin.allCoins());
         Collections.shuffle(allCoins);
         coinStack = new LinkedList<>(allCoins);
@@ -54,7 +52,7 @@ public class Game {
 
     public Player getPlayerByName(String playerName){
         if(players.contains(new Player(playerName))){
-            players.get(players.indexOf(new Player(playerName)));
+            return players.get(players.indexOf(new Player(playerName)));
         }
         return null;
     }
@@ -63,8 +61,11 @@ public class Game {
         //Max 6 players
         //Unique player necessary!
 
-        if(players.size() > 6){
+        if(players.size() >= 6){
             throw new AlhambraGameRuleException("There's no available space left for more players");
+        }
+        if(players.contains(new Player(playerName))){
+            throw new AlhambraGameRuleException("No unique name!");
         }
 
         players.add(new Player(playerName));

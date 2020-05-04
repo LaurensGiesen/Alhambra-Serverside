@@ -20,6 +20,8 @@ class GameTest {
     @BeforeEach
     private void createGame(){
         g1 = new Game();
+        g2 = new Game();
+        g3 = new Game();
 
         g1.addPlayer("A");
         g1.addPlayer("B");
@@ -52,8 +54,6 @@ class GameTest {
         p1.getReserve().addBuilding(b1);
         p2.getCity().addBuilding(b2, new Location(1,0));
 
-        setCurrentPlayer();
-
 //        assertEquals(p1, getCurrentPlayer());
 //        assertEquals("player1", getCurrentPlayer().getPlayerName());
 
@@ -67,4 +67,6 @@ class GameTest {
 //        assertEquals(p1, getCurrentPlayer());
 //        assertEquals("player1", getCurrentPlayer().getPlayerName());
     }
+
+
 }
