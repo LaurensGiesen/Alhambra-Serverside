@@ -1,7 +1,6 @@
 package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.coin.Currency;
@@ -42,7 +41,7 @@ public class Game {
         buildingStack = new LinkedList<>(allBuildings);
 
         Random rand = new Random();
-        scoringRound = new int[]{rand.nextInt(21)+23, rand.nextInt(21)+67};
+        scoringRound = new int[]{rand.nextInt(21) + 23, rand.nextInt(21) + 67};
     }
 
     public boolean isStarted() {
@@ -80,22 +79,39 @@ public class Game {
         //if current player -> end round
 
         Player player = getPlayerByName(playerName);
-        if(player == null){
+        if (player == null) {
             throw new AlhambraEntityNotFoundException("Player not present");
         }
 
         players.remove(player);
     }
-
-    public void takeMoney(String playerName, Purse coins){
+    public void takeMoney(String playerName, Purse coins) {
         //player is present
         //player is currentPlayer
         //coins are available in bank
         //if more as 2 coins, value lower as 5
+        if(this.getPlayerByName(playerName) == null){
+            throw new AlhambraEntityNotFoundException("No such player in the game");
+        }
+        if(this.getPlayerByName(playerName) != currentPlayer){
+            throw new AlhambraGameRuleException("Not the current player");
+        }
+        for(Coin coin : coins.getCoins()){
+            if(!bank.getCoins().contains(coin)){
+                throw new AlhambraEntityNotFoundException("No such coin in Bank");
+            }
+        }
+        if(coins.getNumberOfCoins() > 1 && coins.getTotalAmount() > 5){
+            throw new AlhambraGameRuleException("2 coins with a value higher as 5");
+        }
 
+        for(Coin coin : coins.getCoins()){
+            bank.removeCoin(coin);
+            this.getPlayerByName(playerName).getMoney().addCoin(coin);
+        }
     }
 
-    public void buyBuilding(String playerName, Currency currency, Purse coins){
+    public void buyBuilding(String playerName, Currency currency, Purse coins) {
         //player is present
         //player is currentPlayer
         //coins from 1 color
@@ -109,7 +125,7 @@ public class Game {
         market.put(Currency.YELLOW, buildingStack.poll());
         market.put(Currency.ORANGE, buildingStack.poll());
     }
-    private void populateMarket(){
+    private void populateMarket() {
         //buildingStack is not empty -> end of game
         //buildings van stack to market
         if (market == null) {
@@ -117,14 +133,13 @@ public class Game {
         }
         for (Currency c : market.keySet()) {
             market.computeIfAbsent(c, k -> buildingStack.poll());
-
         }
 
 
     }
 
-    private  void populateCoinStack() {
-        for (int i = 0; i<108; i++) {
+    private void populateCoinStack() {
+        for (int i = 0; i < 108; i++) {
             coinStack = new LinkedList<>(Coin.allCoins());
         }
     }
@@ -153,13 +168,13 @@ public class Game {
 
     }
 
-    private void score(){
+    private void score() {
         //get correct scoreTable
         //most buildings of kind
         //Longest wall
     }
 
-    public void startGame(){
+    public void startGame() {
         //min 2 players
         if (players.size() >= 2) {
             this.started = true;
@@ -178,19 +193,18 @@ public class Game {
         } else {
             throw new AlhambraGameRuleException("Get some friends!");
         }
-
     }
 
-    public void endGame(){
+    public void endGame() {
         //calculate score 3
         //set game to ended
-        if(!started) {
+        if (!started) {
             throw new AlhambraGameRuleException("The game hasn't even started yet");
         }
         this.ended = true;
     }
 
-    private void setCurrentPlayer(){
+    private void setCurrentPlayer() {
         //next player of List
     }
 
@@ -206,7 +220,7 @@ public class Game {
 
     }
 
-    private void determineStarter(){
+    private void determineStarter() {
         //get player with minimum cards
         //if equal, get player with min value
         //if equal, take highest in list
