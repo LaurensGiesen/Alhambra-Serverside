@@ -229,4 +229,21 @@ public class Game {
 
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        int indexOfCurrentPlayer = players.indexOf(currentPlayer);
+        if (indexOfCurrentPlayer == players.size() - 1) {
+            this.currentPlayer = players.get(0);
+        } else {
+            this.currentPlayer = players.get(indexOfCurrentPlayer + 1);
+        }
+
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
