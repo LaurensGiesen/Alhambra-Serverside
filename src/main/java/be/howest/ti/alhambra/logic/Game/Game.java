@@ -18,7 +18,7 @@ public class Game {
     private boolean started;
     private boolean ended;
     private Player currentPlayer;
-    public Purse bank;
+    private Purse bank;
     private Map<Currency, Building> market;
     private Queue<Coin> coinStack;
     private Queue<Building> buildingStack;
@@ -49,6 +49,38 @@ public class Game {
         return players;
     }
 
+    public int getGameId() {
+        return gameId;
+    }
+
+    public static int getNumberOfGames() {
+        return numberOfGames;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public Purse getBank() {
+        return bank;
+    }
+
+    public Map<Currency, Building> getMarket() {
+        return market;
+    }
+
+    public Queue<Coin> getCoinStack() {
+        return coinStack;
+    }
+
+    public Queue<Building> getBuildingStack() {
+        return buildingStack;
+    }
+
+    public int[] getScoringRound() {
+        return scoringRound;
+    }
+
     public boolean isStarted() {
         return started;
     }
@@ -57,6 +89,7 @@ public class Game {
         return ended;
     }
 
+    
     public Player getPlayerByName(String playerName){
         if(players.contains(new Player(playerName))){
             return players.get(players.indexOf(new Player(playerName)));
