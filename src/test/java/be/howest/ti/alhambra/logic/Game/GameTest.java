@@ -6,6 +6,7 @@ import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
+import be.howest.ti.alhambra.logic.Game.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,8 +42,10 @@ class GameTest {
 
     @Test
     void setCurrentPlayer() {
-        Player p1 = new Player("player1");
-        Player p2 = new Player("player2");
+        g3 = new Game();
+
+        Player p1 = new Player("jonas");
+        Player p2 = new Player("quinten");
         Building b1 = new Building(Buildingtype.TOWER, 7, new Walling(false,false,false,false));
         Building b2 = new Building(Buildingtype.GARDEN, 9, new Walling(false,false,false,false));
 
@@ -52,15 +55,15 @@ class GameTest {
         p1.getReserve().addBuilding(b1);
         p2.getCity().addBuilding(b2, new Location(1,0));
 
-        setCurrentPlayer();
+        g3.setCurrentPlayer(g3.getPlayers().get(1));
 
-//        assertEquals(p1, getCurrentPlayer());
-//        assertEquals("player1", getCurrentPlayer().getPlayerName());
+//        assertEquals(p1, g3.getCurrentPlayer());
+        assertEquals("jonas", g3.getCurrentPlayer());
 
         p1.redesignCity(b1, new Location(1, 0));
 
 //        assertEquals(p2, getCurrentPlayer());
-//        assertEquals("player2", getCurrentPlayer().getPlayerName());
+        assertEquals("quinten", g3.getCurrentPlayer());
 
         p2.redesignCity(null, new Location(1, 0));
 
