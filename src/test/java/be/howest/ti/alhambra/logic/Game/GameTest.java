@@ -1,12 +1,9 @@
 package be.howest.ti.alhambra.logic.Game;
 
-<<<<<<< src/test/java/be/howest/ti/alhambra/logic/Game/GameTest.java
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
-=======
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
->>>>>>> src/test/java/be/howest/ti/alhambra/logic/Game/GameTest.java
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
