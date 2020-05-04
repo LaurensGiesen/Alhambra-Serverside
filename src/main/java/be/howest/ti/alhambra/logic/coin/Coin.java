@@ -2,7 +2,6 @@ package be.howest.ti.alhambra.logic.coin;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -18,13 +17,6 @@ public class Coin {
         this.amount = amount;
     }
 
-    public static List<Coin> allCoins() {
-        return Stream.of(Currency.values())
-                .flatMap(currency -> IntStream.rangeClosed(1, 9).mapToObj(value -> new Coin(currency, value)))
-                .flatMap(coin -> Stream.of(coin, coin, coin))
-                .collect(Collectors.toList()); 
-    }
-
     public Currency getCurrency() {
         return currency;
     }
@@ -33,6 +25,14 @@ public class Coin {
     public int getAmount() {
         return amount;
     }
+
+    public static List<Coin> allCoins() {
+        return Stream.of(Currency.values())
+                .flatMap(currency -> IntStream.rangeClosed(1, 9).mapToObj(value -> new Coin(currency, value)))
+                .flatMap(coin -> Stream.of(coin, coin, coin))
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public boolean equals(Object o) {

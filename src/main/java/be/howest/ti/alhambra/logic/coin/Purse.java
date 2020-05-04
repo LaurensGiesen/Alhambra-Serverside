@@ -12,22 +12,8 @@ public class Purse {
         coins = new ArrayList<>();
     }
 
-    public void addCoin(Coin coin) {
-
-        coins.add(coin);
-    }
-
-    public void removeCoin(Coin coin) {
-        if(coins.contains(coin)) {
-            coins.remove(coin);
-        } else {
-            throw new AlhambraEntityNotFoundException("Building not present");
-        }
-    }
-
     public List<Coin> getCoins() {
         return coins;
-
     }
 
     public int getTotalAmount() {
@@ -37,7 +23,7 @@ public class Purse {
     public Currency getCurrency() {
         if (coins.stream().allMatch(c -> c.getCurrency().equals(coins.get(0).getCurrency()))) {
             return coins.get(0).getCurrency();
-        }else {
+        } else {
             throw new AlhambraEntityNotFoundException("exceptional situation");
         }
     }
@@ -46,4 +32,15 @@ public class Purse {
         return coins.size();
     }
 
+    public void addCoin(Coin coin) {
+        coins.add(coin);
+    }
+
+    public void removeCoin(Coin coin) {
+        if (coins.contains(coin)) {
+            coins.remove(coin);
+        } else {
+            throw new AlhambraEntityNotFoundException("Building not present");
+        }
+    }
 }
