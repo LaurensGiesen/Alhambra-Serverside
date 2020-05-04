@@ -89,7 +89,7 @@ public class Game {
         return ended;
     }
 
-    
+
     public Player getPlayerByName(String playerName){
         if(players.contains(new Player(playerName))){
             return players.get(players.indexOf(new Player(playerName)));
