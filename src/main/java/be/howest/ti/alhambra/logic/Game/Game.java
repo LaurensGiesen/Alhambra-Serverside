@@ -272,7 +272,7 @@ public class Game {
 
     }  
 
-    private void determineStarter() {
+    public void determineStarter() {
         //get player with minimum cards
         //if equal, get player with min value
         //if equal, take highest in list
