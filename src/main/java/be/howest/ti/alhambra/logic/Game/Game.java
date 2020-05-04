@@ -197,7 +197,7 @@ public class Game {
 
         }
 
-    }
+    }  
 
     private void determineStarter(){
         //get player with minimum cards
