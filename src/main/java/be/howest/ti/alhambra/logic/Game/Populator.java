@@ -39,7 +39,7 @@ public class Populator {
 
     }
 
-    public static void giveStartMoney(Purse money, Queue<Coin> coinStack) {
+    public static void giveStartMoney(Queue<Coin> coinStack, Purse money) {
         while (money.getTotalAmount() < 20) {
             money.addCoin(coinStack.poll());
         }
