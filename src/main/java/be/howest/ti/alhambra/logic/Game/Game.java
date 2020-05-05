@@ -303,7 +303,6 @@ public class Game {
     }
 
 
-
 //    private void setCurrentPlayer(Player currentPlayer) {
 //        int indexOfCurrentPlayer = players.indexOf(currentPlayer);
 //        if (indexOfCurrentPlayer == players.size() - 1) {
