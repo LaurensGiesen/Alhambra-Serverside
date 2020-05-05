@@ -97,6 +97,22 @@ public class Game {
         return null;
     }
 
+    /* ------------ SETTERS ------------ */
+
+    public void setCoinStack(Queue<Coin> coinStack) {
+        this.coinStack = coinStack;
+    }
+
+    public void setBuildingStack(Queue<Building> buildingStack) {
+        this.buildingStack = buildingStack;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
 
     /* ------------ PUBLIC METHODS ------------ */
 
@@ -126,6 +142,7 @@ public class Game {
 
         players.remove(player);
     }
+
 
     public void takeMoney(String playerName, Purse coins) {
         //player is present
@@ -202,7 +219,7 @@ public class Game {
     public void endOfTurn() {
         populateBank();
         populateMarket();
-        setCurrentPlayer(); //Set the currentPlayer to the next one
+        //setCurrentPlayer(); //Set the currentPlayer to the next one
     }
 
 
@@ -285,16 +302,16 @@ public class Game {
         }
     }
 
-    private void setCurrentPlayer() {}
 
-    private void setCurrentPlayer(Player currentPlayer) {
-        int indexOfCurrentPlayer = players.indexOf(currentPlayer);
-        if (indexOfCurrentPlayer == players.size() - 1) {
-            this.currentPlayer = players.get(0);
-        } else {
-            this.currentPlayer = players.get(indexOfCurrentPlayer + 1);
-        }
-    }
+
+//    private void setCurrentPlayer(Player currentPlayer) {
+//        int indexOfCurrentPlayer = players.indexOf(currentPlayer);
+//        if (indexOfCurrentPlayer == players.size() - 1) {
+//            this.currentPlayer = players.get(0);
+//        } else {
+//            this.currentPlayer = players.get(indexOfCurrentPlayer + 1);
+//        }
+//    }
 
     private void score() {
         //get correct scoreTable
