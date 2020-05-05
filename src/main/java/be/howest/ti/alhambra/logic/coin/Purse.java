@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic.coin;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 
 public class Purse {

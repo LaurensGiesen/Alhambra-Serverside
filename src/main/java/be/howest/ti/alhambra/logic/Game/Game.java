@@ -230,7 +230,7 @@ public class Game {
     private void populateMarket() {
         //buildingStack is empty -> end of game
         //buildings van stack to market
-        if (market == null) {
+        if (market.size() == 0) {
             createMarket();
         }
         for (Currency c : market.keySet()) {
@@ -262,6 +262,7 @@ public class Game {
             while (p.getMoney().getTotalAmount() < 20) {
                 p.getMoney().addCoin(coinStack.poll());
             }
+
         }
     }
 
