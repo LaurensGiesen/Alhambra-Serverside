@@ -16,8 +16,10 @@ public class Server {
         return games;
     }
 
-    public void newGame() {
-        games.add(new Game());
+    public int newGame() {
+        Game game = new Game();
+        games.add(game);
+        return game.getGameId();
     }
 
     public Game getGame(int gameId) {
