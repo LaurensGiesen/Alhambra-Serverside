@@ -285,7 +285,8 @@ public class Game {
         }
     }
 
-    private void setCurrentPlayer() {}
+    private void setCurrentPlayer() {
+    }
 
     private void setCurrentPlayer(Player currentPlayer) {
         int indexOfCurrentPlayer = players.indexOf(currentPlayer);
