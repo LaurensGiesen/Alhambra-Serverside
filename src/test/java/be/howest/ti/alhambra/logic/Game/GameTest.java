@@ -30,6 +30,10 @@ class GameTest {
         game.getPlayerByName("C").setReady(true);
         return game;
     }
+    @Test
+    void methodsOfServer() {
+
+    }
 
 //    @Test
 //    void addPlayer() {
