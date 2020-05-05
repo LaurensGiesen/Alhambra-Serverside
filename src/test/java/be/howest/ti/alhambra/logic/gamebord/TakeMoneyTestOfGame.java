@@ -32,6 +32,7 @@ public class TakeMoneyTestOfGame {
     @Test
     void testOfExceptionWhenPlayerIsZero() {
         createGame();
+
         assertThrows(AlhambraEntityNotFoundException.class, () -> game.takeMoney(null, new Purse()));
     }
 
