@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.coin.Currency;
+import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
@@ -22,7 +23,7 @@ class GameTest {
     Game g3;
 
     @BeforeEach
-    private void createGame(){
+    private void createGame() {
         g1 = new Game();
         g2 = new Game();
         g3 = new Game();
@@ -34,38 +35,38 @@ class GameTest {
 
     @Test
     void addPlayer() {
-        assertDoesNotThrow(()->g2.addPlayer("A"));
+        assertDoesNotThrow(() -> g2.addPlayer("A"));
         assertEquals(new Player("A"), g2.getPlayerByName("A"));
 
-        assertThrows(AlhambraGameRuleException.class, ()->g2.addPlayer("A")); //No unique name
+        assertThrows(AlhambraGameRuleException.class, () -> g2.addPlayer("A")); //No unique name
         g2.addPlayer("B");
         g2.addPlayer("C");
         g2.addPlayer("D");
         g2.addPlayer("E");
         g2.addPlayer("F");
-        assertThrows(AlhambraGameRuleException.class, ()->g2.addPlayer("G")); //Max 6 players
+        assertThrows(AlhambraGameRuleException.class, () -> g2.addPlayer("G")); //Max 6 players
     }
 
     @Test
     void removePlayer() {
-        assertDoesNotThrow(()->g1.removePlayer("A"));
+        assertDoesNotThrow(() -> g1.removePlayer("A"));
         assertNull(g1.getPlayerByName("A"));
 
-        assertThrows(AlhambraEntityNotFoundException.class, ()->g1.removePlayer("D")); //Player not present
+        assertThrows(AlhambraEntityNotFoundException.class, () -> g1.removePlayer("D")); //Player not present
     }
 
     @Test
     void setCurrentPlayer() {
         Player p1 = new Player("player1");
         Player p2 = new Player("player2");
-        Building b1 = new Building(Buildingtype.TOWER, 7, new Walling(false,false,false,false));
-        Building b2 = new Building(Buildingtype.GARDEN, 9, new Walling(false,false,false,false));
+        Building b1 = new Building(Buildingtype.TOWER, 7, new Walling(false, false, false, false));
+        Building b2 = new Building(Buildingtype.GARDEN, 9, new Walling(false, false, false, false));
 
         g3.addPlayer(p1.getPlayerName());
         g3.addPlayer(p2.getPlayerName());
 
         p1.getReserve().addBuilding(b1);
-        p2.getCity().addBuilding(b2, new Location(1,0));
+        p2.getCity().addBuilding(b2, new Location(1, 0));
 
 //        assertEquals(p1, getCurrentPlayer());
 //        assertEquals("player1", getCurrentPlayer().getPlayerName());
@@ -138,4 +139,31 @@ class GameTest {
         assertTrue(currNr < bNr || (currNr == bNr && currAmount <= bAmount));
         assertTrue(currNr < cNr || (currNr == cNr && currAmount <= cAmount));
     }
+//    @Test
+//    void populateMarket() { 
+//
+//        Game g1 = new Game();
+//
+//        Player p1 = new Player("Bart");
+//        Player p2 = new Player("José");
+//
+//        g1.addPlayer(p1.getPlayerName());
+//        g1.addPlayer(p2.getPlayerName());
+//
+//        g1.startGame();
+//
+//        Coin c1 = new Coin(Currency.BLUE, 9);
+//        Coin c2 = new Coin(Currency.BLUE, 8);
+//
+//        Purse temp = new Purse();
+//        temp.addCoin(c1);
+//        temp.addCoin(c2);
+//
+//        g1.buyBuilding("José", temp);
+//
+//        g1.populateMarket();
+//
+//        assertNotEquals(null, g1.getMarket().get(Currency.BLUE));
+//
+//    }
 }
