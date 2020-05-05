@@ -74,7 +74,18 @@ public class ScoreCalculator {
         }
     }
 
+    private void loadPlayerStats(List<Player> players) {
+        playerWithMostBuildings(players, Buildingtype.PAVILION);
+        playerWithMostBuildings(players, Buildingtype.SERAGLIO);
+        playerWithMostBuildings(players, Buildingtype.ARCADES);
+        playerWithMostBuildings(players, Buildingtype.CHAMBERS);
+        playerWithMostBuildings(players, Buildingtype.GARDEN);
+        playerWithMostBuildings(players, Buildingtype.TOWER);
+    }
+
     public void determineScoreRound1(List<Player> players) {
+        loadPlayerStats(players);
+
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.PAVILION), 1, 0, 0);
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.SERAGLIO), 2, 0, 0);
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.ARCADES), 3, 0, 0);
@@ -83,16 +94,21 @@ public class ScoreCalculator {
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.TOWER), 6, 0, 0);
     }
 
+
     public void determineScoreRound2(List<Player> players) {
-        addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.TOWER), 13, 6, 0);
+        loadPlayerStats(players);
+
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.PAVILION), 8, 1, 0 );
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.SERAGLIO), 9, 2, 0);
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.ARCADES), 10, 3, 0);
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.CHAMBERS), 11, 4, 0);
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.GARDEN), 12, 5, 0);
+        addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.TOWER), 13, 6, 0);
     }
 
     public void determineScoreRound3(List<Player> players) {
+        loadPlayerStats(players);
+
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.PAVILION), 16, 8, 1 );
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.SERAGLIO), 17, 9, 2);
         addScoreToPlayerRound(playerWithMostBuildings(players, Buildingtype.ARCADES), 18, 10, 3);
