@@ -38,7 +38,7 @@ public class GameStarter {
         game.setStarted(true);
 
         for (Player p : game.getPlayers()) {
-            Populator.giveStartMoney(p.getMoney(), game.getCoinStack());
+            Populator.giveStartMoney(game.getCoinStack(), p.getMoney());
         }
 
         game.getPlayers().sort(new OrderByPurse());

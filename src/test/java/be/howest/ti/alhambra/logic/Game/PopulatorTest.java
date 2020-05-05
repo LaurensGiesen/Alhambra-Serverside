@@ -95,9 +95,12 @@ class PopulatorTest {
         assertEquals(100, coinStack.size());
     }
 
-
-
     @Test
     void giveStartMoney() {
+        Purse money = new Purse();
+        Populator.populateCoinStack(coinStack);
+
+        Populator.giveStartMoney(coinStack, money);
+        assertTrue(money.getTotalAmount() > 20);
     }
 }
