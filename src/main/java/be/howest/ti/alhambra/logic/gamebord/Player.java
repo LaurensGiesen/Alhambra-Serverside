@@ -21,6 +21,7 @@ public class Player {
     private BuildingPlace buildingInHand;
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static Random r = new Random();
+    private int amountOfBuildingType;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -28,6 +29,10 @@ public class Player {
         this.reserve = new BuildingPlace();
         this.city = new City();
         this.buildingInHand = new BuildingPlace();
+    }
+
+    public int getAmountOfBuildingType() {
+        return amountOfBuildingType;
     }
 
     public String getPlayerName() {
@@ -68,6 +73,10 @@ public class Player {
 
     public boolean isReady() {
         return ready;
+    }
+
+    public void setAmountOfBuildingType(int amount) {
+        this.amountOfBuildingType = amount;
     }
 
     public void setReady(boolean ready) {
