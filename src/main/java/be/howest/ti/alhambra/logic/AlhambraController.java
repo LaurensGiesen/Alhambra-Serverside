@@ -11,6 +11,10 @@ public class AlhambraController {
         server = new Server();
     }
 
+    public Server getServer() {
+        return server;
+    }
+
     public Currency[] getCurrencies() {
         return Currency.values();
     }
