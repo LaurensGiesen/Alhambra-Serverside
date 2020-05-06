@@ -20,8 +20,16 @@ public class ScoreCalculator {
             for(int position = 1; position < playerTable.size()+1; position++){
                 int score = 0;
                 if(!playerTable.get(position-1).isEmpty()){
-                    score = scorecard.getScore(buildingtype, round, position) / playerTable.get(position-1).size();
+                    score += scorecard.getScore(buildingtype, round, position);
+                    if(position < playerTable.size() && playerTable.get(position-1).size() > 1){
+                        score += scorecard.getScore(buildingtype, round, position+1);
+                    }
+                    if(position+1 < playerTable.size() && playerTable.get(position-1).size() > 2){
+                        score += scorecard.getScore(buildingtype, round, position+2);
+                    }
+                    score /=  playerTable.get(position-1).size();
                 }
+
                 for(int i = 0; i < playerTable.get(position-1).size(); i++){
                     playerTable.get(position-1).get(i).addScore(score);
                 }
