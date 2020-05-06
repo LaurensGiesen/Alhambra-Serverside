@@ -13,6 +13,8 @@ import be.howest.ti.alhambra.logic.gamebord.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
@@ -30,6 +32,7 @@ class GameTest {
         game.getPlayerByName("C").setReady(true);
         return game;
     }
+
 
 //    @Test
 //    void addPlayer() {
@@ -119,6 +122,7 @@ class GameTest {
 //        assertNotEquals(currPlayer2, game1.getCurrentPlayer()); //After taking money, the turn changed
 //        assertFalse(game1.getBank().getCoins().contains(coin3)); //Taken coins are no longer in bank
 //    }
+
 
 
     /* -----------------------------------------------------------------------------------------
