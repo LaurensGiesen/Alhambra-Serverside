@@ -53,9 +53,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         LOGGER.info("getGames");
         return null;
     }
-
-
-
+    
     public Object createGame(RoutingContext ctx) {
         LOGGER.info("createGame");
         return null;
