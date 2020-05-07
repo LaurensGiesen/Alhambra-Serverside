@@ -1,9 +1,13 @@
 package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
+import be.howest.ti.alhambra.logic.gamebord.Player;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.logging.Log;
 
 public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
@@ -66,7 +70,14 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object joinGame(RoutingContext ctx) {
         LOGGER.info("joinGame");
-        return null;
+
+        String body = ctx.getBodyAsString();
+        Player players = Json.decodeValue(body, Player.class);
+        String playerName = players.getPlayerName();
+
+        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
+
+        return controller.joinGame(gameId, playerName);
     }
 
 

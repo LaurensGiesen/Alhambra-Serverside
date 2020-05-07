@@ -116,7 +116,7 @@ public class Game {
 
     /* ------------ PUBLIC METHODS ------------ */
 
-    public void addPlayer(String playerName) {
+    public String addPlayer(String playerName) {
         //Max 6 players
         //Unique player necessary!
 
@@ -128,6 +128,7 @@ public class Game {
         }
 
         players.add(new Player(playerName));
+        return players.get(players.indexOf(new Player(playerName))).getToken();
     }
 
     public void removePlayer(String playerName) {

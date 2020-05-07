@@ -5,6 +5,9 @@ import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 import java.util.Random;
 
@@ -22,7 +25,8 @@ public class Player {
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static Random r = new Random();
 
-    public Player(String playerName) {
+    @JsonCreator
+    public Player(@JsonProperty("playerName") String playerName) {
         this.playerName = playerName;
         this.money = new Purse();
         this.reserve = new BuildingPlace();
