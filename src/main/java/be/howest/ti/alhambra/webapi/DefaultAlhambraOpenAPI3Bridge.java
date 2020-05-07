@@ -55,7 +55,17 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object getGames(RoutingContext ctx) {
         LOGGER.info("getGames");
-        return null;
+        //if details == false -> gameIds
+        boolean details = Boolean.parseBoolean(ctx.request().getParam("details"));
+
+        if(details){
+            //details == true -> volledige info
+        } else {
+            return controller.getNotStartedGameIds().toArray();
+        }
+
+
+        return details;
     }
 
     public Object createGame(RoutingContext ctx) {
