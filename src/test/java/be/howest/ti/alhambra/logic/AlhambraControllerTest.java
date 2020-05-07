@@ -26,6 +26,6 @@ class AlhambraControllerTest {
         String playerName = "jonas";
         int gameId = Integer.parseInt(controller.createGame());
         controller.joinGame(gameId, playerName);
-        assertEquals(0, controller.getServer().getGame(gameId).getPlayers().size());
+        assertEquals(1, controller.getServer().getGame(gameId).getPlayers().size());
     }
 }
