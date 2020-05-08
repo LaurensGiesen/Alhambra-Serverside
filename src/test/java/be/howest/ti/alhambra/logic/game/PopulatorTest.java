@@ -100,6 +100,6 @@ class PopulatorTest {
         Populator.populateCoinStack(coinStack);
 
         Populator.giveStartMoney(coinStack, money);
-        assertTrue(money.getTotalAmount() > 20);
+        assertTrue(money.getTotalAmount() >= 20);
     }
 }

@@ -26,7 +26,7 @@ public class TurnManager {
         setNextPlayer(game);
     }
 
-    
+
     private static void determineStarter(Game game) {
         //get player with minimum cards
         //if equal, get player with min value

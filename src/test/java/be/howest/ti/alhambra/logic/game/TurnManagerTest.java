@@ -49,7 +49,7 @@ class TurnManagerTest {
         assertNotNull(g1.getMarket().get(Currency.YELLOW));
         assertNotNull(g1.getCurrentPlayer());
         assertTrue(g1.getPlayerByName("A").getMoney().getNumberOfCoins() > 0);
-        assertTrue(g1.getPlayerByName("A").getMoney().getTotalAmount() > 20);
+        assertTrue(g1.getPlayerByName("A").getMoney().getTotalAmount() >= 20);
     }
 
     @Test
