@@ -23,7 +23,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {
         LOGGER.info("verifyPlayerToken");
-        return true;
+        return controller.verifyPlayerToken(token, Integer.parseInt(gameId), playerName);
     }
 
     public Object getBuildings(RoutingContext ctx) {

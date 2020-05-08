@@ -38,4 +38,8 @@ public class AlhambraController {
     public List<Integer> getNotStartedGameIds() {
         return server.getNotStartedGameIds();
     }
+
+    public boolean verifyPlayerToken(String token, int gameId, String playerName) {
+        return server.getGame(gameId).getPlayerByName(playerName).isValidToken(token);
+    }
 }
