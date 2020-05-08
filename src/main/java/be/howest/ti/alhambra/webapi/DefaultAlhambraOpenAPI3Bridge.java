@@ -24,7 +24,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {
         LOGGER.info("verifyPlayerToken");
-        return true;
+        return controller.verifyPlayerToken(token, Integer.parseInt(gameId), playerName);
     }
 
     public Object getBuildings(RoutingContext ctx) {
@@ -54,7 +54,13 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object getGames(RoutingContext ctx) {
         LOGGER.info("getGames");
-        return null;
+        boolean details = Boolean.parseBoolean(ctx.request().getParam("details"));
+
+        if(details){
+            return controller.getGames().toArray();
+        } else {
+            return controller.getNotStartedGameIds().toArray();
+        }
     }
 
     public Object createGame(RoutingContext ctx) {
