@@ -94,8 +94,9 @@ public class AlhambraController {
 
     public Object getGame(int gameId) {
 
-        server.getGame(gameId);
-
+        if (server.getGame(gameId) == null) {
+            throw new AlhambraEntityNotFoundException("Game not present");
+        }
         return server.getGame(gameId);
     }
 
