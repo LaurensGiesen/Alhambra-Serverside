@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
+import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 import io.vertx.core.json.Json;
 import io.vertx.core.logging.Logger;
@@ -34,7 +35,19 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object getAvailableBuildLocations(RoutingContext ctx) {
         LOGGER.info("getAvailableBuildLocations");
-        return null;
+
+        boolean north = Boolean.parseBoolean(ctx.request().getParam("north"));
+        boolean east = Boolean.parseBoolean(ctx.request().getParam("east"));
+        boolean south = Boolean.parseBoolean(ctx.request().getParam("south"));
+        boolean west = Boolean.parseBoolean(ctx.request().getParam("west"));
+
+        Walling walls = new Walling(north, east, south, west);
+
+        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
+        String playerName = ctx.request().getParam("playerName");
+
+
+        return controller.getAvailableLocations(gameId, playerName, walls);
     }
 
     public Object getBuildingTypes(RoutingContext ctx) {

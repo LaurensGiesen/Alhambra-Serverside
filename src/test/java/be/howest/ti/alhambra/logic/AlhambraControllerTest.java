@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,6 +79,20 @@ class AlhambraControllerTest {
         assertThrows(AlhambraEntityNotFoundException.class, () -> controller.verifyPlayerToken(token, 21988, playerName));
         assertTrue(controller.verifyPlayerToken(token, gameId, null));
         assertFalse(controller.verifyPlayerToken("N5HJ16VOKQBN9DIDEMNP", gameId, playerName));
+    }
+
+    @Test
+    void getAvailableLocations() {
+        int gameId = controller.server.newGame();
+        Walling w1 = new Walling(false, false, false, false);
+        Walling w2 = new Walling(true, false, true, false);
+        String playerName = "joske";
+        controller.server.getGame(gameId).addPlayer(playerName);
+
+        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.getAvailableLocations(21888, playerName, w1));
+        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.getAvailableLocations(gameId, null, w1));
+        assertEquals(2, controller.getAvailableLocations(gameId, playerName, w2).size());
+        assertEquals(4, controller.getAvailableLocations(gameId, playerName, w1).size());
     }
 }
 
