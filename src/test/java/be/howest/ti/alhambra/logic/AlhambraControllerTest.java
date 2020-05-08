@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,5 +28,16 @@ class AlhambraControllerTest {
         int gameId = Integer.parseInt(controller.createGame());
         controller.joinGame(gameId, playerName);
         assertEquals(1, controller.getServer().getGame(gameId).getPlayers().size());
+    }
+
+    @Test
+    void setReady() {
+       int gameId = controller.server.newGame();
+       String playerName = "jonas";
+       controller.server.getGame(gameId).addPlayer(playerName);
+       assertTrue(controller.setReady(gameId, playerName));
+       assertTrue(controller.server.getGame(gameId).getPlayerByName(playerName).isReady());
+       assertThrows(AlhambraEntityNotFoundException.class, () -> controller.setReady(21220, playerName));
+       assertThrows(AlhambraEntityNotFoundException.class, () -> controller.setReady(gameId, "joske"));
     }
 }
