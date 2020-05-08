@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic.Game;
+package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.coin.Coin;
@@ -40,9 +40,16 @@ public class Game {
         players = new LinkedList<>();
         bank = new Purse();
         market = new HashMap<>();
+        market.put(Currency.BLUE,null);
+        market.put(Currency.GREEN, null);
+        market.put(Currency.YELLOW, null);
+        market.put(Currency.ORANGE, null);
 
-        populateCoinStack();
-        populateBuildingStack();
+        coinStack = new LinkedList<>();
+        buildingStack = new LinkedList<>();
+
+        Populator.populateCoinStack(coinStack);
+        Populator.populateBuildingStack(buildingStack);
 
         Random rand = new Random();
         scoringRound = new int[]{rand.nextInt(21) + 23, rand.nextInt(21) + 67};
@@ -134,6 +141,9 @@ public class Game {
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
+    public void setScoringRound(int[] rounds){
+        this.scoringRound = rounds;
+    }
 
     /* ------------ PUBLIC METHODS ------------ */
 
@@ -217,112 +227,63 @@ public class Game {
         getPlayerByName(playerName).addBuildingToHand(building);
     }
 
-    public void startGame() {
-        //min 2 players
-        if (players.size() >= 2) {
-            this.started = true;
-        } else {
-            throw new AlhambraGameRuleException("Get some friends!");
-        }
-        //all players ready
-        populateBank();
-        populateMarket();
-        addStartMoney();
-        determineStarter();
-        //set game to started
-
-        if (players.size() >= 2) {
-            this.started = true;
-        } else {
-            throw new AlhambraGameRuleException("Get some friends!");
-        }
-    }
-
     public void endOfTurn() {
-        populateBank();
-        populateMarket();
+//        populateBank();
+//        populateMarket();
         //setCurrentPlayer(); //Set the currentPlayer to the next one
     }
 
 
     /* ------------ PRIVATE METHODS ------------ */
+//
+//    private void populateCoinStack() {
+//        List<Coin> allCoins = new ArrayList<>(Coin.allCoins());
+//        Collections.shuffle(allCoins);
+//        coinStack = new LinkedList<>(allCoins);
+//    }
+//
+//    private void populateBuildingStack() {
+//        List<Building> allBuildings = new ArrayList<>(Building.allBuilding());
+//        Collections.shuffle(allBuildings);
+//        buildingStack = new LinkedList<>(allBuildings);
+//    }
+//
+//    private void createMarket() {
+//        market.put(Currency.BLUE, buildingStack.poll());
+//        market.put(Currency.GREEN, buildingStack.poll());
+//        market.put(Currency.YELLOW, buildingStack.poll());
+//        market.put(Currency.ORANGE, buildingStack.poll());
+//    }
+//
+//    private void populateMarket() {
+//        //buildingStack is empty -> end of game
+//        //buildings van stack to market
+//        if (market.size() == 0) {
+//            createMarket();
+//        }
+//        for (Currency c : market.keySet()) {
+//            market.computeIfAbsent(c, k -> buildingStack.poll());
+//        }
+//    }
+//
+//    private void populateBank() {
+//        //coinStack is not empty -> replenish coinStack
+//        //coins van stack to bank
+//        //check for scoringRound
+//        if (coinStack.isEmpty()) {
+//            populateCoinStack();
+//        }
+//        if (bank.getCoins().size() < 4) {
+//            for (int i = bank.getCoins().size(); i < 4; i++) {
+//                bank.addCoin(coinStack.poll());
+//                if (coinStack.size() == scoringRound[0] || coinStack.size() == scoringRound[1]) {
+//                    score();
+//                }
+//            }
+//        }
+//    }
 
-    private void populateCoinStack() {
-        List<Coin> allCoins = new ArrayList<>(Coin.allCoins());
-        Collections.shuffle(allCoins);
-        coinStack = new LinkedList<>(allCoins);
-    }
 
-    private void populateBuildingStack() {
-        List<Building> allBuildings = new ArrayList<>(Building.allBuilding());
-        Collections.shuffle(allBuildings);
-        buildingStack = new LinkedList<>(allBuildings);
-    }
-
-    private void createMarket() {
-        market.put(Currency.BLUE, buildingStack.poll());
-        market.put(Currency.GREEN, buildingStack.poll());
-        market.put(Currency.YELLOW, buildingStack.poll());
-        market.put(Currency.ORANGE, buildingStack.poll());
-    }
-
-    private void populateMarket() {
-        //buildingStack is empty -> end of game
-        //buildings van stack to market
-        if (market.size() == 0) {
-            createMarket();
-        }
-        for (Currency c : market.keySet()) {
-            market.computeIfAbsent(c, k -> buildingStack.poll());
-        }
-    }
-
-    private void populateBank() {
-        //coinStack is not empty -> replenish coinStack
-        //coins van stack to bank
-        //check for scoringRound
-        if (coinStack.isEmpty()) {
-            populateCoinStack();
-        }
-        if (bank.getCoins().size() < 4) {
-            for (int i = bank.getCoins().size(); i < 4; i++) {
-                bank.addCoin(coinStack.poll());
-                if (coinStack.size() == scoringRound[0] || coinStack.size() == scoringRound[1]) {
-                    score();
-                }
-            }
-        }
-    }
-
-    private void addStartMoney() {
-        //each player to > 20 coins
-
-        for (Player p : players) {
-            while (p.getMoney().getTotalAmount() < 20) {
-                p.getMoney().addCoin(coinStack.poll());
-            }
-
-        }
-    }
-
-    private void determineStarter() {
-        //get player with minimum cards
-        //if equal, get player with min value
-        //if equal, take highest in list
-        int smallestNumberOfCards = 20;
-        int totalAmountOfCoins = 0;
-        for (Player p : players) {
-            int numberOfCoins = p.getMoney().getCoins().size();
-            if (numberOfCoins < smallestNumberOfCards) {
-                smallestNumberOfCards = numberOfCoins;
-                totalAmountOfCoins = p.getMoney().getTotalAmount();
-                currentPlayer = p;
-            } else if (numberOfCoins == smallestNumberOfCards && totalAmountOfCoins > p.getMoney().getTotalAmount()) {
-                currentPlayer = p;
-                totalAmountOfCoins = p.getMoney().getTotalAmount();
-            }
-        }
-    }
 
 
 //    private void setCurrentPlayer(Player currentPlayer) {
