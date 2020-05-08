@@ -93,8 +93,9 @@ public class Player {
         return ready;
     }
 
-    public void setReady(boolean ready) {
+    public boolean setReady(boolean ready) {
         this.ready = ready;
+        return ready;
     }
 
     public void buildBuilding(Building building, Location location) {

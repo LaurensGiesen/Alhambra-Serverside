@@ -7,6 +7,7 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
 
+
 public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     private final AlhambraController controller;
@@ -92,7 +93,11 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object setReady(RoutingContext ctx) {
         LOGGER.info("setReady");
-        return null;
+
+        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
+        String playerName = ctx.request().getParam("playerName");
+
+        return controller.setReady(gameId, playerName);
     }
 
     public Object setNotReady(RoutingContext ctx) {
