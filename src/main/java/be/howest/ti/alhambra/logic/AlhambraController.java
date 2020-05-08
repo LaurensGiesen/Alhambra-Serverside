@@ -1,10 +1,12 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Server;
 import be.howest.ti.alhambra.logic.game.TurnManager;
 import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 
 import java.util.List;
@@ -100,4 +102,17 @@ public class AlhambraController {
         return server.getGame(gameId);
     }
 
+    public List<Location> getAvailableLocations(int gameId,String playerName, Walling walls) {
+
+        if (server.getGame(gameId) == null) {
+            throw new AlhambraEntityNotFoundException("Game does not exist");
+        }
+
+        if (server.getGame(gameId).getPlayerByName(playerName) == null) {
+            throw new AlhambraEntityNotFoundException("Player does not exist");
+        }
+
+        return server.getGame(gameId).getPlayerByName(playerName).getCity().getAvailableLocations(walls);
+
+    }
 }

@@ -2,12 +2,14 @@ package be.howest.ti.alhambra.logic.gamebord;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.WallingDirection;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 
 public class Location {
     private int row;
     private int col;
-    private Building building;
+    @JsonIgnore private Building building;
 
     public Location(int row, int col) {
         this.row = row;
@@ -33,6 +35,7 @@ public class Location {
         return building;
     }
 
+    @JsonIgnore
     public boolean isEmpty() {
         return building == null;
     }
