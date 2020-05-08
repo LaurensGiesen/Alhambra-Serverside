@@ -17,6 +17,7 @@ public class TurnManager {
             Populator.giveStartMoney(game.getCoinStack(), p.getMoney());
         }
         determineStarter(game);
+        game.setStarted(true);
     }
 
     private static void determineStarter(Game game) {

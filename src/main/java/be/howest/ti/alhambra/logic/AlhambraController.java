@@ -92,11 +92,11 @@ public class AlhambraController {
         return true;
     }
 
-    public Game getGame(int gameId) {
+    public Object getGame(int gameId) {
 
         server.getGame(gameId);
 
-        return null;
+        return server.getGame(gameId);
     }
 
 }

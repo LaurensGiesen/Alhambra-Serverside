@@ -134,7 +134,6 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         LOGGER.info("getGame");
 
         int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
-
         return controller.getGame(gameId);
     }
 
