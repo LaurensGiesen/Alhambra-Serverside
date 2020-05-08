@@ -175,33 +175,6 @@ public class Game {
         players.remove(player);
     }
 
-
-    public void takeMoney(String playerName, Purse coins) {
-        //player is present
-        //player is currentPlayer
-        //coins are available in bank
-        //if more as 2 coins, value lower as 5
-        if (this.getPlayerByName(playerName) == null) {
-            throw new AlhambraEntityNotFoundException("No such player in the game");
-        }
-        if (this.getPlayerByName(playerName) != currentPlayer) {
-            throw new AlhambraGameRuleException("Not the current player");
-        }
-        for (Coin coin : coins.getCoins()) {
-            if (!bank.getCoins().contains(coin)) {
-                throw new AlhambraEntityNotFoundException("No such coin in Bank");
-            }
-        }
-        if (coins.getNumberOfCoins() > 1 && coins.getTotalAmount() > 5) {
-            throw new AlhambraGameRuleException("2 coins with a value higher as 5");
-        }
-
-        for (Coin coin : coins.getCoins()) {
-            bank.removeCoin(coin);
-            this.getPlayerByName(playerName).getMoney().addCoin(coin);
-        }
-    }
-
     public void buyBuilding(String playerName, Purse coins) {
         //player is present
         //player is currentPlayer
