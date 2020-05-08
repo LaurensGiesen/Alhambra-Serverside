@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public class Purse {
 
+    @JsonValue
     private List<Coin> coins;
 
     public Purse() {

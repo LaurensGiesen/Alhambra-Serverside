@@ -7,6 +7,8 @@ import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.gamebord.Player;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
 
@@ -14,7 +16,7 @@ public class Game {
 
     /* ------------ FIELDS ------------ */
 
-    private int gameId;
+    @JsonProperty("id") private int gameId;
     private static int numberOfGames = 0;
     private List<Player> players;
     private boolean started;
@@ -22,8 +24,11 @@ public class Game {
     private Player currentPlayer;
     private Purse bank;
     private Map<Currency, Building> market;
+    @JsonIgnore
     private Queue<Coin> coinStack;
+    @JsonIgnore
     private Queue<Building> buildingStack;
+    @JsonIgnore
     private int[] scoringRound;
 
     /* ------------ CONSTRUCTOR ------------ */
@@ -95,6 +100,22 @@ public class Game {
             return players.get(players.indexOf(new Player(playerName)));
         }
         return null;
+    }
+
+    @JsonProperty("playerCount")
+    public int getPlayerCount(){
+        return players.size();
+    }
+
+    @JsonProperty("readyCount")
+    public int getReadyCount(){
+        int count = 0;
+        for(Player p : players){
+            if(p.isReady()){
+                count++;
+            }
+        }
+        return count;
     }
 
     /* ------------ SETTERS ------------ */

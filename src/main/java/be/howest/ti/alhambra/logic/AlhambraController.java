@@ -1,8 +1,10 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.Game.Game;
 import be.howest.ti.alhambra.logic.Game.Server;
 import be.howest.ti.alhambra.logic.coin.Currency;
-import be.howest.ti.alhambra.logic.gamebord.Player;
+import java.util.List;
+import java.util.Set;
 
 public class AlhambraController {
 
@@ -29,4 +31,11 @@ public class AlhambraController {
 
     }
 
+    public Set<Game> getGames() {
+        return server.getGames();
+    }
+
+    public List<Integer> getNotStartedGameIds() {
+        return server.getNotStartedGameIds();
+    }
 }

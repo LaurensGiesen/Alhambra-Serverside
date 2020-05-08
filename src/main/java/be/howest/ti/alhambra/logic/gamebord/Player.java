@@ -2,10 +2,12 @@ package be.howest.ti.alhambra.logic.gamebord;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingPlace;
+import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,20 +15,21 @@ import java.util.Random;
 
 public class Player {
 
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static Random r = new Random();
+
     private String playerName;
-    private String token = randomAlphaNumeric(20);
     private int score;
     private int virtualScore;
     private boolean ready;
     private Purse money;
     private BuildingPlace reserve;
     private City city;
-    private BuildingPlace buildingInHand;
-    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private static Random r = new Random();
+    @JsonIgnore private String token = randomAlphaNumeric(20);
+    @JsonIgnore private BuildingPlace buildingInHand;
 
-    @JsonCreator
-    public Player(@JsonProperty("playerName") String playerName) {
+
+    @JsonCreator public Player(@JsonProperty("playerName") String playerName) {
         this.playerName = playerName;
         this.money = new Purse();
         this.reserve = new BuildingPlace();
@@ -50,12 +53,28 @@ public class Player {
         return money;
     }
 
+    @JsonProperty("money") public Coin[] getMoneyAsArray() {
+        Coin[] coins = new Coin[money.getCoins().size()];
+        money.getCoins().toArray(coins);
+        return coins;
+    }
+
     public BuildingPlace getReserve() {
         return reserve;
     }
 
+    @JsonProperty("reserve") public Building[] getReserveAsArray() {
+        Building[] buildings = new Building[reserve.getBuildings().size()];
+        reserve.getBuildings().toArray(buildings);
+        return buildings;
+    }
+
     public City getCity() {
         return city;
+    }
+
+    @JsonProperty("city") public Building[][] getCityAsGrid() {
+        return city.cityToGrid();
     }
 
     public BuildingPlace getBuildingInHand() {

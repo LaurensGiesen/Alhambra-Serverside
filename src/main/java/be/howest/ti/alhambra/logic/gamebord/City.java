@@ -6,6 +6,8 @@ import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.building.WallingDirection;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Set;
 
 public class City {
 
+    @JsonIgnore
     private List<Location> locations = new ArrayList<>();
 
     public City() {
@@ -24,7 +27,7 @@ public class City {
         return locations;
     }
 
-    public Location getLocation(Location location) {
+    @JsonIgnore public Location getLocation(Location location) {
         if (locations.contains(location)) {
             return locations.get(locations.indexOf(location));
         }

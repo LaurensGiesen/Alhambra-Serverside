@@ -2,8 +2,7 @@ package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Server {
     private Set<Game> games;
@@ -33,6 +32,16 @@ public class Server {
 
     public void resetGames() {
         games.clear();
+    }
+
+    public List<Integer> getNotStartedGameIds() {
+        List<Integer> gameIds = new ArrayList<>();
+        for(Game game : games){
+            if(!game.isStarted()){
+                gameIds.add(game.getGameId());
+            }
+        }
+        return gameIds;
     }
 
 }

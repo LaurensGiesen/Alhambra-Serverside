@@ -27,4 +27,5 @@ public class BuildingPlace {
             throw new AlhambraEntityNotFoundException("Building not present");
         }
     }
+
 }
