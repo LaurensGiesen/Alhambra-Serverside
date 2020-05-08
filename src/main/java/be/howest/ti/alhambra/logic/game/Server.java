@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic.Game;
+package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 

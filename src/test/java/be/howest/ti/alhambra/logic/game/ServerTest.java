@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic.Game;
+package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class ServerTest {
     @Test
     void newGame() {
         createServer();
-        assertTrue(server.getGames().size() == 3);
+        assertEquals(3, server.getGames().size());
     }
 
     @Test
@@ -32,6 +32,6 @@ class ServerTest {
     void resetGames() {
         createServer();
         server.resetGames();
-        assertTrue(server.getGames().size() == 0);
+        assertEquals(0, server.getGames().size());
     }
 }

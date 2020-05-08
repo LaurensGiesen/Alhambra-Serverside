@@ -1,10 +1,9 @@
-package be.howest.ti.alhambra.logic.Game;
+package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.coin.Purse;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

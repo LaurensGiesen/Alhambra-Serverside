@@ -1,7 +1,8 @@
 package be.howest.ti.alhambra.logic;
 
-import be.howest.ti.alhambra.logic.Game.Game;
-import be.howest.ti.alhambra.logic.Game.Server;
+import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.game.Server;
+import be.howest.ti.alhambra.logic.game.TurnManager;
 import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import java.util.List;
@@ -43,6 +44,9 @@ public class AlhambraController {
         }
 
         server.getGame(gameId).getPlayerByName(playerName).setReady(true);
+        if(TurnManager.isReadyToStart(server.getGame(gameId))){
+            TurnManager.startGame(server.getGame(gameId));
+        }
 
         return true;
     }
