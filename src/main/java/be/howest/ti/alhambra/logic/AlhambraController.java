@@ -5,6 +5,8 @@ import be.howest.ti.alhambra.logic.game.Server;
 import be.howest.ti.alhambra.logic.game.TurnManager;
 import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.gamebord.Player;
+
 import java.util.List;
 import java.util.Set;
 
@@ -60,7 +62,19 @@ public class AlhambraController {
     }
 
     public boolean verifyPlayerToken(String token, int gameId, String playerName) {
-        return server.getGame(gameId).getPlayerByName(playerName).isValidToken(token);
+        if(server.getGame(gameId) ==  null) {
+            throw new AlhambraEntityNotFoundException("Game not present");
+        }
+        if (playerName == null) {
+            for(Player p: server.getGame(gameId).getPlayers()) {
+                if (p.isValidToken(token)) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            return server.getGame(gameId).getPlayerByName(playerName).isValidToken(token);
+        }
     }
 
     public boolean setNotReady(int gameId, String playerName) {
@@ -76,6 +90,13 @@ public class AlhambraController {
         server.getGame(gameId).getPlayerByName(playerName).setReady(false);
 
         return true;
+    }
+
+    public Game getGame(int gameId) {
+
+        server.getGame(gameId);
+
+        return null;
     }
 
 }
