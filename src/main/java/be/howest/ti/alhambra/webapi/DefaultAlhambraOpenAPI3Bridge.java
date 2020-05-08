@@ -3,11 +3,10 @@ package be.howest.ti.alhambra.webapi;
 import be.howest.ti.alhambra.logic.AlhambraController;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 import io.vertx.core.json.Json;
-import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
-import org.apache.commons.logging.Log;
+
 
 public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
@@ -88,7 +87,11 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object setReady(RoutingContext ctx) {
         LOGGER.info("setReady");
-        return null;
+
+        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
+        String playerName = ctx.request().getParam("playerName");
+
+        return controller.setReady(gameId, playerName);
     }
 
     public Object setNotReady(RoutingContext ctx) {
