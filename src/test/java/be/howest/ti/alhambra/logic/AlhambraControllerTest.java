@@ -40,4 +40,15 @@ class AlhambraControllerTest {
        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.setReady(21220, playerName));
        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.setReady(gameId, "joske"));
     }
+    @Test
+    void setNotReady() {
+        int gameId = controller.server.newGame();
+        String playerName = "thomas";
+        controller.server.getGame(gameId).addPlayer(playerName);
+        assertTrue(controller.setReady(gameId, playerName));
+        assertTrue(controller.setNotReady(gameId, playerName));
+        assertFalse(controller.server.getGame(gameId).getPlayerByName(playerName).isReady());
+        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.setReady(21220, playerName));
+        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.setReady(gameId, "joske"));
+    }
 }
