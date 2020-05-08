@@ -42,7 +42,9 @@ public class AlhambraController {
             throw new AlhambraEntityNotFoundException("Player does not exist");
         }
 
-        return server.getGame(gameId).getPlayerByName(playerName).setReady(true);
+        server.getGame(gameId).getPlayerByName(playerName).setReady(true);
+
+        return true;
     }
 
     public Set<Game> getGames() {
@@ -56,6 +58,7 @@ public class AlhambraController {
     public boolean verifyPlayerToken(String token, int gameId, String playerName) {
         return server.getGame(gameId).getPlayerByName(playerName).isValidToken(token);
     }
+
     public boolean setNotReady(int gameId, String playerName) {
 
         if (server.getGame(gameId) == null) {
@@ -66,7 +69,9 @@ public class AlhambraController {
             throw new AlhambraEntityNotFoundException("Player does not exist");
         }
 
-        return server.getGame(gameId).getPlayerByName(playerName).setReady(false);
+        server.getGame(gameId).getPlayerByName(playerName).setReady(false);
+
+        return true;
     }
 
 }

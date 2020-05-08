@@ -93,13 +93,8 @@ public class Player {
         return ready;
     }
 
-    public boolean setReady(boolean ready) {
+    public void setReady(boolean ready) {
         this.ready = ready;
-        if (this.isReady() == ready) {
-            return true;
-        }else {
-            return false;
-        }
     }
 
     public void buildBuilding(Building building, Location location) {
