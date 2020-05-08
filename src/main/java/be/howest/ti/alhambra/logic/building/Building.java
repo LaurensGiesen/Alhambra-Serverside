@@ -1,5 +1,7 @@
 package be.howest.ti.alhambra.logic.building;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +32,7 @@ public class Building {
         return walls;
     }
 
-    public boolean isFountain() {
+    @JsonIgnore public boolean isFountain() {
         return type == null;
     }
 

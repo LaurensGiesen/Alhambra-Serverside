@@ -2,10 +2,7 @@ package be.howest.ti.alhambra.logic.Game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Server {
     private Set<Game> games;
@@ -46,4 +43,5 @@ public class Server {
         }
         return gameIds;
     }
+
 }

@@ -1,5 +1,7 @@
 package be.howest.ti.alhambra.logic.building;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,19 +20,20 @@ public class Walling {
         return walls;
     }
 
-    public boolean getWallNorth() {
+
+    @JsonIgnore public boolean getWallNorth() {
         return walls.get(WallingDirection.NORTH);
     }
 
-    public boolean getWallEast() {
+    @JsonIgnore public boolean getWallEast() {
         return walls.get(WallingDirection.EAST);
     }
 
-    public boolean getWallSouth() {
+    @JsonIgnore public boolean getWallSouth() {
         return walls.get(WallingDirection.SOUTH);
     }
 
-    public boolean getWallWest() {
+    @JsonIgnore public boolean getWallWest() {
         return walls.get(WallingDirection.WEST);
     }
 }
