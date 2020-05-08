@@ -30,7 +30,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object getBuildings(RoutingContext ctx) {
         LOGGER.info("getBuildings");
-        return null;
+        return controller.getBuildings();
     }
 
     public Object getAvailableBuildLocations(RoutingContext ctx) {
@@ -131,7 +131,6 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         LOGGER.info("buyBuilding");
         return null;
     }
-
 
     public Object redesign(RoutingContext ctx) {
         LOGGER.info("redesign");

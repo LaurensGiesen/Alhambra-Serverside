@@ -94,6 +94,12 @@ class AlhambraControllerTest {
         assertEquals(2, controller.getAvailableLocations(gameId, playerName, w2).size());
         assertEquals(4, controller.getAvailableLocations(gameId, playerName, w1).size());
     }
+
+    @Test
+    void getBuildings() {
+        assertEquals(54, controller.getBuildings().size());
+    }
+    
 }
 
 
