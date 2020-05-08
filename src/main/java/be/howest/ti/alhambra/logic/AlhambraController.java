@@ -29,6 +29,25 @@ public class AlhambraController {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     public boolean setReady(int gameId, String playerName) {
 
         if (server.getGame(gameId) == null) {
