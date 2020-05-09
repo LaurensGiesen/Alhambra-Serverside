@@ -27,6 +27,7 @@ public class Player {
     private City city;
     @JsonIgnore private String token = randomAlphaNumeric(20);
     private BuildingPlace buildingInHand;
+    @JsonIgnore private Boolean extraTurn;
 
 
     @JsonCreator public Player(@JsonProperty("playerName") String playerName) {
@@ -69,6 +70,15 @@ public class Player {
         return buildings;
     }
 
+    public Boolean getExtraTurn() {
+        return extraTurn;
+    }
+    public void setExtraTurn(Boolean extraTurn) {
+        this.extraTurn = extraTurn;
+    }
+
+
+
     public City getCity() {
         return city;
     }
@@ -95,14 +105,6 @@ public class Player {
 
     public void setReady(boolean ready) {
         this.ready = ready;
-    }
-
-    public void buildBuilding(Building building, Location location) {
-        if (location == null) {
-            placeBuildingInReserve(building);
-        } else {
-            buildBuildingOnAlhambra(building, location);
-        }
     }
 
     public void addBuildingToHand(Building building) {
@@ -155,22 +157,6 @@ public class Player {
         reserve.removeBuilding(building);
         Building b1 = city.replaceBuilding(building, location);
         reserve.addBuilding(b1);
-    }
-
-    private void buildBuildingOnAlhambra(Building building, Location location) {
-        if (!buildingInHand.getBuildings().contains(building)) {
-            throw new AlhambraEntityNotFoundException("selected building not in hand");
-        }
-        city.addBuilding(building, location);
-        buildingInHand.removeBuilding(building);
-    }
-
-    private void placeBuildingInReserve(Building building) {
-        if (!buildingInHand.getBuildings().contains(building)) {
-            throw new AlhambraEntityNotFoundException("selected building not in hand");
-        }
-        reserve.addBuilding(building);
-        buildingInHand.removeBuilding(building);
     }
 
     private void boardToReserve(Location location) {
