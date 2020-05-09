@@ -2,6 +2,7 @@ package be.howest.ti.alhambra.logic.coin;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

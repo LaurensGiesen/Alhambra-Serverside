@@ -3,7 +3,9 @@ package be.howest.ti.alhambra.logic;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
+import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.game.MoveManager;
 import be.howest.ti.alhambra.logic.game.Server;
 import be.howest.ti.alhambra.logic.game.TurnManager;
 import be.howest.ti.alhambra.logic.coin.Currency;
@@ -11,7 +13,6 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -50,13 +51,7 @@ public class AlhambraController {
 
     public boolean setReady(int gameId, String playerName) {
 
-        if (server.getGame(gameId) == null) {
-            throw new AlhambraEntityNotFoundException("Game does not exist");
-        }
-
-        if (server.getGame(gameId).getPlayerByName(playerName) == null) {
-            throw new AlhambraEntityNotFoundException("Player does not exist");
-        }
+        isExistingEntity(gameId, playerName);
 
         server.getGame(gameId).getPlayerByName(playerName).setReady(true);
         if(TurnManager.isReadyToStart(server.getGame(gameId))){
@@ -92,6 +87,14 @@ public class AlhambraController {
 
     public boolean setNotReady(int gameId, String playerName) {
 
+        isExistingEntity(gameId, playerName);
+
+        server.getGame(gameId).getPlayerByName(playerName).setReady(false);
+
+        return true;
+    }
+
+    private void isExistingEntity(int gameId, String playerName) {
         if (server.getGame(gameId) == null) {
             throw new AlhambraEntityNotFoundException("Game does not exist");
         }
@@ -99,10 +102,6 @@ public class AlhambraController {
         if (server.getGame(gameId).getPlayerByName(playerName) == null) {
             throw new AlhambraEntityNotFoundException("Player does not exist");
         }
-
-        server.getGame(gameId).getPlayerByName(playerName).setReady(false);
-
-        return true;
     }
 
     public Object getGame(int gameId) {
@@ -115,45 +114,22 @@ public class AlhambraController {
 
     public List<Location> getAvailableLocations(int gameId,String playerName, Walling walls) {
 
-        if (server.getGame(gameId) == null) {
-            throw new AlhambraEntityNotFoundException("Game does not exist");
-        }
-
-        if (server.getGame(gameId).getPlayerByName(playerName) == null) {
-            throw new AlhambraEntityNotFoundException("Player does not exist");
-        }
+        isExistingEntity(gameId, playerName);
 
         return server.getGame(gameId).getPlayerByName(playerName).getCity().getAvailableLocations(walls);
     }
 
-    public Object buyBuilding(int gameId, String playerName) {
+    public Object buyBuilding(int gameId, String playerName, Purse coins) {
+        isExistingEntity(gameId, playerName);
 
-        if (server.getGame(gameId) == null) {
-            throw new AlhambraEntityNotFoundException("Game does not exist");
+        Game game = server.getGame(gameId);
+        Player player = server.getGame(gameId).getPlayerByName(playerName);
+
+        if (MoveManager.canBuyBuilding(game, player, coins)) {
+            MoveManager.buyBuilding(player, game.getMarket(), coins);
         }
 
-        if (server.getGame(gameId).getPlayerByName(playerName) == null) {
-            throw new AlhambraEntityNotFoundException("Player does not exist");
-        }
-
-//        Object bank = server.getGame(gameId).getBank();
-//        Object market =  server.getGame(gameId).getMarket();
-//        Object player = server.getGame(gameId).getPlayers();
-//        Object started = server.getGame(gameId).isStarted();
-//        Object ended = server.getGame(gameId).isEnded();
-//        Object currentPlayer = server.getGame(gameId).getCurrentPlayer().getPlayerName();
-//        Object buildingInHand = server.getGame(gameId).getPlayerByName(playerName).getBuildingInHand();
-//
-//        List<Object> list = new ArrayList<>();
-//        list.add(bank);
-//        list.add(market);
-//        list.add(player);
-//        list.add(buildingInHand);
-//        list.add(started);
-//        list.add(ended);
-//        list.add(currentPlayer);
-
-        return server.getGame(gameId);
+        return game;
     }
 
 }

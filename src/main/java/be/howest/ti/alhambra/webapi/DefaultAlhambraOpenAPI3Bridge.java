@@ -2,8 +2,12 @@ package be.howest.ti.alhambra.webapi;
 
 import be.howest.ti.alhambra.logic.AlhambraController;
 import be.howest.ti.alhambra.logic.building.Walling;
+import be.howest.ti.alhambra.logic.coin.Coin;
+import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
@@ -133,7 +137,17 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
         String playerName = ctx.request().getParam("playerName");
 
-        return controller.buyBuilding(gameId, playerName);
+        Purse coins = new Purse();
+
+        JsonObject obj = new JsonObject(ctx.getBodyAsString());
+        JsonArray coinArray = obj.getJsonArray("coins");
+
+        for (int i = 0; i < coinArray.size(); i++) {
+            JsonObject element = coinArray.getJsonObject(i);
+            Coin coin = element.mapTo(Coin.class);
+            coins.addCoin(coin);
+        }
+        return controller.buyBuilding(gameId, playerName, coins);
     }
 
     public Object redesign(RoutingContext ctx) {
