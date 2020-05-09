@@ -132,4 +132,17 @@ public class AlhambraController {
         return game;
     }
 
+    public Object takeMoney(int gameId, String playerName, Purse coins) {
+        isExistingEntity(gameId, playerName);
+
+        Game game = server.getGame(gameId);
+        Player player = server.getGame(gameId).getPlayerByName(playerName);
+
+        if (MoveManager.canTakeMoney(game, player, coins)) {
+            MoveManager.takeMoney(game, player, coins);
+        }
+
+        return game;
+    }
+
 }

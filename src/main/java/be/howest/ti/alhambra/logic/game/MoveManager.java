@@ -46,6 +46,7 @@ public class MoveManager {
             game.getBank().removeCoin(coin);
             game.getPlayerByName(player.getPlayerName()).getMoney().addCoin(coin);
         }
+        TurnManager.endTurn(game);
     }
 
     public static boolean canBuyBuilding(Game game, Player player, Purse coins){
