@@ -93,7 +93,7 @@ public class MoveManager {
         if(!player.getBuildingInHand().getBuildings().contains(building)){
             throw new AlhambraEntityNotFoundException("Building not in hand");
         }
-        if(location != null && player.getCity().isValidPlacing(building, location)){
+        if(location != null && !player.getCity().isValidPlacing(building, location)){
             throw new AlhambraGameRuleException("Invalid location for this building");
         }
 
