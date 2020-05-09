@@ -25,16 +25,10 @@ public class MoveManager {
         return true;
     }
 
-    public static boolean canTakeMoney(Game game, Player player){
+    public static boolean canTakeMoney(Game game, Player player, Purse coinsToTake){
         canPlay(game, player);
 
-        if (game.getPlayerByName(player.getPlayerName()) == null) {
-            throw new AlhambraEntityNotFoundException("No such player in the game");
-        }
-        if (game.getPlayerByName(player.getPlayerName()) != game.getCurrentPlayer()) {
-            throw new AlhambraGameRuleException("Not the current player");
-        }
-        for (Coin coin : player.getMoney().getCoins()) {
+        for (Coin coin : coinsToTake.getCoins()) {
             if (!game.getBank().getCoins().contains(coin)) {
                 throw new AlhambraEntityNotFoundException("No such coin in Bank");
             }
