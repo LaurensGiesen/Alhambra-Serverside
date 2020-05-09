@@ -26,7 +26,7 @@ public class Player {
     private BuildingPlace reserve;
     private City city;
     @JsonIgnore private String token = randomAlphaNumeric(20);
-    @JsonIgnore private BuildingPlace buildingInHand;
+    private BuildingPlace buildingInHand;
 
 
     @JsonCreator public Player(@JsonProperty("playerName") String playerName) {
