@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.logic;
 
 import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.Server;
@@ -31,6 +32,10 @@ public class AlhambraController {
 
     public List<Building> getBuildings() {
         return Building.allBuilding();
+    }
+
+    public Buildingtype[] getBuildingTypes() {
+        return Buildingtype.values();
     }
 
     public String createGame() {
