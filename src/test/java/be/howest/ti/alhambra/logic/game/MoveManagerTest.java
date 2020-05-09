@@ -50,24 +50,42 @@ class MoveManagerTest {
 
     @Test
     void canTakeMoney() {
-        //     Game game = new Game();
-//     Player player = new Player("michiel");
-//     Player player1 = new Player("Quinten");
-//     Player player2 = new Player("Laurens");
-//    game.addPlayer(player.getPlayerName());
-//    game.addPlayer(player1.getPlayerName());
-//    game.addPlayer(player2.getPlayerName());
-//    Coin coin = new Coin(Currency.BLUE, 9);
-//    Purse purse = new Purse();
-//    purse.addCoin(coin);
-//
-//    TurnManager.startGame(game);
-//
-//    MoveManager move = new MoveManager();
-//
-//    assertTrue(move.canTakeMoney(game, player1,purse));
-//    assertThrows(AlhambraGameRuleException.class, () -> move.canTakeMoney(game, player, purse));
-//
+    Game game = new Game();
+    Player player = new Player("michiel");
+    Player player1 = new Player("Quinten");
+    Player player2 = new Player("Laurens");
+    game.addPlayer(player.getPlayerName());
+    game.addPlayer(player1.getPlayerName());
+    game.addPlayer(player2.getPlayerName());
+
+    Coin coin = new Coin(Currency.BLUE, 18);
+
+    TurnManager.startGame(game);
+
+    Player currentPlayer = game.getCurrentPlayer();
+    Purse bank = game.getBank();
+
+    Purse selectedCoins = new Purse();
+    selectedCoins.addCoin(bank.getCoins().get(1));
+
+    Purse selectedWrongCoins = new Purse();
+    selectedWrongCoins.addCoin(coin);
+
+    Purse selectedCoinsTotalIsToHigh = new Purse();
+    selectedCoinsTotalIsToHigh.addCoin(bank.getCoins().get(0));
+    selectedCoinsTotalIsToHigh.addCoin(bank.getCoins().get(1));
+    selectedCoinsTotalIsToHigh.addCoin(bank.getCoins().get(2));
+    selectedCoinsTotalIsToHigh.addCoin(bank.getCoins().get(3));
+
+    assertTrue(MoveManager.canTakeMoney(game, currentPlayer, selectedCoins));
+    assertThrows(AlhambraEntityNotFoundException.class, () -> MoveManager.canTakeMoney(game, currentPlayer, selectedWrongCoins));
+    assertThrows(AlhambraGameRuleException.class, () -> MoveManager.canTakeMoney(game, currentPlayer, selectedCoinsTotalIsToHigh));
+
+    int currentSize = currentPlayer.getMoney().getCoins().size();
+
+    MoveManager.takeMoney(game, currentPlayer, selectedCoins);
+
+    assertEquals(currentSize + selectedCoins.getCoins().size(), currentPlayer.getMoney().getCoins().size());
     }
 
 
