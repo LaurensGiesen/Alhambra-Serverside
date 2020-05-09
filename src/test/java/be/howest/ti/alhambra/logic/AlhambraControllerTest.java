@@ -99,7 +99,13 @@ class AlhambraControllerTest {
     void getBuildings() {
         assertEquals(54, controller.getBuildings().size());
     }
-    
+
+    @Test
+    void getBuildingsTypes() {
+        assertEquals(6, controller.getBuildingTypes().length);
+    }
+
+
 }
 
 
