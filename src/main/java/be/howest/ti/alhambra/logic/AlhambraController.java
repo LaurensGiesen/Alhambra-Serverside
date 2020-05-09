@@ -11,6 +11,7 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -123,6 +124,36 @@ public class AlhambraController {
         }
 
         return server.getGame(gameId).getPlayerByName(playerName).getCity().getAvailableLocations(walls);
-
     }
+
+    public List<Object> buyBuilding(int gameId, String playerName) {
+
+        if (server.getGame(gameId) == null) {
+            throw new AlhambraEntityNotFoundException("Game does not exist");
+        }
+
+        if (server.getGame(gameId).getPlayerByName(playerName) == null) {
+            throw new AlhambraEntityNotFoundException("Player does not exist");
+        }
+
+        Object bank = server.getGame(gameId).getBank();
+        Object market =  server.getGame(gameId).getMarket();
+        Object player = server.getGame(gameId).getPlayers();
+        Object started = server.getGame(gameId).isStarted();
+        Object ended = server.getGame(gameId).isEnded();
+        Object currentPlayer = server.getGame(gameId).getCurrentPlayer().getPlayerName();
+        Object buildingInHand = server.getGame(gameId).getPlayerByName(playerName).getBuildingInHand();
+
+        List<Object> list = new ArrayList<>();
+        list.add(bank);
+        list.add(market);
+        list.add(player);
+        list.add(buildingInHand);
+        list.add(started);
+        list.add(ended);
+        list.add(currentPlayer);
+
+        return list;
+    }
+
 }

@@ -129,7 +129,11 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object buyBuilding(RoutingContext ctx) {
         LOGGER.info("buyBuilding");
-        return null;
+
+        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
+        String playerName = ctx.request().getParam("playerName");
+
+        return controller.buyBuilding(gameId, playerName);
     }
 
     public Object redesign(RoutingContext ctx) {
@@ -148,5 +152,4 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
         return controller.getGame(gameId);
     }
-
 }
