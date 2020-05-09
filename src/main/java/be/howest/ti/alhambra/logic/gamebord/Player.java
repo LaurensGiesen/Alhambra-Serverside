@@ -97,13 +97,13 @@ public class Player {
         this.ready = ready;
     }
 
-    public void buildBuilding(Building building, Location location) {
-        if (location == null) {
-            placeBuildingInReserve(building);
-        } else {
-            buildBuildingOnAlhambra(building, location);
-        }
-    }
+//    public void buildBuilding(Building building, Location location) {
+//        if (location == null) {
+//            placeBuildingInReserve(building);
+//        } else {
+//            buildBuildingOnAlhambra(building, location);
+//        }
+//    }
 
     public void addBuildingToHand(Building building) {
         buildingInHand.addBuilding(building);
@@ -157,21 +157,21 @@ public class Player {
         reserve.addBuilding(b1);
     }
 
-    private void buildBuildingOnAlhambra(Building building, Location location) {
-        if (!buildingInHand.getBuildings().contains(building)) {
-            throw new AlhambraEntityNotFoundException("selected building not in hand");
-        }
-        city.addBuilding(building, location);
-        buildingInHand.removeBuilding(building);
-    }
+//    private void buildBuildingOnAlhambra(Building building, Location location) {
+//        if (!buildingInHand.getBuildings().contains(building)) {
+//            throw new AlhambraEntityNotFoundException("selected building not in hand");
+//        }
+//        city.addBuilding(building, location);
+//        buildingInHand.removeBuilding(building);
+//    }
 
-    private void placeBuildingInReserve(Building building) {
-        if (!buildingInHand.getBuildings().contains(building)) {
-            throw new AlhambraEntityNotFoundException("selected building not in hand");
-        }
-        reserve.addBuilding(building);
-        buildingInHand.removeBuilding(building);
-    }
+//    private void placeBuildingInReserve(Building building) {
+//        if (!buildingInHand.getBuildings().contains(building)) {
+//            throw new AlhambraEntityNotFoundException("selected building not in hand");
+//        }
+//        reserve.addBuilding(building);
+//        buildingInHand.removeBuilding(building);
+//    }
 
     private void boardToReserve(Location location) {
         if (location == null) {

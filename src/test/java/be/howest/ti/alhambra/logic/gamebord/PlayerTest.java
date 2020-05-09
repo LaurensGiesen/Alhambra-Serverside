@@ -85,19 +85,19 @@ class PlayerTest {
     }
 
 
-    @Test
-    void buildBuildingOnAlhambra() {
-        p1.addBuildingToHand(b1);
-        p1.buildBuilding(b1, new Location(0,-1));
-        assertFalse(p1.getBuildingInHand().getBuildings().contains(b1));
-        assertEquals(b1, p1.getCity().getLocation(new Location(0, -1)).getBuilding());
-    }
-
-    @Test
-    void buildBuildingInReserve() {
-        p1.addBuildingToHand(b1);
-        p1.buildBuilding(b1,null);
-        assertFalse(p1.getBuildingInHand().getBuildings().contains(b1));
-        assertTrue(p1.getReserve().getBuildings().contains(b1));
-    }
+//    @Test
+//    void buildBuildingOnAlhambra() {
+//        p1.addBuildingToHand(b1);
+//        p1.buildBuilding(b1, new Location(0,-1));
+//        assertFalse(p1.getBuildingInHand().getBuildings().contains(b1));
+//        assertEquals(b1, p1.getCity().getLocation(new Location(0, -1)).getBuilding());
+//    }
+//
+//    @Test
+//    void buildBuildingInReserve() {
+//        p1.addBuildingToHand(b1);
+//        p1.buildBuilding(b1,null);
+//        assertFalse(p1.getBuildingInHand().getBuildings().contains(b1));
+//        assertTrue(p1.getReserve().getBuildings().contains(b1));
+//    }
 }

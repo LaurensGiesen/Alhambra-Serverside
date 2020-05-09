@@ -105,4 +105,14 @@ class MoveManagerTest {
         assertFalse(currPlayer.getBuildingInHand().getBuildings().isEmpty());
         assertNotEquals(0, currPlayer.getMoney().getNumberOfCoins());
     }
+
+    @Test
+    void canBuildBuilding() {
+        createGame();
+
+    }
+
+    @Test
+    void buildBuilding() {
+    }
 }

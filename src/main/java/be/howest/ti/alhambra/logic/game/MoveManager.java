@@ -6,6 +6,7 @@ import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.coin.Purse;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 
 import java.util.Map;
@@ -85,5 +86,38 @@ public class MoveManager {
             money.removeCoin(coin);
         }
     }
+
+    public static boolean canBuildBuilding(Game game, Player player, Building building, Location location){
+        canPlay(game, player);
+
+        if(!player.getBuildingInHand().getBuildings().contains(building)){
+            throw new AlhambraEntityNotFoundException("Building not in hand");
+        }
+        if(location != null && player.getCity().isValidPlacing(building, location)){
+            throw new AlhambraGameRuleException("Invalid location for this building");
+        }
+
+        return true;
+    }
+
+    public static void buildBuilding(Player player, Building building, Location location){
+        if(location == null){
+            buildBuildingInReserve(player, building);
+        } else {
+            buildBuildingInAlhambra(player, building, location);
+        }
+    }
+
+    private static void buildBuildingInReserve(Player player, Building building) {
+        player.getReserve().addBuilding(building);
+        player.getBuildingInHand().removeBuilding(building);
+    }
+
+    private static void buildBuildingInAlhambra(Player player, Building building, Location location) {
+        player.getCity().addBuilding(building, location);
+        player.getBuildingInHand().removeBuilding(building);
+    }
+
+
 
 }
