@@ -126,7 +126,7 @@ public class AlhambraController {
         return server.getGame(gameId).getPlayerByName(playerName).getCity().getAvailableLocations(walls);
     }
 
-    public List<Object> buyBuilding(int gameId, String playerName) {
+    public Object buyBuilding(int gameId, String playerName) {
 
         if (server.getGame(gameId) == null) {
             throw new AlhambraEntityNotFoundException("Game does not exist");
@@ -136,24 +136,24 @@ public class AlhambraController {
             throw new AlhambraEntityNotFoundException("Player does not exist");
         }
 
-        Object bank = server.getGame(gameId).getBank();
-        Object market =  server.getGame(gameId).getMarket();
-        Object player = server.getGame(gameId).getPlayers();
-        Object started = server.getGame(gameId).isStarted();
-        Object ended = server.getGame(gameId).isEnded();
-        Object currentPlayer = server.getGame(gameId).getCurrentPlayer().getPlayerName();
-        Object buildingInHand = server.getGame(gameId).getPlayerByName(playerName).getBuildingInHand();
+//        Object bank = server.getGame(gameId).getBank();
+//        Object market =  server.getGame(gameId).getMarket();
+//        Object player = server.getGame(gameId).getPlayers();
+//        Object started = server.getGame(gameId).isStarted();
+//        Object ended = server.getGame(gameId).isEnded();
+//        Object currentPlayer = server.getGame(gameId).getCurrentPlayer().getPlayerName();
+//        Object buildingInHand = server.getGame(gameId).getPlayerByName(playerName).getBuildingInHand();
+//
+//        List<Object> list = new ArrayList<>();
+//        list.add(bank);
+//        list.add(market);
+//        list.add(player);
+//        list.add(buildingInHand);
+//        list.add(started);
+//        list.add(ended);
+//        list.add(currentPlayer);
 
-        List<Object> list = new ArrayList<>();
-        list.add(bank);
-        list.add(market);
-        list.add(player);
-        list.add(buildingInHand);
-        list.add(started);
-        list.add(ended);
-        list.add(currentPlayer);
-
-        return list;
+        return server.getGame(gameId);
     }
 
 }
