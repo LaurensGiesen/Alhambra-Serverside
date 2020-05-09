@@ -16,7 +16,7 @@ public class MoveManager {
         }
     }
 
-    public boolean canTakeMoney(Game game, Player player){
+    public boolean canTakeMoney(Game game, Player player, Purse coinsToTake){
         canPlay(game, player);
 
         if (game.getPlayerByName(player.getPlayerName()) == null) {
@@ -25,7 +25,7 @@ public class MoveManager {
         if (game.getPlayerByName(player.getPlayerName()) != game.getCurrentPlayer()) {
             throw new AlhambraGameRuleException("Not the current player");
         }
-        for (Coin coin : game.getBank().getCoins()) {
+        for (Coin coin : coinsToTake.getCoins()) {
             if (!game.getBank().getCoins().contains(coin)) {
                 throw new AlhambraEntityNotFoundException("No such coin in Bank");
             }
