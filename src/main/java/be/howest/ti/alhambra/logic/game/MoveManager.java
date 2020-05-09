@@ -14,7 +14,7 @@ public class MoveManager {
         }else{
             throw  new AlhambraGameRuleException("Stop cheating");
         }
-
+ 
     }
 
     public boolean canTakeMoney(Game game, Player player, Purse coinsToTake){
