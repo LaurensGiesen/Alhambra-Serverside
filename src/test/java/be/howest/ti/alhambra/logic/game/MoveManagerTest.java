@@ -12,8 +12,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MoveManagerTest {
 
-    @Test
-    void takeMoney() {
 
-    }
+//    @Test
+//    void canTakeMoney() {
+//     Game game = new Game();
+//     Player player = new Player("michiel");
+//     Player player1 = new Player("Quinten");
+//     Player player2 = new Player("Laurens");
+//    game.addPlayer(player.getPlayerName());
+//    game.addPlayer(player1.getPlayerName());
+//    game.addPlayer(player2.getPlayerName());
+//    Coin coin = new Coin(Currency.BLUE, 9);
+//    Purse purse = new Purse();
+//    purse.addCoin(coin);
+//
+//    TurnManager.startGame(game);
+//
+//    MoveManager move = new MoveManager();
+//
+//    assertTrue(move.canTakeMoney(game, player1,purse));
+//    assertThrows(AlhambraGameRuleException.class, () -> move.canTakeMoney(game, player, purse));
+//
+
+
+
+//    }
 }
