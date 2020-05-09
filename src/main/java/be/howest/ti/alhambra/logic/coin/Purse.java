@@ -43,7 +43,7 @@ public class Purse {
         if (coins.contains(coin)) {
             coins.remove(coin);
         } else {
-            throw new AlhambraEntityNotFoundException("Building not present");
+            throw new AlhambraEntityNotFoundException("Coin not present");
         }
     }
 }
