@@ -25,7 +25,7 @@ public class MoveManager {
         if (game.getPlayerByName(player.getPlayerName()) != game.getCurrentPlayer()) {
             throw new AlhambraGameRuleException("Not the current player");
         }
-        for (Coin coin : player.getMoney().getCoins()) {
+        for (Coin coin : game.getBank().getCoins()) {
             if (!game.getBank().getCoins().contains(coin)) {
                 throw new AlhambraEntityNotFoundException("No such coin in Bank");
             }
