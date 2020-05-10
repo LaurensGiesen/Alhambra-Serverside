@@ -111,6 +111,7 @@ public class City {
             throw new AlhambraGameRuleException("The building on this location cannot be removed");
         }
         Building building = this.getLocation(location).getBuilding();
+        this.getLocation(location).setBuilding(null);
         locations.remove(location);
         return building;
     }
@@ -125,8 +126,8 @@ public class City {
         if (!isValidPlacing(building, location)) {
             throw new AlhambraGameRuleException("The tile cannot be placed here");
         }
-        Building b = removeBuilding(location);
-        addBuilding(building, location);
+        Building b = this.getLocation(location).getBuilding();
+        this.getLocation(location).setBuilding(building);
 
         return b;
     }

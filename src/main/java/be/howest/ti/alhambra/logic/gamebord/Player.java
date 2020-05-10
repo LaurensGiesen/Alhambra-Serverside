@@ -4,7 +4,6 @@ import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.BuildingPlace;
 import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.coin.Purse;
-import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -118,21 +117,6 @@ public class Player {
         this.score += amount;
     }
 
-    public void redesignCity(Building building, Location location) {
-        if (building == null) {
-            //if from board to reserve
-            boardToReserve(location);
-        } else {
-            if (city.getLocation(location).getBuilding() == null) {
-                //if from reserve to board
-                reserveToBoard(building, location);
-            } else {
-                //if from reserve to replaceOnBoard
-                reserveToReplace(building, location);
-            }
-        }
-    }
-
     public static String randomAlphaNumeric(int count) {
         StringBuilder builder = new StringBuilder();
         while (count-- != 0) {
@@ -140,31 +124,6 @@ public class Player {
             builder.append(ALPHA_NUMERIC_STRING.charAt(character));
         }
         return builder.toString();
-    }
-
-    private void reserveToBoard(Building building, Location location) {
-        if (!reserve.getBuildings().contains(building)) {
-            throw new AlhambraEntityNotFoundException("No such building in reserve");
-        }
-        reserve.removeBuilding(building);
-        city.addBuilding(building, location);
-    }
-
-    private void reserveToReplace(Building building, Location location) {
-        if (!reserve.getBuildings().contains(building)) {
-            throw new AlhambraEntityNotFoundException("No such building in reserve");
-        }
-        reserve.removeBuilding(building);
-        Building b1 = city.replaceBuilding(building, location);
-        reserve.addBuilding(b1);
-    }
-
-    private void boardToReserve(Location location) {
-        if (location == null) {
-            throw new AlhambraEntityNotFoundException("Remove building from location null cannot be done");
-        }
-        Building b = city.removeBuilding(location);
-        reserve.addBuilding(b);
     }
 
     @Override

@@ -13,20 +13,21 @@ import java.util.Map;
 
 public class MoveManager {
 
-    private MoveManager() {}
+    private MoveManager() {
+    }
 
-    private static boolean canPlay(Game game, Player player ){
+    private static boolean canPlay(Game game, Player player) {
         if (game.getPlayerByName(player.getPlayerName()) == null) {
             throw new AlhambraEntityNotFoundException("No such player in the game");
         }
         if (game.getCurrentPlayer() != game.getPlayerByName(player.getPlayerName())) {
-            throw  new AlhambraGameRuleException("Stop cheating, it's not your turn!");
+            throw new AlhambraGameRuleException("Stop cheating, it's not your turn!");
         }
 
         return true;
     }
 
-    public static boolean canTakeMoney(Game game, Player player, Purse coinsToTake){
+    public static boolean canTakeMoney(Game game, Player player, Purse coinsToTake) {
         canPlay(game, player);
 
         for (Coin coin : coinsToTake.getCoins()) {
@@ -38,7 +39,7 @@ public class MoveManager {
             throw new AlhambraGameRuleException("2 coins with a value higher as 5");
         }
 
-            return true;
+        return true;
 
     }
 
@@ -50,7 +51,7 @@ public class MoveManager {
         TurnManager.endTurn(game);
     }
 
-    public static boolean canBuyBuilding(Game game, Player player, Purse coins){
+    public static boolean canBuyBuilding(Game game, Player player, Purse coins) {
         canPlay(game, player);
 
         Currency currency = coins.getCurrency();
@@ -61,8 +62,8 @@ public class MoveManager {
         if (building.getCost() > coins.getTotalAmount()) {
             throw new AlhambraGameRuleException("Not enough money to buy");
         }
-        for(Coin coin : coins.getCoins()){
-            if(!player.getMoney().getCoins().contains(coin)){
+        for (Coin coin : coins.getCoins()) {
+            if (!player.getMoney().getCoins().contains(coin)) {
                 throw new AlhambraEntityNotFoundException("Player does not have the money");
             }
         }
@@ -71,7 +72,7 @@ public class MoveManager {
 
     }
 
-    public static void buyBuilding(Player player, Map<Currency, Building> market, Purse coins){
+    public static void buyBuilding(Player player, Map<Currency, Building> market, Purse coins) {
         //take money from player, put building from market to buildingInHand of player
         Currency currency = coins.getCurrency();
         Building building = market.get(currency);
@@ -82,30 +83,59 @@ public class MoveManager {
         player.addBuildingToHand(building);
     }
 
-    public static void useMoney(Purse money, Purse coins){
-        for(Coin coin : coins.getCoins()){
+    public static void useMoney(Purse money, Purse coins) {
+        for (Coin coin : coins.getCoins()) {
             money.removeCoin(coin);
         }
     }
 
-    public static boolean canBuildBuilding(Game game, Player player, Building building, Location location){
+    public static boolean canBuildBuilding(Game game, Player player, Building building, Location location) {
         canPlay(game, player);
 
-        if(!player.getBuildingInHand().getBuildings().contains(building)){
+        if (!player.getBuildingInHand().getBuildings().contains(building)) {
             throw new AlhambraEntityNotFoundException("Building not in hand");
         }
-        if(location != null && !player.getCity().isValidPlacing(building, location)){
+        if (location != null && !player.getCity().isValidPlacing(building, location)) {
             throw new AlhambraGameRuleException("Invalid location for this building");
         }
 
         return true;
     }
 
-    public static void buildBuilding(Player player, Building building, Location location){
-        if(location == null){
+    public static void buildBuilding(Player player, Building building, Location location) {
+        if (location == null) {
             buildBuildingInReserve(player, building);
         } else {
             buildBuildingInAlhambra(player, building, location);
+        }
+    }
+
+    public static boolean canRedesignCity(Game game, Player player, Building building, Location location) {
+        canPlay(game, player);
+        if(building == null && location == null){
+            throw new AlhambraEntityNotFoundException("Illegal input");
+        }
+        if (building == null && location.getBuilding() == null) {
+            throw new AlhambraEntityNotFoundException("The location is empty");
+        }
+        if (building != null && !player.getReserve().getBuildings().contains(building)) {
+            throw new AlhambraEntityNotFoundException("No such building in the reserve");
+        }
+
+        if (building != null && !player.getCity().isValidPlacing(building, location)) {
+            throw new AlhambraGameRuleException("No valid location to build");
+        }
+
+        return true;
+    }
+
+    public static void redesignCity(Player player, Building building, Location location) {
+        if (building == null) {
+            MoveManager.replaceFromBoardToReserve(player, location);
+        } else if (player.getCity().getLocation(location).getBuilding() == null) {
+            MoveManager.replaceFromReserveToEmptyLocation(player, building, location);
+        } else {
+            MoveManager.replaceFromReserveToUsedLocation(player, building, location);
         }
     }
 
@@ -119,6 +149,20 @@ public class MoveManager {
         player.getBuildingInHand().removeBuilding(building);
     }
 
+    private static void replaceFromBoardToReserve(Player player, Location location) {
+        Building building = player.getCity().removeBuilding(location);
+        player.getReserve().addBuilding(building);
+    }
 
+    private static void replaceFromReserveToEmptyLocation(Player player, Building building, Location location) {
+        player.getCity().addBuilding(building, location);
+        player.getReserve().removeBuilding(building);
+    }
+
+    private static void replaceFromReserveToUsedLocation(Player player, Building building, Location location) {
+        Building oldBuilding = player.getCity().replaceBuilding(building, location);
+        player.getReserve().addBuilding(oldBuilding);
+        player.getReserve().removeBuilding(building);
+    }
 
 }
