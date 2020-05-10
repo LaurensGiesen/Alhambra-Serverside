@@ -144,6 +144,13 @@ public class AlhambraController {
         return game;
     }
     public Object leaveGame(int gameId, String playerName) {
+        if(playerName == server.getGame(gameId).getCurrentPlayer().getPlayerName()) {
+            server.getGame(gameId).endOfTurn();
+            return server.getGame(gameId).removePlayer(playerName);
+        }
+        if(server.getGame(gameId).getPlayers().size() == 2) {
+            TurnManager.endGame(gameId);
+        }
         return server.getGame(gameId).removePlayer(playerName);
     }
 }
