@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic.game;
 
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 
 public class TurnManager {
@@ -57,5 +58,14 @@ public class TurnManager {
             game.setCurrentPlayer(game.getPlayers().get(posCurrPlayer + 1));
         }
     }
-
+    private void endGame(Game game) {
+        //calculate score 3
+        //set game to ended
+        if (!game.isStarted()) {
+            throw new AlhambraGameRuleException("The game hasn't even started yet");
+        } else{
+            ScoreCalculator.score(game.getPlayers(), 3);
+            game.setEnded(true);
+        }
+    }
 }
