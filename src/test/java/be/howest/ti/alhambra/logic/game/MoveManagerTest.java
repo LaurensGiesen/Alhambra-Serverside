@@ -20,6 +20,10 @@ class MoveManagerTest {
     Purse purse;
     Player currPlayer;
     Player otherPlayer;
+    Building b1;
+    Building b2;
+    Location l1;
+    Location l2;
 
     private void createGame(){
         g = new Game();
@@ -41,6 +45,16 @@ class MoveManagerTest {
 
         currPlayer.getMoney().addCoin(c1);
 
+    }
+
+    private void createGameToRedesign(){
+        createGame();
+        b1 = new Building(Buildingtype.PAVILION, 5, new Walling(false, false, false, false));
+        b2 = new Building(Buildingtype.PAVILION, 7, new Walling(false, false, false, false));
+        l1 = new Location(1, 0);
+        l2 = new Location(-1, 0);
+        currPlayer.getReserve().getBuildings().add(b1);
+        currPlayer.getCity().addBuilding(b2, l2);
     }
 
 
@@ -153,5 +167,41 @@ class MoveManagerTest {
         assertDoesNotThrow(()->MoveManager.buildBuilding(currPlayer, b1, null));
         assertTrue(currPlayer.getReserve().getBuildings().contains(b1));
         assertFalse(currPlayer.getBuildingInHand().getBuildings().contains(b1));
+    }
+
+    @Test
+    void canRedesignCity() {
+        createGameToRedesign();
+
+        assertThrows(AlhambraEntityNotFoundException.class, ()->MoveManager.canRedesignCity(g, currPlayer, null, null));
+        assertThrows(AlhambraEntityNotFoundException.class, ()->MoveManager.canRedesignCity(g, currPlayer, null, l1)); //location empty
+        assertThrows(AlhambraEntityNotFoundException.class, ()->MoveManager.canRedesignCity(g, currPlayer, b2, l1)); //building not in reserve
+        assertThrows(AlhambraGameRuleException.class, ()->MoveManager.canRedesignCity(g, currPlayer, b1, new Location(0,0))); //no valid location
+
+        assertTrue(MoveManager.canRedesignCity(g, currPlayer, b1, l2)); //Place building on empty location
+        assertTrue(MoveManager.canRedesignCity(g, currPlayer, b1, l1)); //Place building on taken location
+        assertTrue(MoveManager.canRedesignCity(g, currPlayer, null, l2)); //Place building from board to reserve
+    }
+
+    @Test
+    void redesignCity() {
+        //Place on empty location
+        createGameToRedesign();
+        assertDoesNotThrow(() -> MoveManager.redesignCity(currPlayer, b1, l1));
+        assertFalse(currPlayer.getReserve().getBuildings().contains(b1));
+        assertEquals(b1, currPlayer.getCity().getLocation(l1).getBuilding());
+
+        //Place on taken location
+        createGameToRedesign();
+        assertDoesNotThrow(() -> MoveManager.redesignCity(currPlayer, b1, l2));
+        assertFalse(currPlayer.getReserve().getBuildings().contains(b1));
+        assertTrue(currPlayer.getReserve().getBuildings().contains(b2));
+        assertEquals(b1, currPlayer.getCity().getLocation(l2).getBuilding());
+
+        //Place in reserve
+        createGameToRedesign();
+        assertDoesNotThrow(() -> MoveManager.redesignCity(currPlayer, null, l2));
+        assertTrue(currPlayer.getReserve().getBuildings().contains(b2));
+        assertNull(currPlayer.getCity().getLocation(l2).getBuilding());
     }
 }

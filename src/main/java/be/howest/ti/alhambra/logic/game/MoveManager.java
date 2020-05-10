@@ -112,11 +112,12 @@ public class MoveManager {
 
     public static boolean canRedesignCity(Game game, Player player, Building building, Location location) {
         canPlay(game, player);
-
+        if(building == null && location == null){
+            throw new AlhambraEntityNotFoundException("Illegal input");
+        }
         if (building == null && location.getBuilding() == null) {
             throw new AlhambraEntityNotFoundException("The location is empty");
         }
-
         if (building != null && !player.getReserve().getBuildings().contains(building)) {
             throw new AlhambraEntityNotFoundException("No such building in the reserve");
         }
