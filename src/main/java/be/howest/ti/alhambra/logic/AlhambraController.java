@@ -46,7 +46,6 @@ public class AlhambraController {
 
     public String joinGame(int gameId, String playerName) {
         return server.getGame(gameId).addPlayer(playerName);
-
     }
 
     public boolean setReady(int gameId, String playerName) {
@@ -144,5 +143,7 @@ public class AlhambraController {
 
         return game;
     }
-
+    public Object leaveGame(int gameId, String playerName) {
+        return server.getGame(gameId).removePlayer(playerName);
+    }
 }

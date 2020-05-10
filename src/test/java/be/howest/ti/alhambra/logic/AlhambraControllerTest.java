@@ -105,6 +105,20 @@ class AlhambraControllerTest {
         assertEquals(6, controller.getBuildingTypes().length);
     }
 
+    @Test
+    void leaveGame() {
+        String playerName = "jonas";
+        String playerName2 = "quinten";
+        String playerName3 = "lau";
+        int gameId = Integer.parseInt(controller.createGame());
+        controller.joinGame(gameId, playerName);
+        controller.joinGame(gameId, playerName2);
+        controller.joinGame(gameId, playerName3);
+        controller.leaveGame(gameId, playerName3);
+        assertEquals(2, controller.getServer().getGame(gameId).getPlayers().size());
+        controller.leaveGame(gameId, playerName2);
+        assertEquals(1, controller.getServer().getGame(gameId).getPlayers().size());
+    }
 
 }
 
