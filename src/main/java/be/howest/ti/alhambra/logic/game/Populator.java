@@ -14,14 +14,21 @@ public class Populator {
     }
 
     public static void populateMarket(Queue<Building> buildingStack, Map<Currency, Building> market) {
+        if(buildingStack.isEmpty()) {
+//            TurnManager.endGame(); //Je moet hier game aan meegeven...
+        }
         for (Currency c : market.keySet()) {
             market.computeIfAbsent(c, k -> buildingStack.poll());
         }
     }
 
     public static void populateBank(Queue<Coin> coinStack, Purse bank) {
-        while (bank.getNumberOfCoins() < 4) {
-            bank.addCoin(coinStack.poll());
+        if (coinStack.isEmpty()) {
+            populateCoinStack(coinStack);
+        } else {
+            while (bank.getNumberOfCoins() < 4) {
+                bank.addCoin(coinStack.poll());
+            }
         }
     }
 

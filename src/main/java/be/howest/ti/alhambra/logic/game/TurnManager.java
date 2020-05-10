@@ -58,7 +58,7 @@ public class TurnManager {
             game.setCurrentPlayer(game.getPlayers().get(posCurrPlayer + 1));
         }
     }
-    private void endGame(Game game) {
+    public static void endGame(Game game) {
         //calculate score 3
         //set game to ended
         if (!game.isStarted()) {
