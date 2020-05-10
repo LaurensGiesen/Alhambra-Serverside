@@ -54,34 +54,4 @@ class PlayerTest {
         assertThrows(AlhambraGameRuleException.class, ()->p1.addScore(-50));
     }
 
-//    @Test
-//    void redesignCityBoardToReserve() {
-//        p1.redesignCity(null, new Location(-1, 0));
-//        assertTrue(p1.getReserve().getBuildings().contains(b2));
-//        assertTrue(p1.getReserve().getBuildings().contains(b1));
-//        assertTrue(p1.getCity().getLocation(new Location(-1, 0)).isEmpty());
-//        assertThrows(AlhambraEntityNotFoundException.class, ()->p1.redesignCity(null, null));
-//    }
-//
-//    @Test
-//    void redesignCityReserveToBoard() {
-//        p1.redesignCity(b1, new Location(1, 0));
-//        assertFalse(p1.getReserve().getBuildings().contains(b1));
-//        assertEquals(b1, p1.getCity().getLocation(new Location(1, 0)).getBuilding());
-//        assertEquals(b2, p1.getCity().getLocation(new Location(-1, 0)).getBuilding());
-//
-//        assertThrows(AlhambraEntityNotFoundException.class, ()->p1.redesignCity(b2, new Location(0, 1)));
-//    }
-//
-//    @Test
-//    void redesignCityReplace() {
-//        p1.redesignCity(b1, new Location(-1, 0));
-//
-//        assertThrows(AlhambraEntityNotFoundException.class, ()->p1.redesignCity(b1, new Location(-1, 0)));
-//
-//        assertTrue(p1.getReserve().getBuildings().contains(b2));
-//        assertFalse(p1.getReserve().getBuildings().contains(b1));
-//        assertEquals(b1, p1.getCity().getLocation(new Location(-1, 0)).getBuilding());
-//    }
-    
 }
