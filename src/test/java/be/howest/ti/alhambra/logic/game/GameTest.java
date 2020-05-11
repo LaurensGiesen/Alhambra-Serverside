@@ -23,6 +23,7 @@ class GameTest {
         TurnManager.startGame(game);
         return game;
     }
+    
     @Test
     void addPlayer() {
         Game game = createEmptyGame();
@@ -65,15 +66,6 @@ class GameTest {
         assertDoesNotThrow(()->g4.removePlayer("B"));
         assertTrue(g4.isEnded()); //If only 1 player is left of started game, game is finished
 
-    }
-
-    @Test
-    void getNumberOfGames() {
-        Game g1 = new Game();
-        assertEquals(1, Game.getNumberOfGames());
-        Game g2 = new Game();
-        Game g3 = new Game();
-        assertEquals(3, Game.getNumberOfGames());
     }
 
     @Test
