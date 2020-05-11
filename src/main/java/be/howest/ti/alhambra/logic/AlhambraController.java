@@ -13,6 +13,7 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.List;
 import java.util.Set;
 
@@ -173,12 +174,22 @@ public class AlhambraController {
     }
 
     public Object leaveGame(int gameId, String playerName) {
-        if(playerName == server.getGame(gameId).getCurrentPlayer().getPlayerName()) {
-            server.getGame(gameId).endOfTurn();
-            return server.getGame(gameId).removePlayer(playerName);
-        }
-        if(server.getGame(gameId).getPlayers().size() == 2) {
-//            TurnManager.
+        if(server.getGame(gameId).isStarted()){
+
+            if(playerName.equals(server.getGame(gameId).getCurrentPlayer())) {
+                if(server.getGame(gameId).getPlayers().size() == 2) {
+                    TurnManager.endGame(server.getGame(gameId));
+                }else{
+                    server.getGame(gameId).endOfTurn();
+                    return server.getGame(gameId).removePlayer(playerName);
+                }
+            }
+            if(server.getGame(gameId).getPlayers().size() == 2) {
+                TurnManager.endGame(server.getGame(gameId));
+            }
+            else{
+                return server.getGame(gameId).removePlayer(playerName);
+            }
         }
         return server.getGame(gameId).removePlayer(playerName);
     }
