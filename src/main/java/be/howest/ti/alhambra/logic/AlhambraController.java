@@ -159,4 +159,18 @@ public class AlhambraController {
         return game;
     }
 
+    public Object redesignCity(int gameId, String playerName, Building building, Location locations) {
+        isExistingEntity(gameId, playerName);
+
+        Game game = server.getGame(gameId);
+        Player player = server.getGame(gameId).getPlayerByName(playerName);
+
+        if (MoveManager.canRedesignCity(game, player, building, locations)) {
+            MoveManager.redesignCity(player, building, locations);
+            TurnManager.endTurn(game);
+        }
+
+        return game;
+    }
+
 }
