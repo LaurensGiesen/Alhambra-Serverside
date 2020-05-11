@@ -8,10 +8,7 @@ import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class City {
 
@@ -45,7 +42,44 @@ public class City {
     }
 
     public int getLengthWall() {
-        return 0;
+        int maxLength = 0;
+        for(Location l : locations){
+            for(WallingDirection d : WallingDirection.values()){
+                Citywall cw = new Citywall(l, d);
+                maxLength = Math.max(maxLength, getLengthWallFromWall(cw, null));
+            }
+        }
+        return maxLength;
+    }
+
+    private int getLengthWallFromWall(Citywall cw, Set<Citywall> prevCitywalls){
+        if(prevCitywalls == null){
+            prevCitywalls = new HashSet<>();
+        }
+        if(prevCitywalls.contains(cw)){
+            return 0;
+        }
+        prevCitywalls.add(cw);
+
+        int maxLength = 0;
+        if(isOuterWall(cw)){
+            Queue<Citywall> connectedWalls = cw.getConnectedCitywalls();
+            for(Citywall connectedWall : connectedWalls){
+                maxLength = Math.max(maxLength, getLengthWallFromWall(connectedWall, prevCitywalls) + 1);
+            }
+        }
+
+        return maxLength;
+    }
+
+    private boolean isOuterWall(Citywall cw){
+        if(this.getLocation(cw.getLocation()).isEmpty()){
+            return false;
+        }
+        if(Boolean.FALSE.equals(this.getLocation(cw.getLocation()).getBuilding().getWalls().getWalls().get(cw.getDirection()))){
+            return false;
+        }
+        return this.getLocation(cw.getLocation().getNeighbourLocation(cw.getDirection())).isEmpty();
     }
 
     public List<Location> getAvailableLocations(Walling walls) {
