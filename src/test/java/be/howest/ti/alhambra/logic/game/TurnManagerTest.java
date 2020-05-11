@@ -74,7 +74,6 @@ class TurnManagerTest {
         assertNotNull(g1.getMarket().get(Currency.GREEN));
 
         getStartedGame();
-        currPlayer = g1.getCurrentPlayer();
         g1.getBuildingStack().clear();
         g1.getMarket().replace(Currency.BLUE, null);
         assertDoesNotThrow(() -> TurnManager.endTurn(g1));
