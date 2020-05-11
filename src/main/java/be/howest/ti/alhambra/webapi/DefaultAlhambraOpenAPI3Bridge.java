@@ -107,7 +107,9 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object leaveGame(RoutingContext ctx) {
         LOGGER.info("leaveGame");
-        return null;
+        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
+        String playerName = ctx.request().getParam("playerName");
+        return controller.leaveGame(gameId, playerName);
     }
 
     public Object setReady(RoutingContext ctx) {

@@ -165,7 +165,7 @@ public class Game {
         return players.get(players.indexOf(new Player(playerName))).getToken();
     }
 
-    public void removePlayer(String playerName) {
+    public boolean removePlayer(String playerName) {
         //Player must be present
         //remove player from players
         //if current player -> end round
@@ -174,8 +174,8 @@ public class Game {
         if (player == null) {
             throw new AlhambraEntityNotFoundException("Player not present");
         }
-
         players.remove(player);
+        return true;
     }
 
     public void buyBuilding(String playerName, Purse coins) {
