@@ -62,7 +62,7 @@ class TurnManagerTest {
     @Test
     void endTurn() {
         getStartedGame();
-        Player currPlayer = g1.getCurrentPlayer();
+        String currPlayer = g1.getCurrentPlayer();
         assertDoesNotThrow(() -> TurnManager.endTurn(g1));
         assertNotEquals(currPlayer, g1.getCurrentPlayer());
         TurnManager.endTurn(g1);

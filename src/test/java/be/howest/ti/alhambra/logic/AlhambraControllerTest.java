@@ -1,7 +1,12 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.game.TurnManager;
+import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -105,7 +110,30 @@ class AlhambraControllerTest {
         assertEquals(6, controller.getBuildingTypes().length);
     }
 
+    @Test
+    void build() {
+        int gameId = controller.server.newGame();
+        Player player = new Player("michiel");
+        Player player1 = new Player("Quinten");
 
+        Game game = controller.server.getGame(gameId);
+
+        game.addPlayer(player.getPlayerName());
+        game.addPlayer(player1.getPlayerName());
+
+        TurnManager.startGame(game);
+
+        Player currentPlayer = game.getCurrentPlayer();
+
+        Building buildingInHand = new Building(Buildingtype.ARCADES,1, new Walling(false, false, false, false));
+
+        game.getPlayerByName(currentPlayer.getPlayerName()).getBuildingInHand().addBuilding(buildingInHand);
+
+        assertDoesNotThrow(() -> controller.build(gameId, currentPlayer.getPlayerName(), buildingInHand, new Location(1,0)));
+        assertNotEquals(currentPlayer, game.getCurrentPlayer());
+        assertFalse(currentPlayer.getBuildingInHand().getBuildings().contains(buildingInHand));
+        assertEquals(buildingInHand, currentPlayer.getCity().getLocation(new Location(1,0)).getBuilding());
+    }
 }
 
 

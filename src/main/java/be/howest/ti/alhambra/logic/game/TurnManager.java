@@ -52,22 +52,22 @@ public class TurnManager {
             if (numberOfCoins < smallestNumberOfCards) {
                 smallestNumberOfCards = numberOfCoins;
                 totalAmountOfCoins = p.getMoney().getTotalAmount();
-                game.setCurrentPlayer(p);
+                game.setCurrentPlayer(p.getPlayerName());
             } else if (numberOfCoins == smallestNumberOfCards && totalAmountOfCoins > p.getMoney().getTotalAmount()) {
-                game.setCurrentPlayer(p);
+                game.setCurrentPlayer(p.getPlayerName());
                 totalAmountOfCoins = p.getMoney().getTotalAmount();
             }
         }
     }
 
     private static void setNextPlayer(Game game) {
-        Player currPlayer = game.getCurrentPlayer();
+        Player currPlayer = game.getPlayerByName(game.getCurrentPlayer());
         int posCurrPlayer = game.getPlayers().indexOf(currPlayer);
 
         if (posCurrPlayer == game.getPlayers().size() - 1) {
-            game.setCurrentPlayer(game.getPlayers().get(0));
+            game.setCurrentPlayer(game.getPlayers().get(0).getPlayerName());
         } else {
-            game.setCurrentPlayer(game.getPlayers().get(posCurrPlayer + 1));
+            game.setCurrentPlayer(game.getPlayers().get(posCurrPlayer + 1).getPlayerName());
         }
     }
 

@@ -21,7 +21,7 @@ public class Game {
     private List<Player> players;
     private boolean started;
     private boolean ended;
-    private Player currentPlayer;
+    private String currentPlayer;
     private Purse bank;
     private Map<Currency, Building> market;
     @JsonIgnore
@@ -82,7 +82,7 @@ public class Game {
         return buildingStack;
     }
 
-    public Player getCurrentPlayer() {
+    public String getCurrentPlayer() {
         return currentPlayer;
     }
 
@@ -97,7 +97,6 @@ public class Game {
     public boolean isEnded() {
         return ended;
     }
-
 
     public List<Player> getPlayers() {
         return players;
@@ -139,11 +138,10 @@ public class Game {
     public void setStarted(boolean started) {
         this.started = started;
     }
-
     public void setEnded(boolean ended) {
         this.ended = ended;
     }
-    public void setCurrentPlayer(Player currentPlayer) {
+    public void setCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
     public void setScoringRound(int[] rounds){
@@ -190,7 +188,7 @@ public class Game {
         if (this.getPlayerByName(playerName) == null) {
             throw new AlhambraEntityNotFoundException("No such player in the game");
         }
-        if (this.getPlayerByName(playerName) != currentPlayer) {
+        if (!playerName.equals(currentPlayer)) {
             throw new AlhambraGameRuleException("Not the current player");
         }
         Currency currency = coins.getCurrency();

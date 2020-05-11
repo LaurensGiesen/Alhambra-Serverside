@@ -1,6 +1,8 @@
 package be.howest.ti.alhambra.logic.building;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,9 @@ public class Building {
     private Walling walls;
     private static Random r = new Random();
 
-    public Building(Buildingtype type, int cost, Walling walls) {
+
+    @JsonCreator
+    public Building(@JsonProperty("type") Buildingtype type,@JsonProperty("cost") int cost,@JsonProperty("walls") Walling walls) {
         this.type = type;
         this.cost = cost;
         this.walls = walls;
@@ -75,7 +79,7 @@ public class Building {
         //The number in binary represents the walls N-E-S-W
         //(n/8)%2 gives the binary number for the 4th digit (N)
         int rw = r.nextInt(14);  // between 0 en 14
-        return new Walling((rw / 8) % 2 == 1, (rw / 4) % 2 == 1, (rw / 2) % 2 == 1, (rw / 1) % 2 == 1);
+        return new Walling((rw / 8) % 2 == 1, (rw / 4) % 2 == 1, (rw / 2) % 2 == 1, (rw) % 2 == 1);
     }
 
     @Override

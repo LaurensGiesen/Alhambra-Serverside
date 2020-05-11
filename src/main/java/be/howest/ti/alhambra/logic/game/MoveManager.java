@@ -20,7 +20,7 @@ public class MoveManager {
         if (game.getPlayerByName(player.getPlayerName()) == null) {
             throw new AlhambraEntityNotFoundException("No such player in the game");
         }
-        if (game.getCurrentPlayer() != game.getPlayerByName(player.getPlayerName())) {
+        if (!game.getCurrentPlayer().equals(player.getPlayerName())) {
             throw new AlhambraGameRuleException("Stop cheating, it's not your turn!");
         }
 
