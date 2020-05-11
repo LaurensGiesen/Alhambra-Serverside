@@ -1,20 +1,32 @@
 package be.howest.ti.alhambra.logic.game;
 
-class GameTest {
+import be.howest.ti.alhambra.logic.coin.Coin;
+import be.howest.ti.alhambra.logic.coin.Purse;
+import be.howest.ti.alhambra.logic.gamebord.Player;
+import be.howest.ti.alhambra.logic.game.Populator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-    private Game createEmptyGame(){
-        return new Game();
-    }
-    private Game createStartedGame(){
-        Game game = new Game();
-        game.addPlayer("A");
-        game.addPlayer("B");
-        game.addPlayer("C");
-        game.getPlayerByName("A").setReady(true);
-        game.getPlayerByName("B").setReady(true);
-        game.getPlayerByName("C").setReady(true);
-        return game;
-    }
+import java.util.LinkedList;
+import java.util.Queue;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+//
+//class GameTest {
+//
+//    private Game createEmptyGame(){
+//        return new Game();
+//    }
+//    private Game createStartedGame(){
+//        Game game = new Game();
+//        game.addPlayer("A");
+//        game.addPlayer("B");
+//        game.addPlayer("C");
+//        game.getPlayerByName("A").setReady(true);
+//        game.getPlayerByName("B").setReady(true);
+//        game.getPlayerByName("C").setReady(true);
+//        return game;
+//    }
 
 
 //    @Test
@@ -114,12 +126,12 @@ class GameTest {
     OVER FUNCTIES GAAT DIE PRIVATE ZAL STAAN!
     --------------------------------------------------------------------------------------------
     ----------------------------------------------------------------------------------------- */
-
-
+//
+//
 //    Game g1; // 2 player game;
 //    Game g2; //empty game
 //    Game g3;
-
+//
 //    @BeforeEach
 //    private void createGame(){
 //        g1 = new Game();
@@ -192,16 +204,21 @@ class GameTest {
 //        assertEquals(4, g1.getBank().getCoins().size());
 //    }
 //
-//
+////
 //    @Test
 //    void determineStarter() {
-//        g1.addStartMoney();
-//        g1.determineStarter();
 //
-//        Player curr = g1.getCurrentPlayer();
+//        TurnManager.startGame(g1);
+//        Purse singlePurse = new Purse();
+//        Queue<Coin> coinStack = new LinkedList<>();
 //
-//        int currNr = curr.getMoney().getNumberOfCoins();
-//        int currAmount = curr.getMoney().getTotalAmount();
+//        Populator.giveStartMoney(coinStack, singlePurse);
+//        TurnManager.determineStarter(g1);
+//
+//        Player currentPlayer = g1.getPlayerByName(g1.getCurrentPlayer());
+//
+//        int currNr = currentPlayer.getMoney().getNumberOfCoins();
+//        int currAmount = currentPlayer.getMoney().getTotalAmount();
 //        int aNr = g1.getPlayerByName("A").getMoney().getNumberOfCoins();
 //        int bNr = g1.getPlayerByName("B").getMoney().getNumberOfCoins();
 //        int cNr = g1.getPlayerByName("C").getMoney().getNumberOfCoins();
@@ -213,4 +230,4 @@ class GameTest {
 //        assertTrue(currNr < bNr || (currNr == bNr && currAmount <= bAmount));
 //        assertTrue(currNr < cNr || (currNr == cNr && currAmount <= cAmount));
 //    }
-}
+//}

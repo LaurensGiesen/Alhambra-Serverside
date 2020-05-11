@@ -40,7 +40,7 @@ class MoveManagerTest {
 
         purse.addCoin(c1);
 
-        currPlayer = g.getCurrentPlayer();
+        currPlayer = g.getPlayerByName(g.getCurrentPlayer());
         otherPlayer = pA == currPlayer ? pB : pA;
 
         currPlayer.getMoney().addCoin(c1);
@@ -72,7 +72,7 @@ class MoveManagerTest {
 
     TurnManager.startGame(game);
 
-    Player currentPlayer = game.getCurrentPlayer();
+    Player currentPlayer = game.getPlayerByName(game.getCurrentPlayer());
     Purse bank = game.getBank();
 
     Purse selectedCoins = new Purse();
