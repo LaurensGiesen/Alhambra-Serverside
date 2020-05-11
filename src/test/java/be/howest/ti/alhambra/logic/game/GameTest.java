@@ -66,4 +66,27 @@ class GameTest {
         assertTrue(g4.isEnded()); //If only 1 player is left of started game, game is finished
 
     }
+
+    @Test
+    void getNumberOfGames() {
+        Game g1 = new Game();
+        assertEquals(1, Game.getNumberOfGames());
+        Game g2 = new Game();
+        Game g3 = new Game();
+        assertEquals(3, Game.getNumberOfGames());
+    }
+
+    @Test
+    void getScoringRound() {
+        Game g = createStartedGame();
+        assertTrue(g.getScoringRound()[0] > 23 && g.getScoringRound()[0] < 44);
+        assertTrue(g.getScoringRound()[1] > 67 && g.getScoringRound()[1] < 88);
+    }
+
+    @Test
+    void testEquals() {
+        Game g = new Game();
+        Game g2 = new Game();
+        assertNotEquals(g, g2);
+    }
 }
