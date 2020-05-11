@@ -149,7 +149,7 @@ public class AlhambraController {
             return server.getGame(gameId).removePlayer(playerName);
         }
         if(server.getGame(gameId).getPlayers().size() == 2) {
-            TurnManager.endGame(gameId);
+            TurnManager.
         }
         return server.getGame(gameId).removePlayer(playerName);
     }
