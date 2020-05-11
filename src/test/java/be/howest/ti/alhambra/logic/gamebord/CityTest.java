@@ -161,22 +161,22 @@ class CityTest {
     }
 
 
-//    @Test
-//    void getLengthWall() {
-//        createCity();
-//
-//        assertEquals(3, c.getLengthWall()); //Check normal in 1 direction
-//
-//        c.addBuilding(bS, new Location(-1, -1));
-//        c.replaceBuilding(bNW, new Location(0, -2));
-//
-//        assertEquals(4, c.getLengthWall()); //Test for inside wall
-//
-//        c.addBuilding(bS, new Location(-1, -2));
-//        assertEquals(4, c.getLengthWall()); //Test for additional inside wall
-//
-//        c.addBuilding(bESW, new Location(3, -2));
-//        assertEquals(7, c.getLengthWall()); //Test for normal in many directions
-//    }
+    @Test
+    void getLengthWall() {
+        createCity();
+
+        assertEquals(3, c.getLengthWall()); //Check normal in 1 direction
+
+        c.addBuilding(bS, new Location(-1, -1));
+        c.replaceBuilding(bNW, new Location(0, -2));
+
+        assertEquals(4, c.getLengthWall()); //Test for inside wall
+
+        c.addBuilding(bS, new Location(-1, -2));
+        assertEquals(3, c.getLengthWall()); //Test for additional inside wall
+
+        c.addBuilding(bESW, new Location(3, -2));
+        assertEquals(7, c.getLengthWall()); //Test for normal in many directions
+    }
     
 }
