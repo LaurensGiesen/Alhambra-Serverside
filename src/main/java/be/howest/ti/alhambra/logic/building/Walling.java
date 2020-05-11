@@ -1,6 +1,8 @@
 package be.howest.ti.alhambra.logic.building;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +12,9 @@ public class Walling {
 
     private Map<WallingDirection, Boolean> walls = new HashMap<>();
 
-    public Walling(boolean north, boolean east, boolean south, boolean west) {
+
+    @JsonCreator
+    public Walling(@JsonProperty("north") boolean north,@JsonProperty("east") boolean east,@JsonProperty("south") boolean south,@JsonProperty("west") boolean west) {
         this.walls.put(WallingDirection.NORTH, north);
         this.walls.put(WallingDirection.EAST, east);
         this.walls.put(WallingDirection.SOUTH, south);
