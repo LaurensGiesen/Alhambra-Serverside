@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Walling {
 
@@ -35,5 +36,18 @@ public class Walling {
 
     @JsonIgnore public boolean getWallWest() {
         return walls.get(WallingDirection.WEST);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Walling walling = (Walling) o;
+        return Objects.equals(walls, walling.walls);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(walls);
     }
 }
