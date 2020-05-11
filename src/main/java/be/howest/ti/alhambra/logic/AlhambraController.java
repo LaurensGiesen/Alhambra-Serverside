@@ -12,8 +12,6 @@ import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
-
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.List;
 import java.util.Set;
 
@@ -180,7 +178,7 @@ public class AlhambraController {
                 if(server.getGame(gameId).getPlayers().size() == 2) {
                     TurnManager.endGame(server.getGame(gameId));
                 }else{
-                    server.getGame(gameId).endOfTurn();
+                    TurnManager.endTurn(server.getGame(gameId));
                     return server.getGame(gameId).removePlayer(playerName);
                 }
             }
