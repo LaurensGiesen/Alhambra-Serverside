@@ -15,12 +15,17 @@ public class ScoreCalculator {
     private ScoreCalculator() {}
 
     public static void score(List<Player> players, int round){
+        scoreBuildingTypes(players, round);
+        scoreWalls(players);
+    }
+
+    private static void scoreBuildingTypes(List<Player> players, int round) {
         for(Buildingtype buildingtype : Buildingtype.values()){
             List<List<Player>> playerTable = playersWithMostBuildings(players, buildingtype);
             for(int position = 1; position < playerTable.size()+1; position++){
                 int score = 0;
                 if(!playerTable.get(position-1).isEmpty()){
-                    score = getScore(round, buildingtype, playerTable, position, score);
+                    score = getScoreForBuildingType(round, buildingtype, playerTable, position, score);
                 }
 
                 for(int i = 0; i < playerTable.get(position-1).size(); i++){
@@ -29,8 +34,11 @@ public class ScoreCalculator {
             }
         }
     }
+    private static void scoreWalls(List<Player> players) {
+        //TODO: add score to player for the longest wall
+    }
 
-    private static int getScore(int round, Buildingtype buildingtype, List<List<Player>> playerTable, int position, int score) {
+    private static int getScoreForBuildingType(int round, Buildingtype buildingtype, List<List<Player>> playerTable, int position, int score) {
         score += scorecard.getScore(buildingtype, round, position);
         if(position < playerTable.size() && playerTable.get(position-1).size() > 1){
             score += scorecard.getScore(buildingtype, round, position+1);
@@ -41,8 +49,7 @@ public class ScoreCalculator {
         score /=  playerTable.get(position-1).size();
         return score;
     }
-
-    public static List<List<Player>> playersWithMostBuildings(List<Player> players, Buildingtype buildingtype){
+    private static List<List<Player>> playersWithMostBuildings(List<Player> players, Buildingtype buildingtype){
         List<Player> playersCopy = new ArrayList<>(List.copyOf(players));
 
         switch(buildingtype){

@@ -138,8 +138,7 @@ public class City {
         int colMin = getEdgeOfCity(WallingDirection.WEST);
         int colMax = getEdgeOfCity(WallingDirection.EAST);
         Building[][] grid = new Building[rowMax - rowMin + 3][colMax - colMin + 3];
-
-
+        
         for (Location l : locations) {
             grid[l.getRow() - rowMin + 1][l.getCol() - colMin + 1] = l.getBuilding();
         }
