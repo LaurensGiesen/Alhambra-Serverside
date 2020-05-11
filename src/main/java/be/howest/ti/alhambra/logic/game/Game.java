@@ -138,6 +138,9 @@ public class Game {
     public void setStarted(boolean started) {
         this.started = started;
     }
+    public void setEnded(boolean ended) {
+        this.ended = ended;
+    }
     public void setCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
@@ -274,14 +277,14 @@ public class Game {
         //Longest wall
     }
 
-    private void endGame() {
-        //calculate score 3
-        //set game to ended
-        if (!started) {
-            throw new AlhambraGameRuleException("The game hasn't even started yet");
-        }
-        this.ended = true;
-    }
+//    private void endGame() {
+//        //calculate score 3
+//        //set game to ended
+//        if (!started) {
+//            throw new AlhambraGameRuleException("The game hasn't even started yet");
+//        }
+//        this.ended = true;
+//    }
 
 
     /* ------------ EQUALS & HASH ------------ */

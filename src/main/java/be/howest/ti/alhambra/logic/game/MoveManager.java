@@ -38,7 +38,6 @@ public class MoveManager {
         if (coinsToTake.getNumberOfCoins() > 1 && player.getMoney().getTotalAmount() > 5) {
             throw new AlhambraGameRuleException("2 coins with a value higher as 5");
         }
-
         return true;
 
     }

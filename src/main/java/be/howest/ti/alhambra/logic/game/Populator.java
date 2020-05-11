@@ -13,15 +13,23 @@ public class Populator {
     private Populator() {
     }
 
-    public static void populateMarket(Queue<Building> buildingStack, Map<Currency, Building> market) {
+    public static boolean populateMarket(Queue<Building> buildingStack, Map<Currency, Building> market) {
+        if (buildingStack.isEmpty()) {
+            return false;
+        }
         for (Currency c : market.keySet()) {
             market.computeIfAbsent(c, k -> buildingStack.poll());
         }
+        return true;
     }
 
     public static void populateBank(Queue<Coin> coinStack, Purse bank) {
-        while (bank.getNumberOfCoins() < 4) {
-            bank.addCoin(coinStack.poll());
+        if (coinStack.isEmpty()) {
+            populateCoinStack(coinStack);
+        } else {
+            while (bank.getNumberOfCoins() < 4) {
+                bank.addCoin(coinStack.poll());
+            }
         }
     }
 
@@ -34,7 +42,6 @@ public class Populator {
     public static void populateBuildingStack(Queue<Building> buildingStack) {
         List<Building> allBuildings = new ArrayList<>(Building.allBuilding());
         Collections.shuffle(allBuildings);
-
         buildingStack.addAll(allBuildings);
 
     }
