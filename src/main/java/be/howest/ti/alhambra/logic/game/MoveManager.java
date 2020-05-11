@@ -115,7 +115,7 @@ public class MoveManager {
         if(building == null && location == null){
             throw new AlhambraEntityNotFoundException("Illegal input");
         }
-        if (building == null && location.getBuilding() == null) {
+        if (building == null && player.getCity().getLocation(location).getBuilding() == null) {
             throw new AlhambraEntityNotFoundException("The location is empty");
         }
         if (building != null && !player.getReserve().getBuildings().contains(building)) {

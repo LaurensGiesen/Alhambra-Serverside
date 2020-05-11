@@ -168,7 +168,18 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
     public Object redesign(RoutingContext ctx) {
         LOGGER.info("redesign");
-        return null;
+
+        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
+        String playerName = ctx.request().getParam("playerName");
+
+        JsonObject obj = new JsonObject(ctx.getBodyAsString());
+        JsonObject jsonBuilding = obj.getJsonObject("building");
+        Building building = jsonBuilding.mapTo(Building.class);
+        JsonObject jsonLocation = obj.getJsonObject("location");
+        Location location = jsonLocation.mapTo(Location.class);
+
+
+        return controller.redesignCity(gameId, playerName, building, location);
     }
 
     public Object build(RoutingContext ctx) {
