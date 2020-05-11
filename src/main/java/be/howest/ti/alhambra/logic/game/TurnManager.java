@@ -24,7 +24,9 @@ public class TurnManager {
 
     public static void endTurn(Game game) {
         Populator.populateBank(game.getCoinStack(), game.getBank());
-        Populator.populateMarket(game.getBuildingStack(), game.getMarket());
+        if(!Populator.populateMarket(game.getBuildingStack(), game.getMarket())) {
+            TurnManager.endGame(game);
+        }
         setNextPlayer(game);
     }
 

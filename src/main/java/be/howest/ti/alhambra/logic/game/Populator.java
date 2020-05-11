@@ -13,13 +13,14 @@ public class Populator {
     private Populator() {
     }
 
-    public static void populateMarket(Queue<Building> buildingStack, Map<Currency, Building> market) {
-        if(buildingStack.isEmpty()) {
-//            TurnManager.endGame(); //Je moet hier game aan meegeven...
+    public static boolean populateMarket(Queue<Building> buildingStack, Map<Currency, Building> market) {
+        if (buildingStack.isEmpty()) {
+            return false;
         }
         for (Currency c : market.keySet()) {
             market.computeIfAbsent(c, k -> buildingStack.poll());
         }
+        return true;
     }
 
     public static void populateBank(Queue<Coin> coinStack, Purse bank) {
@@ -41,7 +42,6 @@ public class Populator {
     public static void populateBuildingStack(Queue<Building> buildingStack) {
         List<Building> allBuildings = new ArrayList<>(Building.allBuilding());
         Collections.shuffle(allBuildings);
-
         buildingStack.addAll(allBuildings);
 
     }
