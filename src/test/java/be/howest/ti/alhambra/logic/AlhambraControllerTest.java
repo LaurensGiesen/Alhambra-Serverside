@@ -1,7 +1,13 @@
 package be.howest.ti.alhambra.logic;
 
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.game.Game;
+import be.howest.ti.alhambra.logic.game.TurnManager;
+import be.howest.ti.alhambra.logic.gamebord.City;
+import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -106,20 +112,70 @@ class AlhambraControllerTest {
     }
 
     @Test
-    void leaveGame() {
-        String playerName = "jonas";
-        String playerName2 = "quinten";
-        String playerName3 = "lau";
-        int gameId = Integer.parseInt(controller.createGame());
-        controller.joinGame(gameId, playerName);
-        controller.joinGame(gameId, playerName2);
-        controller.joinGame(gameId, playerName3);
-        controller.leaveGame(gameId, playerName3);
-        assertEquals(2, controller.getServer().getGame(gameId).getPlayers().size());
-        controller.leaveGame(gameId, playerName2);
-        assertEquals(1, controller.getServer().getGame(gameId).getPlayers().size());
+    void build() {
+        int gameId = controller.server.newGame();
+        Player player = new Player("michiel");
+        Player player1 = new Player("Quinten");
+
+        Game game = controller.server.getGame(gameId);
+
+        game.addPlayer(player.getPlayerName());
+        game.addPlayer(player1.getPlayerName());
+
+        TurnManager.startGame(game);
+
+        Player currentPlayer = game.getPlayerByName(game.getCurrentPlayer());
+
+        Building buildingInHand = new Building(Buildingtype.ARCADES,1, new Walling(false, false, false, false));
+
+        game.getPlayerByName(currentPlayer.getPlayerName()).getBuildingInHand().addBuilding(buildingInHand);
+
+        assertDoesNotThrow(() -> controller.build(gameId, currentPlayer.getPlayerName(), buildingInHand, new Location(1,0)));
+        assertNotEquals(currentPlayer, game.getCurrentPlayer());
+        assertFalse(currentPlayer.getBuildingInHand().getBuildings().contains(buildingInHand));
+        assertEquals(buildingInHand, currentPlayer.getCity().getLocation(new Location(1,0)).getBuilding());
     }
 
+    @Test
+    void redesignCity() {
+        int gameId = controller.server.newGame();
+        Player player = new Player("michiel");
+        Player player1 = new Player("Quinten");
+
+        Game game = controller.server.getGame(gameId);
+
+        game.addPlayer(player.getPlayerName());
+        game.addPlayer(player1.getPlayerName());
+
+        TurnManager.startGame(game);
+
+        Player currentPlayer = game.getPlayerByName(game.getCurrentPlayer());
+
+        Building buildingInReserve = new Building(Buildingtype.ARCADES, 1, new Walling(false, false, false, false));
+        Building buildingOnCity = new Building(Buildingtype.TOWER, 1, new Walling(false, false, false, false));
+
+        currentPlayer.getCity().addBuilding(buildingOnCity, new Location(1,0));
+        currentPlayer.getReserve().addBuilding(buildingInReserve);
+
+        controller.redesignCity(gameId, currentPlayer.getPlayerName(), buildingInReserve, new Location(1, 0));
+
+        assertNotEquals(currentPlayer, game.getCurrentPlayer());
+        assertFalse(currentPlayer.getReserve().getBuildings().contains(buildingInReserve));
+        assertEquals(buildingInReserve, currentPlayer.getCity().getLocation(new Location(1, 0)).getBuilding());
+        assertNotEquals(buildingOnCity, currentPlayer.getCity().getLocation(new Location(1, 0)).getBuilding());
+        assertTrue(currentPlayer.getReserve().getBuildings().contains(buildingOnCity));
+
+        TurnManager.endTurn(game);
+
+        controller.redesignCity(gameId, currentPlayer.getPlayerName(), null, new Location(1,0));
+        assertTrue(currentPlayer.getReserve().getBuildings().contains(buildingInReserve));
+
+        TurnManager.endTurn(game);
+
+        controller.redesignCity(gameId, currentPlayer.getPlayerName(), buildingOnCity, new Location(1,0));
+        assertEquals(buildingOnCity, currentPlayer.getCity().getLocation(new Location(1, 0)).getBuilding());
+        assertTrue(currentPlayer.getReserve().getBuildings().contains(buildingInReserve));
+    }
 }
 
 

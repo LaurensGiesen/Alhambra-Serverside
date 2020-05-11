@@ -2,7 +2,9 @@ package be.howest.ti.alhambra.logic.gamebord;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.WallingDirection;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -11,7 +13,8 @@ public class Location {
     private int col;
     @JsonIgnore private Building building;
 
-    public Location(int row, int col) {
+    @JsonCreator
+    public Location(@JsonProperty("row") int row,@JsonProperty("col") int col) {
         this.row = row;
         this.col = col;
         this.building = null;

@@ -1,8 +1,15 @@
 package be.howest.ti.alhambra.logic.game;
 
+import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.coin.Coin;
 import be.howest.ti.alhambra.logic.coin.Currency;
+import be.howest.ti.alhambra.logic.coin.Purse;
+import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.gamebord.Player;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,7 +62,7 @@ class TurnManagerTest {
     @Test
     void endTurn() {
         getStartedGame();
-        Player currPlayer = g1.getCurrentPlayer();
+        String currPlayer = g1.getCurrentPlayer();
         assertDoesNotThrow(() -> TurnManager.endTurn(g1));
         assertNotEquals(currPlayer, g1.getCurrentPlayer());
         TurnManager.endTurn(g1);
@@ -65,5 +72,22 @@ class TurnManagerTest {
         assertNotNull(g1.getMarket().get(Currency.YELLOW));
         assertNotNull(g1.getMarket().get(Currency.ORANGE));
         assertNotNull(g1.getMarket().get(Currency.GREEN));
+
+        getStartedGame();
+        g1.getBuildingStack().clear();
+        g1.getMarket().replace(Currency.BLUE, null);
+        assertDoesNotThrow(() -> TurnManager.endTurn(g1));
+        assertTrue(g1.isEnded());
+
+    }
+
+    @Test
+    void endGame() {
+        getStartedGame();
+        assertDoesNotThrow(()->TurnManager.endGame(g1));
+        assertTrue(g1.isEnded());
+
+        getGameReadyToStart();
+        assertThrows(AlhambraGameRuleException.class, ()->TurnManager.endGame(g1));
     }
 }

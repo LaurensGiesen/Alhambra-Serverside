@@ -20,7 +20,7 @@ public class MoveManager {
         if (game.getPlayerByName(player.getPlayerName()) == null) {
             throw new AlhambraEntityNotFoundException("No such player in the game");
         }
-        if (game.getCurrentPlayer() != game.getPlayerByName(player.getPlayerName())) {
+        if (!game.getCurrentPlayer().equals(player.getPlayerName())) {
             throw new AlhambraGameRuleException("Stop cheating, it's not your turn!");
         }
 
@@ -38,7 +38,6 @@ public class MoveManager {
         if (coinsToTake.getNumberOfCoins() > 1 && player.getMoney().getTotalAmount() > 5) {
             throw new AlhambraGameRuleException("2 coins with a value higher as 5");
         }
-
         return true;
 
     }
@@ -115,7 +114,7 @@ public class MoveManager {
         if(building == null && location == null){
             throw new AlhambraEntityNotFoundException("Illegal input");
         }
-        if (building == null && location.getBuilding() == null) {
+        if (building == null && player.getCity().getLocation(location).getBuilding() == null) {
             throw new AlhambraEntityNotFoundException("The location is empty");
         }
         if (building != null && !player.getReserve().getBuildings().contains(building)) {
