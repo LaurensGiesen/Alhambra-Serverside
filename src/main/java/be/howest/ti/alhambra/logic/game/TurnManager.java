@@ -30,6 +30,16 @@ public class TurnManager {
         setNextPlayer(game);
     }
 
+    public static void endGame(Game game) {
+        //calculate score 3
+        //set game to ended
+        if (!game.isStarted()) {
+            throw new AlhambraGameRuleException("The game hasn't even started yet");
+        } else{
+            ScoreCalculator.score(game.getPlayers(), 3);
+            game.setEnded(true);
+        }
+    }
 
     private static void determineStarter(Game game) {
         //get player with minimum cards
@@ -60,14 +70,5 @@ public class TurnManager {
             game.setCurrentPlayer(game.getPlayers().get(posCurrPlayer + 1));
         }
     }
-    public static void endGame(Game game) {
-        //calculate score 3
-        //set game to ended
-        if (!game.isStarted()) {
-            throw new AlhambraGameRuleException("The game hasn't even started yet");
-        } else{
-            ScoreCalculator.score(game.getPlayers(), 3);
-            game.setEnded(true);
-        }
-    }
+
 }
