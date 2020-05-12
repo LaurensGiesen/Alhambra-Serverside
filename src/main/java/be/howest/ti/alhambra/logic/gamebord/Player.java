@@ -14,22 +14,25 @@ import java.util.Random;
 
 public class Player {
 
+    /* ------------ FIELDS ------------ */
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static Random r = new Random();
-
     private String playerName;
     private int score;
-    private int virtualScore;
     private boolean ready;
     private Purse money;
     private BuildingPlace reserve;
     private City city;
-    @JsonIgnore private String token = randomAlphaNumeric(20);
+    @JsonIgnore
+    private String token = randomAlphaNumeric(20);
     private BuildingPlace buildingInHand;
-    @JsonIgnore private Boolean extraTurn;
+    @JsonIgnore
+    private Boolean extraTurn;
 
 
-    @JsonCreator public Player(@JsonProperty("playerName") String playerName) {
+    /* ------------ CONSTRUCTOR ------------ */
+    @JsonCreator
+    public Player(@JsonProperty("playerName") String playerName) {
         this.playerName = playerName;
         this.money = new Purse();
         this.reserve = new BuildingPlace();
@@ -37,6 +40,8 @@ public class Player {
         this.buildingInHand = new BuildingPlace();
     }
 
+
+    /* ------------ GETTERS ------------ */
     public String getPlayerName() {
         return playerName;
     }
@@ -45,15 +50,12 @@ public class Player {
         return token;
     }
 
-    public int getVirtualScore() {
-        return virtualScore;
-    }
-
     public Purse getMoney() {
         return money;
     }
 
-    @JsonProperty("money") public Coin[] getMoneyAsArray() {
+    @JsonProperty("money")
+    public Coin[] getMoneyAsArray() {
         Coin[] coins = new Coin[money.getCoins().size()];
         money.getCoins().toArray(coins);
         return coins;
@@ -63,7 +65,8 @@ public class Player {
         return reserve;
     }
 
-    @JsonProperty("reserve") public Building[] getReserveAsArray() {
+    @JsonProperty("reserve")
+    public Building[] getReserveAsArray() {
         Building[] buildings = new Building[reserve.getBuildings().size()];
         reserve.getBuildings().toArray(buildings);
         return buildings;
@@ -72,17 +75,13 @@ public class Player {
     public Boolean getExtraTurn() {
         return extraTurn;
     }
-    public void setExtraTurn(Boolean extraTurn) {
-        this.extraTurn = extraTurn;
-    }
-
-
 
     public City getCity() {
         return city;
     }
 
-    @JsonProperty("city") public Building[][] getCityAsGrid() {
+    @JsonProperty("city")
+    public Building[][] getCityAsGrid() {
         return city.cityToGrid();
     }
 
@@ -102,10 +101,18 @@ public class Player {
         return ready;
     }
 
+
+    /* ------------ SETTERS ------------ */
     public void setReady(boolean ready) {
         this.ready = ready;
     }
 
+    public void setExtraTurn(Boolean extraTurn) {
+        this.extraTurn = extraTurn;
+    }
+
+
+    /* ------------ PUBLIC METHODS ------------ */
     public void addBuildingToHand(Building building) {
         buildingInHand.addBuilding(building);
     }
@@ -126,6 +133,8 @@ public class Player {
         return builder.toString();
     }
 
+
+    /* ------------ EQUALS & HASH ------------ */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -10,38 +10,47 @@ import java.util.Objects;
 
 public class Walling {
 
+    /* ------------ FIELDS ------------ */
     private Map<WallingDirection, Boolean> walls = new HashMap<>();
 
-
+    
+    /* ------------ CONSTRUCTOR ------------ */
     @JsonCreator
-    public Walling(@JsonProperty("north") boolean north,@JsonProperty("east") boolean east,@JsonProperty("south") boolean south,@JsonProperty("west") boolean west) {
+    public Walling(@JsonProperty("north") boolean north, @JsonProperty("east") boolean east, @JsonProperty("south") boolean south, @JsonProperty("west") boolean west) {
         this.walls.put(WallingDirection.NORTH, north);
         this.walls.put(WallingDirection.EAST, east);
         this.walls.put(WallingDirection.SOUTH, south);
         this.walls.put(WallingDirection.WEST, west);
     }
 
+
+    /* ------------ GETTERS ------------ */
     public Map<WallingDirection, Boolean> getWalls() {
         return walls;
     }
 
-
-    @JsonIgnore public boolean getWallNorth() {
+    @JsonIgnore
+    public boolean getWallNorth() {
         return walls.get(WallingDirection.NORTH);
     }
 
-    @JsonIgnore public boolean getWallEast() {
+    @JsonIgnore
+    public boolean getWallEast() {
         return walls.get(WallingDirection.EAST);
     }
 
-    @JsonIgnore public boolean getWallSouth() {
+    @JsonIgnore
+    public boolean getWallSouth() {
         return walls.get(WallingDirection.SOUTH);
     }
 
-    @JsonIgnore public boolean getWallWest() {
+    @JsonIgnore
+    public boolean getWallWest() {
         return walls.get(WallingDirection.WEST);
     }
 
+
+    /* ------------ EQUALS & HASH ------------ */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

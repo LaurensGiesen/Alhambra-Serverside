@@ -13,19 +13,13 @@ import java.util.Map;
 
 public class MoveManager {
 
+    /* ------------ CONSTRUCTOR ------------ */
+
     private MoveManager() {
     }
 
-    private static boolean canPlay(Game game, Player player) {
-        if (game.getPlayerByName(player.getPlayerName()) == null) {
-            throw new AlhambraEntityNotFoundException("No such player in the game");
-        }
-        if (!game.getCurrentPlayer().equals(player.getPlayerName())) {
-            throw new AlhambraGameRuleException("Stop cheating, it's not your turn!");
-        }
 
-        return true;
-    }
+    /* ------------ PUBLIC METHODS ------------ */
 
     public static boolean canTakeMoney(Game game, Player player, Purse coinsToTake) {
         canPlay(game, player);
@@ -68,7 +62,6 @@ public class MoveManager {
         }
 
         return true;
-
     }
 
     public static void buyBuilding(Player player, Map<Currency, Building> market, Purse coins) {
@@ -111,7 +104,7 @@ public class MoveManager {
 
     public static boolean canRedesignCity(Game game, Player player, Building building, Location location) {
         canPlay(game, player);
-        if(building == null && location == null){
+        if (building == null && location == null) {
             throw new AlhambraEntityNotFoundException("Illegal input");
         }
         if (building == null && player.getCity().getLocation(location).getBuilding() == null) {
@@ -136,6 +129,20 @@ public class MoveManager {
         } else {
             MoveManager.replaceFromReserveToUsedLocation(player, building, location);
         }
+    }
+
+
+    /* ------------ PRIVATE METHODS ------------ */
+
+    private static boolean canPlay(Game game, Player player) {
+        if (game.getPlayerByName(player.getPlayerName()) == null) {
+            throw new AlhambraEntityNotFoundException("No such player in the game");
+        }
+        if (!game.getCurrentPlayer().equals(player.getPlayerName())) {
+            throw new AlhambraGameRuleException("Stop cheating, it's not your turn!");
+        }
+
+        return true;
     }
 
     private static void buildBuildingInReserve(Player player, Building building) {

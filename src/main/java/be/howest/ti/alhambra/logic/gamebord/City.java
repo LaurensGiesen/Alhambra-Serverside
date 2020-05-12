@@ -12,19 +12,24 @@ import java.util.*;
 
 public class City {
 
+    /* ------------ FIELDS ------------ */
     @JsonIgnore
     private List<Location> locations = new ArrayList<>();
 
+    /* ------------ CONSTRUCTOR ------------ */
     public City() {
         Building fountain = new Building(null, 0, new Walling(false, false, false, false));
         locations.add(new Location(0, 0, fountain));
     }
 
+
+    /* ------------ GETTERS ------------ */
     public List<Location> getLocations() {
         return locations;
     }
 
-    @JsonIgnore public Location getLocation(Location location) {
+    @JsonIgnore
+    public Location getLocation(Location location) {
         if (locations.contains(location)) {
             return locations.get(locations.indexOf(location));
         }
@@ -35,7 +40,7 @@ public class City {
         int amount = 0;
         for (Location l : locations) {
             if (l.getBuilding() != null && l.getBuilding().getType() == type) {
-                amount ++;
+                amount++;
             }
         }
         return amount;
@@ -43,8 +48,8 @@ public class City {
 
     public int getLengthWall() {
         int maxLength = 0;
-        for(Location l : locations){
-            for(WallingDirection d : WallingDirection.values()){
+        for (Location l : locations) {
+            for (WallingDirection d : WallingDirection.values()) {
                 Citywall cw = new Citywall(l, d);
                 maxLength = Math.max(maxLength, getLengthWallFromWall(cw, null));
             }
@@ -52,19 +57,19 @@ public class City {
         return maxLength;
     }
 
-    private int getLengthWallFromWall(Citywall cw, Set<Citywall> prevCitywalls){
-        if(prevCitywalls == null){
+    private int getLengthWallFromWall(Citywall cw, Set<Citywall> prevCitywalls) {
+        if (prevCitywalls == null) {
             prevCitywalls = new HashSet<>();
         }
-        if(prevCitywalls.contains(cw)){
+        if (prevCitywalls.contains(cw)) {
             return 0;
         }
         prevCitywalls.add(cw);
 
         int maxLength = 0;
-        if(isOuterWall(cw)){
+        if (isOuterWall(cw)) {
             Queue<Citywall> connectedWalls = cw.getConnectedCitywalls();
-            for(Citywall connectedWall : connectedWalls){
+            for (Citywall connectedWall : connectedWalls) {
                 maxLength = Math.max(maxLength, getLengthWallFromWall(connectedWall, prevCitywalls) + 1);
             }
         }
@@ -72,11 +77,11 @@ public class City {
         return maxLength;
     }
 
-    private boolean isOuterWall(Citywall cw){
-        if(this.getLocation(cw.getLocation()).isEmpty()){
+    private boolean isOuterWall(Citywall cw) {
+        if (this.getLocation(cw.getLocation()).isEmpty()) {
             return false;
         }
-        if(Boolean.FALSE.equals(this.getLocation(cw.getLocation()).getBuilding().getWalls().getWalls().get(cw.getDirection()))){
+        if (Boolean.FALSE.equals(this.getLocation(cw.getLocation()).getBuilding().getWalls().getWalls().get(cw.getDirection()))) {
             return false;
         }
         return this.getLocation(cw.getLocation().getNeighbourLocation(cw.getDirection())).isEmpty();
@@ -128,6 +133,8 @@ public class City {
                 && (lW.isEmpty() || isReachableOnFoot(lW, prevLocations));
     }
 
+
+    /* ------------ PUBLIC METHODS ------------ */
     public void addBuilding(Building building, Location location) {
         if (!isValidPlacing(building, location)) {
             throw new AlhambraGameRuleException("Cannot add building here");
@@ -172,7 +179,7 @@ public class City {
         int colMin = getEdgeOfCity(WallingDirection.WEST);
         int colMax = getEdgeOfCity(WallingDirection.EAST);
         Building[][] grid = new Building[rowMax - rowMin + 3][colMax - colMin + 3];
-        
+
         for (Location l : locations) {
             grid[l.getRow() - rowMin + 1][l.getCol() - colMin + 1] = l.getBuilding();
         }
@@ -180,6 +187,8 @@ public class City {
         return grid;
     }
 
+
+    /* ------------ PRIVATE METHODS ------------ */
     private int getEdgeOfCity(WallingDirection direction) {
         int res = 0;
         for (Location l : locations) {
