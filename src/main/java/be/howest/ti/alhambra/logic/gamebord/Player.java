@@ -38,6 +38,7 @@ public class Player {
         this.reserve = new BuildingPlace();
         this.city = new City();
         this.buildingInHand = new BuildingPlace();
+        this.extraTurn = false;
     }
 
 

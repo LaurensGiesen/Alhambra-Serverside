@@ -24,6 +24,16 @@ class AlhambraControllerTest {
     }
 
     @Test
+    void isExistingEntity() {
+        int gameId = controller.server.newGame();
+        String playerName = "joske";
+        controller.server.getGame(gameId).addPlayer(playerName);
+
+        assertThrows(AlhambraEntityNotFoundException.class , () -> controller.setNotReady(15000, playerName));
+        assertThrows(AlhambraEntityNotFoundException.class , () -> controller.setNotReady(gameId, null));
+    }
+
+    @Test
     void createGame() {
         int gameId = Integer.parseInt(controller.createGame());
 
@@ -72,7 +82,7 @@ class AlhambraControllerTest {
         controller.server.getGame(gameId).addPlayer(playerName);
 
         assertDoesNotThrow(() -> controller.getGame(gameId));
-        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.getGame(21888));
+        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.getGame(15000));
     }
 
     @Test
@@ -82,7 +92,7 @@ class AlhambraControllerTest {
         String token = controller.server.getGame(gameId).addPlayer(playerName);
 
         assertDoesNotThrow(() -> controller.verifyPlayerToken(token, gameId, playerName));
-        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.verifyPlayerToken(token, 21988, playerName));
+        assertThrows(AlhambraEntityNotFoundException.class, () -> controller.verifyPlayerToken(token, 15000, playerName));
         assertTrue(controller.verifyPlayerToken(token, gameId, null));
         assertFalse(controller.verifyPlayerToken("N5HJ16VOKQBN9DIDEMNP", gameId, playerName));
     }
