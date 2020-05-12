@@ -24,9 +24,9 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         this.controller = new AlhambraController();
     }
 
-    public boolean verifyAdminToken(String token) {
+    public boolean verifyAdminToken(String adminToken) {
         LOGGER.info("verifyPlayerToken");
-        return true;
+        return controller.verifyAdminToken(adminToken);
     }
 
     public boolean verifyPlayerToken(String token, String gameId, String playerName) {
