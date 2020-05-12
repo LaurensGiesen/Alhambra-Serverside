@@ -37,14 +37,15 @@ class ServerTest {
 
     @Test
     void getNotStartedGameIds() {
-        createServer();
+        server = new Server();
+        server.newGame();
+        int gameId = server.newGame();
+        int gameId2 = server.newGame();
 
-        server.getGame(21575).setStarted(true);
-        server.getGame(21576).setStarted(false);
-        server.getGame(21577).setStarted(false);
+        server.getGame(gameId).setStarted(true);
 
-        server.getNotStartedGameIds();
-
-        assertEquals(2, server.getNotStartedGameIds().size());
+        assertTrue(server.getNotStartedGameIds().contains(gameId2));
+        assertFalse(server.getNotStartedGameIds().contains(gameId));
+        ;
     }
 }
