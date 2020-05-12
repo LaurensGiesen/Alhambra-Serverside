@@ -34,4 +34,17 @@ class ServerTest {
         server.resetGames();
         assertEquals(0, server.getGames().size());
     }
+
+    @Test
+    void getNotStartedGameIds() {
+        createServer();
+
+        server.getGame(21575).setStarted(true);
+        server.getGame(21576).setStarted(false);
+        server.getGame(21577).setStarted(false);
+
+        server.getNotStartedGameIds();
+
+        assertEquals(2, server.getNotStartedGameIds().size());
+    }
 }
