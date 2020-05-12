@@ -176,9 +176,19 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
         JsonObject obj = new JsonObject(ctx.getBodyAsString());
         JsonObject jsonBuilding = obj.getJsonObject("building");
-        Building building = jsonBuilding.mapTo(Building.class);
+        Building building;
+        if(jsonBuilding == null){
+            building = null;
+        } else {
+            building = jsonBuilding.mapTo(Building.class);
+        }
         JsonObject jsonLocation = obj.getJsonObject("location");
-        Location location = jsonLocation.mapTo(Location.class);
+        Location location;
+        if(jsonLocation == null){
+            location = null;
+        } else {
+            location = jsonLocation.mapTo(Location.class);
+        }
 
 
         return controller.redesignCity(gameId, playerName, building, location);
