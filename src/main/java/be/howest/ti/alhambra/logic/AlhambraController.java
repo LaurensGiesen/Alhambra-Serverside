@@ -158,7 +158,6 @@ public class AlhambraController {
                 TurnManager.endTurn(game);
         }
 
-
         return game;
     }
 
