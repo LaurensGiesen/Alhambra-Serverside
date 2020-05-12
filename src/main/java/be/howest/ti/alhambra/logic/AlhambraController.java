@@ -152,8 +152,12 @@ public class AlhambraController {
 
         if (MoveManager.canBuildBuilding(game, player, building, locations)) {
             MoveManager.buildBuilding(player, building, locations);
-            TurnManager.endTurn(game);
+            if (player.getExtraTurn()) {
+                player.setExtraTurn(false);
+            } else
+                TurnManager.endTurn(game);
         }
+
 
         return game;
     }
