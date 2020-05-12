@@ -138,6 +138,7 @@ public class AlhambraController {
 
         if (MoveManager.canTakeMoney(game, player, coins)) {
             MoveManager.takeMoney(game, player, coins);
+
         }
 
         return game;
