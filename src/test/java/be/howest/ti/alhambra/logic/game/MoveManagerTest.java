@@ -117,6 +117,11 @@ class MoveManagerTest {
 
         Coin c2 = new Coin(Currency.BLUE, 4);
         purse.addCoin(c2);
+        try {
+            currPlayer.getMoney().removeCoin(c2);
+        } catch(Exception AlhambraEntityNotFoundException){
+            //Do nothing
+        }
 
         assertThrows(AlhambraEntityNotFoundException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse)); //Player doesnt have the money
 
