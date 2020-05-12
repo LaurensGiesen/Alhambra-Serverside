@@ -113,9 +113,10 @@ class CityTest {
     @Test
     void getAmountBuildings() {
         createCity();
+        c.addBuilding(b, new Location(3, -2));
 
         assertEquals(3, c.getAmountOfBuildings(Buildingtype.SERAGLIO));
-        assertEquals(0, c.getAmountOfBuildings(Buildingtype.TOWER));
+        assertEquals(1, c.getAmountOfBuildings(Buildingtype.TOWER));
         assertEquals(2, c.getAmountOfBuildings(Buildingtype.ARCADES));
         assertEquals(1, c.getAmountOfBuildings(Buildingtype.PAVILION));
     }

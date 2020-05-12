@@ -32,13 +32,13 @@ public class City {
     }
 
     public int getAmountOfBuildings(Buildingtype type) {
-        int c = 0;
+        int amount = 0;
         for (Location l : locations) {
-            if (!l.isEmpty() && l.getBuilding().getType() == type) {
-                c++;
+            if (l.getBuilding() != null && l.getBuilding().getType() == type) {
+                amount ++;
             }
         }
-        return c;
+        return amount;
     }
 
     public int getLengthWall() {
