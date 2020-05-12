@@ -76,6 +76,9 @@ public class MoveManager {
         Currency currency = coins.getCurrency();
         Building building = market.get(currency);
 
+        if (building.getCost() == coins.getTotalAmount()) {
+            player.setExtraTurn(true);
+        }
 
         useMoney(player.getMoney(), coins);
         market.replace(currency, null);
