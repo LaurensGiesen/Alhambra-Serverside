@@ -29,7 +29,7 @@ public class MoveManager {
                 throw new AlhambraEntityNotFoundException("No such coin in Bank");
             }
         }
-        if (coinsToTake.getNumberOfCoins() > 1 && player.getMoney().getTotalAmount() > 5) {
+        if (coinsToTake.getNumberOfCoins() > 1 && coinsToTake.getTotalAmount() > 5) {
             throw new AlhambraGameRuleException("2 coins with a value higher as 5");
         }
         return true;

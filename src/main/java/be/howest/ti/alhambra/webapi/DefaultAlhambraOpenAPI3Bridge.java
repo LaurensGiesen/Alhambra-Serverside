@@ -194,7 +194,15 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         JsonObject jsonBuilding = obj.getJsonObject("building");
         Building building = jsonBuilding.mapTo(Building.class);
         JsonObject jsonLocation = obj.getJsonObject("location");
-        Location location = jsonLocation.mapTo(Location.class);
+        Location location;
+        if(jsonLocation == null){
+            location = null;
+        } else {
+            location = jsonLocation.mapTo(Location.class);
+        }
+
+
+        LOGGER.info(location);
 
         return controller.build(gameId, playerName, building, location);
     }
