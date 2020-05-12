@@ -13,7 +13,7 @@ public class Walling {
     /* ------------ FIELDS ------------ */
     private Map<WallingDirection, Boolean> walls = new HashMap<>();
 
-    
+
     /* ------------ CONSTRUCTOR ------------ */
     @JsonCreator
     public Walling(@JsonProperty("north") boolean north, @JsonProperty("east") boolean east, @JsonProperty("south") boolean south, @JsonProperty("west") boolean west) {
