@@ -53,7 +53,7 @@ public class Game {
         Populator.populateBuildingStack(buildingStack);
 
         Random rand = new Random();
-        scoringRound = new int[]{rand.nextInt(21) + 23, rand.nextInt(21) + 67};
+        scoringRound = new int[]{rand.nextInt(21) + 67, rand.nextInt(21) + 23};
     }
 
 
