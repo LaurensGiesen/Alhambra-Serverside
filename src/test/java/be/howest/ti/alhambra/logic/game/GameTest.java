@@ -23,7 +23,7 @@ class GameTest {
         TurnManager.startGame(game);
         return game;
     }
-    
+
     @Test
     void addPlayer() {
         Game game = createEmptyGame();
