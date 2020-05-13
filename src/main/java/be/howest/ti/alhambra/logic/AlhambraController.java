@@ -80,12 +80,9 @@ public class AlhambraController {
         }
     }
 
-    public boolean verifyAdminToken(String token) {
+    public boolean verifyAdminToken(String adminToken) {
 
-        if (token == )
-
-        return ;
-
+        return server.isValidAdminToken(adminToken);
     }
 
     public boolean setNotReady(int gameId, String playerName) {
