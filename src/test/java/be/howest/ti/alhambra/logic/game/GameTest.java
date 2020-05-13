@@ -71,8 +71,8 @@ class GameTest {
     @Test
     void getScoringRound() {
         Game g = createStartedGame();
-        assertTrue(g.getScoringRound()[1] > 23 && g.getScoringRound()[1] < 44);
-        assertTrue(g.getScoringRound()[0] > 67 && g.getScoringRound()[0] < 88);
+        assertTrue(g.getScoringRound()[1] >= 23 && g.getScoringRound()[1] < 44);
+        assertTrue(g.getScoringRound()[0] >= 67 && g.getScoringRound()[0] < 88);
     }
 
     @Test

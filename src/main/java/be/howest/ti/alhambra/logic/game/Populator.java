@@ -10,8 +10,13 @@ import java.util.*;
 
 public class Populator {
 
+
+    /* ------------ CONSTRUCTOR ------------ */
+
     private Populator() {
     }
+
+    /* ------------ PUBLIC METHODS ------------ */
 
     public static boolean populateMarket(Queue<Building> buildingStack, Map<Currency, Building> market) {
         if (buildingStack.isEmpty()) {

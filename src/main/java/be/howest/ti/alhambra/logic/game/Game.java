@@ -15,7 +15,6 @@ import java.util.*;
 public class Game {
 
     /* ------------ FIELDS ------------ */
-
     @JsonProperty("id")
     private int gameId;
     private static int numberOfGames = 0;
@@ -30,7 +29,6 @@ public class Game {
     @JsonIgnore private int[] scoringRound;
 
     /* ------------ CONSTRUCTOR ------------ */
-
     public Game() {
         gameId = numberOfGames + 21575;
         numberOfGames++;
@@ -55,7 +53,6 @@ public class Game {
 
 
     /* ------------ GETTERS ------------ */
-
     public int getGameId() {
         return gameId;
     }
@@ -124,7 +121,6 @@ public class Game {
     }
 
     /* ------------ SETTERS ------------ */
-
     public void setCoinStack(Queue<Coin> coinStack) {
         this.coinStack = coinStack;
     }
@@ -149,8 +145,8 @@ public class Game {
         this.scoringRound = rounds;
     }
 
-    /* ------------ PUBLIC METHODS ------------ */
 
+    /* ------------ PUBLIC METHODS ------------ */
     public String addPlayer(String playerName) {
         if(started){
             throw new AlhambraGameRuleException("Players can't join a started game!");
@@ -182,13 +178,7 @@ public class Game {
     }
 
 
-    /* ------------ PRIVATE METHODS ------------ */
-
-
-
-
     /* ------------ EQUALS & HASH ------------ */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

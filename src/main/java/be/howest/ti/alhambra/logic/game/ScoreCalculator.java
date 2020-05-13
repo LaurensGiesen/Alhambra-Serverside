@@ -10,67 +10,80 @@ import java.util.List;
 
 public class ScoreCalculator {
 
+    /* ------------ FIELDS ------------ */
+
     private static Scorecard scorecard = new Scorecard();
 
-    private ScoreCalculator() {}
 
-    public static void score(List<Player> players, int round){
+    /* ------------ CONSTRUCTOR ------------ */
+    private ScoreCalculator() {
+    }
+
+
+
+    /* ------------ PUBLIC METHODS ------------ */
+
+    public static void score(List<Player> players, int round) {
         scoreBuildingTypes(players, round);
         scoreWalls(players);
     }
 
+
+    /* ------------ PRIVATE METHODS ------------ */
+
     private static void scoreBuildingTypes(List<Player> players, int round) {
-        for(Buildingtype buildingtype : Buildingtype.values()){
+        for (Buildingtype buildingtype : Buildingtype.values()) {
             List<List<Player>> playerTable = playersWithMostBuildings(players, buildingtype);
-            for(int position = 1; position < playerTable.size()+1; position++){
+            for (int position = 1; position < playerTable.size() + 1; position++) {
                 int score = 0;
-                if(!playerTable.get(position-1).isEmpty()){
+                if (!playerTable.get(position - 1).isEmpty()) {
                     score = getScoreForBuildingType(round, buildingtype, playerTable, position, score);
                 }
 
-                for(int i = 0; i < playerTable.get(position-1).size(); i++){
-                    playerTable.get(position-1).get(i).addScore(score);
+                for (int i = 0; i < playerTable.get(position - 1).size(); i++) {
+                    playerTable.get(position - 1).get(i).addScore(score);
                 }
             }
         }
     }
+
     private static void scoreWalls(List<Player> players) {
         List<Player> playerWithLongestWall = new ArrayList<>();
         int maxLength = 0;
 
-        for(Player p : players){
+        for (Player p : players) {
             int lengthWall = p.getCity().getLengthWall();
-            if(lengthWall > maxLength){
+            if (lengthWall > maxLength) {
                 playerWithLongestWall = new ArrayList<>();
                 playerWithLongestWall.add(p);
                 maxLength = lengthWall;
-            } else if (lengthWall == maxLength){
+            } else if (lengthWall == maxLength) {
                 playerWithLongestWall.add(p);
             }
         }
 
-        for(Player p : playerWithLongestWall){
-            p.addScore(maxLength/playerWithLongestWall.size());
+        for (Player p : playerWithLongestWall) {
+            p.addScore(maxLength / playerWithLongestWall.size());
         }
 
     }
 
     private static int getScoreForBuildingType(int round, Buildingtype buildingtype, List<List<Player>> playerTable, int position, int score) {
         score += scorecard.getScore(buildingtype, round, position);
-        if(position < playerTable.size() && playerTable.get(position-1).size() > 1){
-            score += scorecard.getScore(buildingtype, round, position+1);
+        if (position < playerTable.size() && playerTable.get(position - 1).size() > 1) {
+            score += scorecard.getScore(buildingtype, round, position + 1);
         }
-        if(position+1 < playerTable.size() && playerTable.get(position-1).size() > 2){
-            score += scorecard.getScore(buildingtype, round, position+2);
+        if (position + 1 < playerTable.size() && playerTable.get(position - 1).size() > 2) {
+            score += scorecard.getScore(buildingtype, round, position + 2);
         }
-        score /=  playerTable.get(position-1).size();
+        score /= playerTable.get(position - 1).size();
         return score;
     }
 
-    private static List<List<Player>> playersWithMostBuildings(List<Player> players, Buildingtype buildingtype){
+    private static List<List<Player>> playersWithMostBuildings(List<Player> players, Buildingtype buildingtype) {
         List<Player> playersCopy = new ArrayList<>(List.copyOf(players));
 
-        switch(buildingtype){
+        switch (buildingtype) {
             case PAVILION:
                 playersCopy.sort(new SortPlayerByPavilion());
                 break;
@@ -99,10 +112,10 @@ public class ScoreCalculator {
         int prevAmount = 0;
         int prevPosition = 0;
         int position = 0;
-        for(Player p : playersCopy){
+        for (Player p : playersCopy) {
             int amount = p.getCity().getAmountOfBuildings(buildingtype);
-            if(prevPosition < 3 && amount > 0){
-                if(amount == prevAmount){
+            if (prevPosition < 3 && amount > 0) {
+                if (amount == prevAmount) {
                     results.get(prevPosition).add(p);
                 } else {
                     results.get(position).add(p);

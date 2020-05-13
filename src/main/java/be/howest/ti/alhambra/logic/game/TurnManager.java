@@ -5,9 +5,11 @@ import be.howest.ti.alhambra.logic.gamebord.Player;
 
 public class TurnManager {
 
+    /* ------------ CONSTRUCTOR ------------ */
     private TurnManager() {
     }
 
+    /* ------------ PUBLIC METHODS ------------ */
     public static boolean isReadyToStart(Game game) {
         return !game.isStarted() && game.getPlayerCount() >= 2 && game.getPlayerCount() == game.getReadyCount();
     }
@@ -25,16 +27,16 @@ public class TurnManager {
     public static void endTurn(Game game) {
         Populator.populateBank(game.getCoinStack(), game.getBank());
 
-        if(game.getCoinStack().size() < game.getScoringRound()[0]){
+        if (game.getCoinStack().size() < game.getScoringRound()[0]) {
             ScoreCalculator.score(game.getPlayers(), 1);
             game.getScoringRound()[0] = -1;
         }
-        if(game.getCoinStack().size() < game.getScoringRound()[1]){
+        if (game.getCoinStack().size() < game.getScoringRound()[1]) {
             ScoreCalculator.score(game.getPlayers(), 2);
             game.getScoringRound()[1] = -1;
         }
 
-        if(!Populator.populateMarket(game.getBuildingStack(), game.getMarket())) {
+        if (!Populator.populateMarket(game.getBuildingStack(), game.getMarket())) {
             TurnManager.endGame(game);
         }
         setNextPlayer(game);
@@ -45,12 +47,13 @@ public class TurnManager {
         //set game to ended
         if (!game.isStarted()) {
             throw new AlhambraGameRuleException("The game hasn't even started yet");
-        } else{
+        } else {
             ScoreCalculator.score(game.getPlayers(), 3);
             game.setEnded(true);
         }
     }
 
+    /* ------------ PRIVATE METHODS ------------ */
     private static void determineStarter(Game game) {
         //get player with minimum cards
         //if equal, get player with min value

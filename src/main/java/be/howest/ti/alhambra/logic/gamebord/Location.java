@@ -9,12 +9,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
 public class Location {
+
+    /* ------------ FIELDS ------------ */
     private int row;
     private int col;
-    @JsonIgnore private Building building;
+    @JsonIgnore
+    private Building building;
 
+
+    /* ------------ CONSTRUCTOR ------------ */
     @JsonCreator
-    public Location(@JsonProperty("row") int row,@JsonProperty("col") int col) {
+    public Location(@JsonProperty("row") int row, @JsonProperty("col") int col) {
         this.row = row;
         this.col = col;
         this.building = null;
@@ -26,6 +31,8 @@ public class Location {
         this.building = building;
     }
 
+
+    /* ------------ GETTERS ------------ */
     public int getRow() {
         return row;
     }
@@ -61,10 +68,14 @@ public class Location {
         }
     }
 
+
+    /* ------------ SETTERS ------------ */
     public void setBuilding(Building b) {
         building = b;
     }
 
+
+    /* ------------ EQUALS & HASH ------------ */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

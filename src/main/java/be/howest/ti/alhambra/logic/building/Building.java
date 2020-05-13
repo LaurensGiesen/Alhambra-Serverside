@@ -11,19 +11,23 @@ import java.util.Random;
 
 public class Building {
 
+    /* ------------ FIELDS ------------ */
     private Buildingtype type;
     private int cost;
     private Walling walls;
     private static Random r = new Random();
 
 
+    /* ------------ CONSTRUCTOR ------------ */
     @JsonCreator
-    public Building(@JsonProperty("type") Buildingtype type,@JsonProperty("cost") int cost,@JsonProperty("walls") Walling walls) {
+    public Building(@JsonProperty("type") Buildingtype type, @JsonProperty("cost") int cost, @JsonProperty("walls") Walling walls) {
         this.type = type;
         this.cost = cost;
         this.walls = walls;
     }
 
+
+    /* ------------ GETTERS ------------ */
     public Buildingtype getType() {
         return type;
     }
@@ -36,10 +40,25 @@ public class Building {
         return walls;
     }
 
-    @JsonIgnore public boolean isFountain() {
+    private static int getRandomCost() {
+        return r.nextInt(11) + 2; // between 2 and 13
+    }
+
+    private static Walling getRandomWalling() {
+        //Create random number between 0 and 14
+        //The number in binary represents the walls N-E-S-W
+        //(n/8)%2 gives the binary number for the 4th digit (N)
+        int rw = r.nextInt(14);  // between 0 en 14
+        return new Walling((rw / 8) % 2 == 1, (rw / 4) % 2 == 1, (rw / 2) % 2 == 1, (rw) % 2 == 1);
+    }
+
+    @JsonIgnore
+    public boolean isFountain() {
         return type == null;
     }
 
+
+    /* ------------ PUBLIC METHODS ------------ */
     public static List<Building> allBuilding() {
         List<Building> buildings = new ArrayList<>();
 
@@ -70,18 +89,8 @@ public class Building {
         return buildings;
     }
 
-    private static int getRandomCost() {
-        return r.nextInt(11) + 2; // between 2 and 13
-    }
 
-    private static Walling getRandomWalling() {
-        //Create random number between 0 and 14
-        //The number in binary represents the walls N-E-S-W
-        //(n/8)%2 gives the binary number for the 4th digit (N)
-        int rw = r.nextInt(14);  // between 0 en 14
-        return new Walling((rw / 8) % 2 == 1, (rw / 4) % 2 == 1, (rw / 2) % 2 == 1, (rw) % 2 == 1);
-    }
-
+    /* ------------ EQUALS & HASH ------------ */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

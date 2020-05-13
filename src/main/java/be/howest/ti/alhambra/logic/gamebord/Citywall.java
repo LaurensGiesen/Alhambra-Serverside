@@ -1,19 +1,24 @@
 package be.howest.ti.alhambra.logic.gamebord;
 
 import be.howest.ti.alhambra.logic.building.WallingDirection;
+
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
 
 public class Citywall {
+
+    /* ------------ FIELDS ------------ */
     private Location location;
     private WallingDirection direction;
 
+    /* ------------ CONSTRUCTOR ------------ */
     public Citywall(Location location, WallingDirection direction) {
         this.location = location;
         this.direction = direction;
     }
 
+    /* ------------ GETTERS ------------ */
     public Location getLocation() {
         return location;
     }
@@ -22,10 +27,10 @@ public class Citywall {
         return direction;
     }
 
-    public Queue<Citywall> getConnectedCitywalls(){
+    public Queue<Citywall> getConnectedCitywalls() {
         Queue<Citywall> connectedCitywalls = new LinkedList<>();
 
-        if(direction == WallingDirection.NORTH || direction == WallingDirection.SOUTH){
+        if (direction == WallingDirection.NORTH || direction == WallingDirection.SOUTH) {
             connectedCitywalls.add(new Citywall(location, WallingDirection.EAST));
             connectedCitywalls.add(new Citywall(location, WallingDirection.WEST));
             connectedCitywalls.add(new Citywall(location.getNeighbourLocation(WallingDirection.WEST), direction));
@@ -44,6 +49,8 @@ public class Citywall {
         return connectedCitywalls;
     }
 
+
+    /* ------------ EQUALS & HASH ------------ */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
