@@ -60,13 +60,12 @@ class AlhambraOpenAPI3TestBridge implements AlhambraOpenAPI3Bridge {
     }
 
 
-
     public Object createGame(RoutingContext ctx) {
         LOGGER.info("createGame");
         return DEFAULT_GAME_ID;
     }
 
-    public void clearGames(RoutingContext ctx) {
+    public Object clearGames(RoutingContext ctx) {
         LOGGER.info("clearGames");
         return null;
     }
@@ -77,7 +76,6 @@ class AlhambraOpenAPI3TestBridge implements AlhambraOpenAPI3Bridge {
         if (!DEFAULT_GAME_ID.equals(ctx.request().getParam("gameId"))) {
             throw new AlhambraEntityNotFoundException("These Are Not the Droids You Are Looking For");
         }
-
         return DEFAULT_PLAYER_TOKEN;
     }
 

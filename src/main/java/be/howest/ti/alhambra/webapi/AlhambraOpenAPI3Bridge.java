@@ -23,10 +23,9 @@ interface AlhambraOpenAPI3Bridge {
 
     Object createGame(RoutingContext ctx);
 
-    void clearGames(RoutingContext ctx);
+    Object clearGames(RoutingContext ctx);
 
     Object joinGame(RoutingContext ctx);
-
 
     Object leaveGame(RoutingContext ctx);
 
