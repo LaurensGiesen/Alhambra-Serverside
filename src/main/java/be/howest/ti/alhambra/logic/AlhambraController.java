@@ -181,18 +181,10 @@ public class AlhambraController {
         if(server.getGame(gameId).isStarted()){
 
             if(playerName.equals(server.getGame(gameId).getCurrentPlayer())) {
-                if(server.getGame(gameId).getPlayers().size() == 2) {
-                    TurnManager.endGame(server.getGame(gameId));
-                }else{
-                    TurnManager.endTurn(server.getGame(gameId));
-                    return server.getGame(gameId).removePlayer(playerName);
-                }
+                TurnManager.endTurn(server.getGame(gameId));
             }
             if(server.getGame(gameId).getPlayers().size() == 2) {
                 TurnManager.endGame(server.getGame(gameId));
-            }
-            else{
-                return server.getGame(gameId).removePlayer(playerName);
             }
         }
         return server.getGame(gameId).removePlayer(playerName);
