@@ -16,7 +16,6 @@ public class Populator {
     private Populator() {
     }
 
-
     /* ------------ PUBLIC METHODS ------------ */
 
     public static boolean populateMarket(Queue<Building> buildingStack, Map<Currency, Building> market) {
