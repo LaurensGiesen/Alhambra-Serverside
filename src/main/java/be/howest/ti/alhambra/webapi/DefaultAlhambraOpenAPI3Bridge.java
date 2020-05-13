@@ -87,9 +87,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         return controller.createGame();
     }
 
-    public Object clearGames(RoutingContext ctx) {
+    public void clearGames(RoutingContext ctx) {
         LOGGER.info("clearGames");
-        return null;
     }
 
     public Object joinGame(RoutingContext ctx) {
@@ -103,7 +102,6 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
         return controller.joinGame(gameId, playerName);
     }
-
 
     public Object leaveGame(RoutingContext ctx) {
         LOGGER.info("leaveGame");

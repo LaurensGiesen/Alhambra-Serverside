@@ -1,6 +1,5 @@
 package be.howest.ti.alhambra.webapi;
 
-import be.howest.ti.alhambra.exceptions.AlhambraException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 
@@ -67,7 +66,7 @@ class AlhambraOpenAPI3TestBridge implements AlhambraOpenAPI3Bridge {
         return DEFAULT_GAME_ID;
     }
 
-    public Object clearGames(RoutingContext ctx) {
+    public void clearGames(RoutingContext ctx) {
         LOGGER.info("clearGames");
         return null;
     }
