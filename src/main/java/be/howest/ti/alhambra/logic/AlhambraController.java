@@ -183,6 +183,7 @@ public class AlhambraController {
             if(playerName.equals(server.getGame(gameId).getCurrentPlayer())) {
                 if(server.getGame(gameId).getPlayers().size() == 2) {
                     TurnManager.endGame(server.getGame(gameId));
+                    server.getGame(gameId).removePlayer(playerName);
                 }else{
                     TurnManager.endTurn(server.getGame(gameId));
                     return server.getGame(gameId).removePlayer(playerName);
