@@ -1,6 +1,5 @@
 package be.howest.ti.alhambra.webapi;
 
-import be.howest.ti.alhambra.exceptions.AlhambraException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 
@@ -61,7 +60,6 @@ class AlhambraOpenAPI3TestBridge implements AlhambraOpenAPI3Bridge {
     }
 
 
-
     public Object createGame(RoutingContext ctx) {
         LOGGER.info("createGame");
         return DEFAULT_GAME_ID;
@@ -78,7 +76,6 @@ class AlhambraOpenAPI3TestBridge implements AlhambraOpenAPI3Bridge {
         if (!DEFAULT_GAME_ID.equals(ctx.request().getParam("gameId"))) {
             throw new AlhambraEntityNotFoundException("These Are Not the Droids You Are Looking For");
         }
-
         return DEFAULT_PLAYER_TOKEN;
     }
 

@@ -11,6 +11,8 @@ public class StartUp {
     }
 
     private void run() {
+        Player player = new Player("lau");
+        System.out.println(player.getPlayerName());
     }
 }
 

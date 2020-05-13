@@ -27,7 +27,6 @@ interface AlhambraOpenAPI3Bridge {
 
     Object joinGame(RoutingContext ctx);
 
-
     Object leaveGame(RoutingContext ctx);
 
     Object setReady(RoutingContext ctx);
