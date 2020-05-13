@@ -57,12 +57,13 @@ public class AlhambraController {
     }
 
     public Set<Game> getGames() {
-        return server.getGames();
+        return server.getNotStartedGames();
     }
 
     public List<Integer> getNotStartedGameIds() {
         return server.getNotStartedGameIds();
     }
+
 
     public boolean verifyPlayerToken(String token, int gameId, String playerName) {
         if(server.getGame(gameId) ==  null) {
@@ -188,5 +189,9 @@ public class AlhambraController {
             }
         }
         return server.getGame(gameId).removePlayer(playerName);
+    }
+    public void clearGames() {
+         server.resetGames();
+
     }
 }

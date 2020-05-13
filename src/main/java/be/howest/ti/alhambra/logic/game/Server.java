@@ -56,4 +56,14 @@ public class Server {
         return gameIds;
     }
 
+    public Set<Game> getNotStartedGames() {
+        Set<Game> notStartedGames = new HashSet<>();
+        for(Game game : games){
+            if(!game.isStarted()){
+                notStartedGames.add(game);
+            }
+        }
+        return notStartedGames;
+    }
+
 }
