@@ -34,6 +34,15 @@ class AlhambraControllerTest {
     }
 
     @Test
+    void verifyAdminToken() {
+        String adminTokenTrue = "ALHAMBRA1ADMIN1TOKEN";
+        String adminTokenFalse = "ALDAMBRATADMINLOOTEN";
+
+        assertFalse(controller.verifyAdminToken(adminTokenFalse));
+        assertTrue(controller.verifyAdminToken(adminTokenTrue));
+    }
+
+    @Test
     void createGame() {
         int gameId = Integer.parseInt(controller.createGame());
 

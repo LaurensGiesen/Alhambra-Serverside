@@ -25,12 +25,9 @@ public class Game {
     private String currentPlayer;
     private Purse bank;
     private Map<Currency, Building> market;
-    @JsonIgnore
-    private Queue<Coin> coinStack;
-    @JsonIgnore
-    private Queue<Building> buildingStack;
-    @JsonIgnore
-    private int[] scoringRound;
+    @JsonIgnore private Queue<Coin> coinStack;
+    @JsonIgnore private Queue<Building> buildingStack;
+    @JsonIgnore private int[] scoringRound;
 
     /* ------------ CONSTRUCTOR ------------ */
 
