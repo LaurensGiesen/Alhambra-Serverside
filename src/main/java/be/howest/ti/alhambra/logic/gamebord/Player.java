@@ -19,7 +19,6 @@ public class Player {
 
     private String playerName;
     private int score;
-    private int virtualScore;
     private boolean ready;
     private Purse money;
     private BuildingPlace reserve;
@@ -35,6 +34,7 @@ public class Player {
         this.reserve = new BuildingPlace();
         this.city = new City();
         this.buildingInHand = new BuildingPlace();
+        this.extraTurn = false;
     }
 
     public String getPlayerName() {
@@ -43,10 +43,6 @@ public class Player {
 
     public String getToken() {
         return token;
-    }
-
-    public int getVirtualScore() {
-        return virtualScore;
     }
 
     public Purse getMoney() {

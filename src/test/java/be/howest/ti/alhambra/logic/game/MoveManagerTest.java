@@ -1,5 +1,6 @@
 package be.howest.ti.alhambra.logic.game;
 
+import be.howest.ti.alhambra.logic.AlhambraController;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
@@ -116,6 +117,11 @@ class MoveManagerTest {
 
         Coin c2 = new Coin(Currency.BLUE, 4);
         purse.addCoin(c2);
+        try {
+            currPlayer.getMoney().removeCoin(c2);
+        } catch(Exception AlhambraEntityNotFoundException){
+            //Do nothing
+        }
 
         assertThrows(AlhambraEntityNotFoundException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse)); //Player doesnt have the money
 
@@ -203,5 +209,50 @@ class MoveManagerTest {
         assertDoesNotThrow(() -> MoveManager.redesignCity(currPlayer, null, l2));
         assertTrue(currPlayer.getReserve().getBuildings().contains(b2));
         assertNull(currPlayer.getCity().getLocation(l2).getBuilding());
+    }
+
+    @Test
+    void leaveGame() {
+
+        String playerName = "jonas";
+        String playerName2 = "quinten";
+        String playerName3 = "lau";
+        AlhambraController controller = new AlhambraController();
+        int gameId = Integer.parseInt(controller.createGame());
+        controller.joinGame(gameId, playerName);
+        controller.joinGame(gameId, playerName2);
+        controller.joinGame(gameId, playerName3);
+        assertEquals(3, controller.getServer().getGame(gameId).getPlayers().size());
+        controller.leaveGame(gameId, playerName2);
+        assertEquals(2, controller.getServer().getGame(gameId).getPlayers().size());
+        controller.leaveGame(gameId, playerName3);
+        assertEquals(1, controller.getServer().getGame(gameId).getPlayers().size());
+
+    }
+
+    @Test
+    void leaveGameStarted() {
+
+        String playerName = "jonas";
+        String playerName2 = "quinten";
+        String playerName3 = "lau";
+        AlhambraController controller = new AlhambraController();
+        int gameId = Integer.parseInt(controller.createGame());
+        controller.joinGame(gameId, playerName);
+        controller.joinGame(gameId, playerName2);
+        controller.joinGame(gameId, playerName3);
+        controller.setReady(gameId, playerName);
+        controller.setReady(gameId, playerName2);
+        controller.setReady(gameId, playerName3);
+
+        assertEquals(3, controller.getServer().getGame(gameId).getPlayers().size());
+        assertFalse(controller.getServer().getGame(gameId).isEnded());
+        controller.leaveGame(gameId, playerName);
+        controller.leaveGame(gameId, playerName2);
+        assertTrue(controller.getServer().getGame(gameId).isEnded());
+
+
+
+
     }
 }

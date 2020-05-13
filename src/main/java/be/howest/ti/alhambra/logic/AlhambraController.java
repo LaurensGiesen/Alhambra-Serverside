@@ -9,7 +9,6 @@ import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.gamebord.Location;
 import be.howest.ti.alhambra.logic.gamebord.Player;
-
 import java.util.List;
 import java.util.Set;
 
@@ -43,7 +42,6 @@ public class AlhambraController {
 
     public String joinGame(int gameId, String playerName) {
         return server.getGame(gameId).addPlayer(playerName);
-
     }
 
     public boolean setReady(int gameId, String playerName) {
@@ -145,6 +143,7 @@ public class AlhambraController {
 
         if (MoveManager.canTakeMoney(game, player, coins)) {
             MoveManager.takeMoney(game, player, coins);
+
         }
 
         return game;
@@ -158,7 +157,10 @@ public class AlhambraController {
 
         if (MoveManager.canBuildBuilding(game, player, building, locations)) {
             MoveManager.buildBuilding(player, building, locations);
-            TurnManager.endTurn(game);
+            if (player.getExtraTurn()) {
+                player.setExtraTurn(false);
+            } else
+                TurnManager.endTurn(game);
         }
 
         return game;
@@ -178,4 +180,24 @@ public class AlhambraController {
         return game;
     }
 
+    public Object leaveGame(int gameId, String playerName) {
+        if(server.getGame(gameId).isStarted()){
+
+            if(playerName.equals(server.getGame(gameId).getCurrentPlayer())) {
+                if(server.getGame(gameId).getPlayers().size() == 2) {
+                    TurnManager.endGame(server.getGame(gameId));
+                }else{
+                    TurnManager.endTurn(server.getGame(gameId));
+                    return server.getGame(gameId).removePlayer(playerName);
+                }
+            }
+            if(server.getGame(gameId).getPlayers().size() == 2) {
+                TurnManager.endGame(server.getGame(gameId));
+            }
+            else{
+                return server.getGame(gameId).removePlayer(playerName);
+            }
+        }
+        return server.getGame(gameId).removePlayer(playerName);
+    }
 }

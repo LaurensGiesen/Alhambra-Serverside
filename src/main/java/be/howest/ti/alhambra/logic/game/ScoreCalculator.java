@@ -35,7 +35,24 @@ public class ScoreCalculator {
         }
     }
     private static void scoreWalls(List<Player> players) {
-        //TODO: add score to player for the longest wall
+        List<Player> playerWithLongestWall = new ArrayList<>();
+        int maxLength = 0;
+
+        for(Player p : players){
+            int lengthWall = p.getCity().getLengthWall();
+            if(lengthWall > maxLength){
+                playerWithLongestWall = new ArrayList<>();
+                playerWithLongestWall.add(p);
+                maxLength = lengthWall;
+            } else if (lengthWall == maxLength){
+                playerWithLongestWall.add(p);
+            }
+        }
+
+        for(Player p : playerWithLongestWall){
+            p.addScore(maxLength/playerWithLongestWall.size());
+        }
+
     }
 
     private static int getScoreForBuildingType(int round, Buildingtype buildingtype, List<List<Player>> playerTable, int position, int score) {
@@ -49,6 +66,7 @@ public class ScoreCalculator {
         score /=  playerTable.get(position-1).size();
         return score;
     }
+
     private static List<List<Player>> playersWithMostBuildings(List<Player> players, Buildingtype buildingtype){
         List<Player> playersCopy = new ArrayList<>(List.copyOf(players));
 
