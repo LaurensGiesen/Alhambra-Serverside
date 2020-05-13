@@ -4,10 +4,7 @@ import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.coin.Purse;
-import be.howest.ti.alhambra.logic.game.Game;
-import be.howest.ti.alhambra.logic.game.MoveManager;
-import be.howest.ti.alhambra.logic.game.Server;
-import be.howest.ti.alhambra.logic.game.TurnManager;
+import be.howest.ti.alhambra.logic.game.*;
 import be.howest.ti.alhambra.logic.coin.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.gamebord.Location;
@@ -81,6 +78,11 @@ public class AlhambraController {
         } else {
             return server.getGame(gameId).getPlayerByName(playerName).isValidToken(token);
         }
+    }
+
+    public boolean verifyAdminToken(String adminToken) {
+
+        return server.isValidAdminToken(adminToken);
     }
 
     public boolean setNotReady(int gameId, String playerName) {
@@ -179,18 +181,10 @@ public class AlhambraController {
         if(server.getGame(gameId).isStarted()){
 
             if(playerName.equals(server.getGame(gameId).getCurrentPlayer())) {
-                if(server.getGame(gameId).getPlayers().size() == 2) {
-                    TurnManager.endGame(server.getGame(gameId));
-                }else{
-                    TurnManager.endTurn(server.getGame(gameId));
-                    return server.getGame(gameId).removePlayer(playerName);
-                }
+                TurnManager.endTurn(server.getGame(gameId));
             }
             if(server.getGame(gameId).getPlayers().size() == 2) {
                 TurnManager.endGame(server.getGame(gameId));
-            }
-            else{
-                return server.getGame(gameId).removePlayer(playerName);
             }
         }
         return server.getGame(gameId).removePlayer(playerName);

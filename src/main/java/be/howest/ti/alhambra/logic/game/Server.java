@@ -17,6 +17,12 @@ public class Server {
 
 
     /* ------------ PUBLIC METHODS ------------ */
+
+    public boolean isValidAdminToken(String adminToken) {
+        String adminToken1 = "ALHAMBRA1ADMIN1TOKEN";
+        return adminToken1.equals(adminToken);
+    }
+
     public Set<Game> getGames() {
         return games;
     }
