@@ -198,7 +198,7 @@ public class AlhambraController {
         return server.getGame(gameId).removePlayer(playerName);
     }
     public void clearGames() {
+         server.resetGames();
 
-        server.getGames().clear();
     }
 }
