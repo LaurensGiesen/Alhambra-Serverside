@@ -1,7 +1,7 @@
 package be.howest.ti.alhambra.logic.sort;
 
 import be.howest.ti.alhambra.logic.building.Buildingtype;
-import be.howest.ti.alhambra.logic.gamebord.Player;
+import be.howest.ti.alhambra.logic.game.Player;
 
 import java.util.Comparator;
 

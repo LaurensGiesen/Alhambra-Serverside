@@ -1,20 +1,16 @@
-package be.howest.ti.alhambra.logic.gamebord;
+package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
+import be.howest.ti.alhambra.logic.building.Location;
 import be.howest.ti.alhambra.logic.building.Walling;
-import be.howest.ti.alhambra.logic.coin.Coin;
-import be.howest.ti.alhambra.logic.coin.Purse;
-import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
+import be.howest.ti.alhambra.logic.game.Player;
+import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import be.howest.ti.alhambra.logic.game.Game;
-import be.howest.ti.alhambra.logic.game.MoveManager;
 import be.howest.ti.alhambra.logic.game.TurnManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

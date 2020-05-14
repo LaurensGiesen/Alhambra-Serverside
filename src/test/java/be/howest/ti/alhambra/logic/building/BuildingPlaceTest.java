@@ -1,4 +1,4 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.building;
 
 import be.howest.ti.alhambra.logic.building.*;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;

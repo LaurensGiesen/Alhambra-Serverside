@@ -1,7 +1,8 @@
-package be.howest.ti.alhambra.logic.gamebord;
+package be.howest.ti.alhambra.logic.building;
 
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
+import be.howest.ti.alhambra.logic.building.Location;
 import be.howest.ti.alhambra.logic.building.Walling;
 import org.junit.jupiter.api.Test;
 

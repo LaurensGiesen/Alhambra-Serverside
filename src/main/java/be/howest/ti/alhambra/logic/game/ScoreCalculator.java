@@ -1,7 +1,6 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Buildingtype;
-import be.howest.ti.alhambra.logic.gamebord.Player;
 import be.howest.ti.alhambra.logic.sort.*;
 
 import java.util.ArrayList;

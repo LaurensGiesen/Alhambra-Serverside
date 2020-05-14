@@ -3,12 +3,12 @@ package be.howest.ti.alhambra.logic;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
-import be.howest.ti.alhambra.logic.coin.Purse;
+import be.howest.ti.alhambra.logic.money.Purse;
 import be.howest.ti.alhambra.logic.game.*;
-import be.howest.ti.alhambra.logic.coin.Currency;
+import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
-import be.howest.ti.alhambra.logic.gamebord.Location;
-import be.howest.ti.alhambra.logic.gamebord.Player;
+import be.howest.ti.alhambra.logic.building.Location;
+import be.howest.ti.alhambra.logic.game.Player;
 import java.util.List;
 import java.util.Set;
 
@@ -155,7 +155,7 @@ public class AlhambraController {
 
         if (MoveManager.canBuildBuilding(game, player, building, locations)) {
             MoveManager.buildBuilding(player, building, locations);
-            if (player.getExtraTurn()) {
+            if (Boolean.TRUE.equals(player.getExtraTurn())) {
                 player.setExtraTurn(false);
             } else
                 TurnManager.endTurn(game);

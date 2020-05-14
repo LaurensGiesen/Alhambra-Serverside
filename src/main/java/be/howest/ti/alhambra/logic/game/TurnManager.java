@@ -1,7 +1,6 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
-import be.howest.ti.alhambra.logic.gamebord.Player;
 
 public class TurnManager {
 

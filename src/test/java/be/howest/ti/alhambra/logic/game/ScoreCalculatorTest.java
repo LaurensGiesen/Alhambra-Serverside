@@ -3,8 +3,7 @@ package be.howest.ti.alhambra.logic.game;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Buildingtype;
 import be.howest.ti.alhambra.logic.building.Walling;
-import be.howest.ti.alhambra.logic.gamebord.Location;
-import be.howest.ti.alhambra.logic.gamebord.Player;
+import be.howest.ti.alhambra.logic.building.Location;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
