@@ -8,6 +8,7 @@ public class Server {
 
     /* ------------ FIELDS ------------ */
     private Set<Game> games;
+    private String adminToken = "ALHAMBRA1ADMIN1TOKEN";
 
 
     /* ------------ CONSTRUCTOR ------------ */
@@ -19,8 +20,7 @@ public class Server {
     /* ------------ PUBLIC METHODS ------------ */
 
     public boolean isValidAdminToken(String adminToken) {
-        String adminToken1 = "ALHAMBRA1ADMIN1TOKEN";
-        return adminToken1.equals(adminToken);
+        return this.adminToken.equals(adminToken);
     }
 
     public Set<Game> getGames() {
