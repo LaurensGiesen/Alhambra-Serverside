@@ -37,7 +37,6 @@ class PopulatorTest {
 
         Populator.populateCoinStack(coinStack1);
         Populator.populateCoinStack(coinStack2);
-
         assertEquals(108, coinStack1.size()); //All coins have been added
         assertNotEquals(coinStack1.peek(), coinStack2.peek()); //Deck has been shuffled
     }

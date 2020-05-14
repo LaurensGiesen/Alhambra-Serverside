@@ -42,13 +42,15 @@ public class MoveManager {
         TurnManager.endTurn(game);
     }
 
-    public static boolean canBuyBuilding(Game game, Player player, Purse coins) {
+    public static boolean canBuyBuilding(Game game, Player player, Purse coins, Currency currency) {
         canPlay(game, player);
         if(coins.getNumberOfCoins() == 0){
             throw new AlhambraGameRuleException("No coins selected");
         }
-        Currency currency = coins.getCurrency();
         Building building = game.getMarket().get(currency);
+        if(coins.getCurrency() != currency) {
+            throw new AlhambraGameRuleException("Wrong currency");
+        }
         if (building == null) {
             throw new AlhambraEntityNotFoundException("No building in that currency");
         }

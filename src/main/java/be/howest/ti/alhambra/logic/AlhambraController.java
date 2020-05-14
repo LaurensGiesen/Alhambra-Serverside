@@ -121,13 +121,13 @@ public class AlhambraController {
         return server.getGame(gameId).getPlayerByName(playerName).getCity().getAvailableLocations(walls);
     }
 
-    public Object buyBuilding(int gameId, String playerName, Purse coins) {
+    public Object buyBuilding(int gameId, String playerName, Purse coins, Currency currency) {
         isExistingEntity(gameId, playerName);
 
         Game game = server.getGame(gameId);
         Player player = server.getGame(gameId).getPlayerByName(playerName);
 
-        if (MoveManager.canBuyBuilding(game, player, coins)) {
+        if (MoveManager.canBuyBuilding(game, player, coins, currency)) {
             MoveManager.buyBuilding(player, game.getMarket(), coins);
         }
 
