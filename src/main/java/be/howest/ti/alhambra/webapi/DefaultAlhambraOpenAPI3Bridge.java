@@ -16,8 +16,8 @@ import io.vertx.ext.web.RoutingContext;
 
 
 public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
-    String parameterGameId = "gameId";
-    String parameterPlayerName = "playerName";
+    private String parameterGameId = "gameId";
+    private String parameterPlayerName = "playerName";
 
     private final AlhambraController controller;
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAlhambraOpenAPI3Bridge.class);
@@ -77,7 +77,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         LOGGER.info("getGames");
         boolean details = Boolean.parseBoolean(ctx.request().getParam("details"));
 
-        if(details){
+        if (details) {
             return controller.getGames().toArray();
         } else {
             return controller.getNotStartedGameIds().toArray();
@@ -180,14 +180,14 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         JsonObject obj = new JsonObject(ctx.getBodyAsString());
         JsonObject jsonBuilding = obj.getJsonObject("building");
         Building building;
-        if(jsonBuilding == null){
+        if (jsonBuilding == null) {
             building = null;
         } else {
             building = jsonBuilding.mapTo(Building.class);
         }
         JsonObject jsonLocation = obj.getJsonObject("location");
         Location location;
-        if(jsonLocation == null){
+        if (jsonLocation == null) {
             location = null;
         } else {
             location = jsonLocation.mapTo(Location.class);
@@ -208,7 +208,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         Building building = jsonBuilding.mapTo(Building.class);
         JsonObject jsonLocation = obj.getJsonObject("location");
         Location location;
-        if(jsonLocation == null){
+        if (jsonLocation == null) {
             location = null;
         } else {
             location = jsonLocation.mapTo(Location.class);

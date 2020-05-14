@@ -9,20 +9,32 @@ import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.building.Location;
 import be.howest.ti.alhambra.logic.game.Player;
+
 import java.util.List;
 import java.util.Set;
 
 public class AlhambraController {
 
+    /* ------------ FIELDS ------------ */
+
     Server server;
+
+
+    /* ------------ CONSTRUCTOR ------------ */
 
     public AlhambraController() {
         server = new Server();
     }
 
+
+    /* ------------ GETTERS ------------ */
+
     public Server getServer() {
         return server;
     }
+
+
+    /* ------------ PUBLIC METHODS ------------ */
 
     public Currency[] getCurrencies() {
         return Currency.values();
@@ -49,7 +61,7 @@ public class AlhambraController {
         isExistingEntity(gameId, playerName);
 
         server.getGame(gameId).getPlayerByName(playerName).setReady(true);
-        if(TurnManager.isReadyToStart(server.getGame(gameId))){
+        if (TurnManager.isReadyToStart(server.getGame(gameId))) {
             TurnManager.startGame(server.getGame(gameId));
         }
 
@@ -64,13 +76,12 @@ public class AlhambraController {
         return server.getNotStartedGameIds();
     }
 
-
     public boolean verifyPlayerToken(String token, int gameId, String playerName) {
-        if(server.getGame(gameId) ==  null) {
+        if (server.getGame(gameId) == null) {
             throw new AlhambraEntityNotFoundException("Game not present");
         }
         if (playerName == null) {
-            for(Player p: server.getGame(gameId).getPlayers()) {
+            for (Player p : server.getGame(gameId).getPlayers()) {
                 if (p.isValidToken(token)) {
                     return true;
                 }
@@ -95,16 +106,6 @@ public class AlhambraController {
         return true;
     }
 
-    private void isExistingEntity(int gameId, String playerName) {
-        if (server.getGame(gameId) == null) {
-            throw new AlhambraEntityNotFoundException("Game does not exist");
-        }
-
-        if (server.getGame(gameId).getPlayerByName(playerName) == null) {
-            throw new AlhambraEntityNotFoundException("Player does not exist");
-        }
-    }
-
     public Object getGame(int gameId) {
 
         if (server.getGame(gameId) == null) {
@@ -113,7 +114,7 @@ public class AlhambraController {
         return server.getGame(gameId);
     }
 
-    public List<Location> getAvailableLocations(int gameId,String playerName, Walling walls) {
+    public List<Location> getAvailableLocations(int gameId, String playerName, Walling walls) {
 
         isExistingEntity(gameId, playerName);
 
@@ -179,19 +180,33 @@ public class AlhambraController {
     }
 
     public Object leaveGame(int gameId, String playerName) {
-        if(server.getGame(gameId).isStarted()){
+        if (server.getGame(gameId).isStarted()) {
 
-            if(playerName.equals(server.getGame(gameId).getCurrentPlayer())) {
+            if (playerName.equals(server.getGame(gameId).getCurrentPlayer())) {
                 TurnManager.endTurn(server.getGame(gameId));
             }
-            if(server.getGame(gameId).getPlayers().size() == 2) {
+            if (server.getGame(gameId).getPlayers().size() == 2) {
                 TurnManager.endGame(server.getGame(gameId));
             }
         }
         return server.getGame(gameId).removePlayer(playerName);
     }
-    public void clearGames() {
-         server.resetGames();
 
+    public void clearGames() {
+        server.resetGames();
+
+    }
+
+
+    /* ------------ PUBLIC METHODS ------------ */
+
+    private void isExistingEntity(int gameId, String playerName) {
+        if (server.getGame(gameId) == null) {
+            throw new AlhambraEntityNotFoundException("Game does not exist");
+        }
+
+        if (server.getGame(gameId).getPlayerByName(playerName) == null) {
+            throw new AlhambraEntityNotFoundException("Player does not exist");
+        }
     }
 }
