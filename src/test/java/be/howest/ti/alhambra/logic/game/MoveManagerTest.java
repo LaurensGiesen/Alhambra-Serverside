@@ -104,15 +104,15 @@ class MoveManagerTest {
         createGame();
         Player pC = new Player("C");
 
-        assertThrows(AlhambraEntityNotFoundException.class, ()->MoveManager.canBuyBuilding(g, pC, purse)); //Player not in game
-        assertThrows(AlhambraGameRuleException.class, ()->MoveManager.canBuyBuilding(g, otherPlayer, purse)); //Player not current player
+        assertThrows(AlhambraEntityNotFoundException.class, ()->MoveManager.canBuyBuilding(g, pC, purse, Currency.BLUE)); //Player not in game
+        assertThrows(AlhambraGameRuleException.class, ()->MoveManager.canBuyBuilding(g, otherPlayer, purse, Currency.BLUE)); //Player not current player
 
         g.getMarket().replace(Currency.BLUE, null);
-        assertThrows(AlhambraEntityNotFoundException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse)); //No building in currency
+        assertThrows(AlhambraEntityNotFoundException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse, Currency.BLUE)); //No building in currency
 
         g.getMarket().replace(Currency.BLUE, new Building(Buildingtype.PAVILION, 8, null));
 
-        assertThrows(AlhambraGameRuleException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse)); //Not enough money
+        assertThrows(AlhambraGameRuleException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse, Currency.BLUE)); //Not enough money
 
         Coin c2 = new Coin(Currency.BLUE, 4);
         purse.addCoin(c2);
@@ -122,11 +122,12 @@ class MoveManagerTest {
             //Do nothing
         }
 
-        assertThrows(AlhambraEntityNotFoundException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse)); //Player doesnt have the money
+        assertThrows(AlhambraEntityNotFoundException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse, Currency.BLUE)); //Player doesnt have the money
 
         currPlayer.getMoney().addCoin(c2);
+        assertThrows(AlhambraGameRuleException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse, Currency.GREEN));
+        assertDoesNotThrow(() -> MoveManager.canBuyBuilding(g, currPlayer, purse, Currency.BLUE)); //Good situation
 
-        assertDoesNotThrow(() -> MoveManager.canBuyBuilding(g, currPlayer, purse)); //Good situation
     }
 
     @Test
@@ -249,9 +250,5 @@ class MoveManagerTest {
         controller.leaveGame(gameId, playerName);
         controller.leaveGame(gameId, playerName2);
         assertTrue(controller.getServer().getGame(gameId).isEnded());
-
-
-
-
     }
 }

@@ -4,6 +4,7 @@ import be.howest.ti.alhambra.logic.AlhambraController;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.money.Purse;
 import be.howest.ti.alhambra.logic.building.Location;
 import be.howest.ti.alhambra.logic.game.Player;
@@ -161,6 +162,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         Purse coins = new Purse();
 
         JsonObject obj = new JsonObject(ctx.getBodyAsString());
+        JsonObject currencyJson = obj.getJsonObject("currency");
+        Currency currency = currencyJson.mapTo(Currency.class);
         JsonArray coinArray = obj.getJsonArray("coins");
 
         for (int i = 0; i < coinArray.size(); i++) {
@@ -168,7 +171,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
             Coin coin = element.mapTo(Coin.class);
             coins.addCoin(coin);
         }
-        return controller.buyBuilding(gameId, playerName, coins);
+        return controller.buyBuilding(gameId, playerName, coins, currency);
     }
 
     public Object redesign(RoutingContext ctx) {
