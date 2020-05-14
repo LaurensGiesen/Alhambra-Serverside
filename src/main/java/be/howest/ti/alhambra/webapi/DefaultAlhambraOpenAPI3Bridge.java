@@ -162,8 +162,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         Purse coins = new Purse();
 
         JsonObject obj = new JsonObject(ctx.getBodyAsString());
-        JsonObject currencyJson = obj.getJsonObject("currency");
-        Currency currency = currencyJson.mapTo(Currency.class);
+
+        Currency currency = Currency.valueOf(obj.getString("currency").toUpperCase());
         JsonArray coinArray = obj.getJsonArray("coins");
 
         for (int i = 0; i < coinArray.size(); i++) {
