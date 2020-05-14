@@ -1,7 +1,5 @@
-package be.howest.ti.alhambra.logic.gamebord;
+package be.howest.ti.alhambra.logic.building;
 
-import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.building.WallingDirection;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

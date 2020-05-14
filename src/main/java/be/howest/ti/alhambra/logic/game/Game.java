@@ -1,12 +1,11 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.coin.Coin;
-import be.howest.ti.alhambra.logic.coin.Purse;
-import be.howest.ti.alhambra.logic.coin.Currency;
+import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Purse;
+import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
-import be.howest.ti.alhambra.logic.gamebord.Player;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -55,10 +54,6 @@ public class Game {
     /* ------------ GETTERS ------------ */
     public int getGameId() {
         return gameId;
-    }
-
-    public static int getNumberOfGames() {
-        return numberOfGames;
     }
 
     public Purse getBank() {
@@ -121,14 +116,6 @@ public class Game {
     }
 
     /* ------------ SETTERS ------------ */
-    public void setCoinStack(Queue<Coin> coinStack) {
-        this.coinStack = coinStack;
-    }
-
-    public void setBuildingStack(Queue<Building> buildingStack) {
-        this.buildingStack = buildingStack;
-    }
-
     public void setStarted(boolean started) {
         this.started = started;
     }
@@ -140,11 +127,6 @@ public class Game {
     public void setCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
-
-    public void setScoringRound(int[] rounds) {
-        this.scoringRound = rounds;
-    }
-
 
     /* ------------ PUBLIC METHODS ------------ */
     public String addPlayer(String playerName) {
@@ -177,7 +159,6 @@ public class Game {
         return true;
     }
 
-
     /* ------------ EQUALS & HASH ------------ */
     @Override
     public boolean equals(Object o) {
@@ -191,8 +172,5 @@ public class Game {
     public int hashCode() {
         return Objects.hash(gameId);
     }
-
-
-    /* ------------ TO STRING ------------ */
 
 }

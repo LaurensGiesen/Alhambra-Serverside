@@ -6,9 +6,8 @@ import be.howest.ti.alhambra.logic.building.Walling;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.game.Game;
 import be.howest.ti.alhambra.logic.game.TurnManager;
-import be.howest.ti.alhambra.logic.gamebord.City;
-import be.howest.ti.alhambra.logic.gamebord.Location;
-import be.howest.ti.alhambra.logic.gamebord.Player;
+import be.howest.ti.alhambra.logic.building.Location;
+import be.howest.ti.alhambra.logic.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

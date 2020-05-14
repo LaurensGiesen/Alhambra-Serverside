@@ -1,8 +1,7 @@
-package be.howest.ti.alhambra.logic;
+package be.howest.ti.alhambra.logic.money;
 
-import be.howest.ti.alhambra.logic.coin.Coin;
-import be.howest.ti.alhambra.logic.coin.Currency;
-import be.howest.ti.alhambra.logic.coin.Purse;
+import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Purse;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static be.howest.ti.alhambra.logic.coin.Currency.BLUE;
-import static be.howest.ti.alhambra.logic.coin.Currency.GREEN;
+import static be.howest.ti.alhambra.logic.money.Currency.BLUE;
+import static be.howest.ti.alhambra.logic.money.Currency.GREEN;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PurseTest {
@@ -35,11 +34,11 @@ public class PurseTest {
     }
 
     @Test
-    void PurseTest() {
+    void testPurse() {
         createPurses();
-        assertEquals(p2.getCurrency(), BLUE);
+        assertEquals(BLUE, p2.getCurrency());
         assertThrows(AlhambraEntityNotFoundException.class, () -> p1.getCurrency()); //different coins in purse
-        assertEquals(p1.getTotalAmount(), 16);
+        assertEquals(16, p1.getTotalAmount());
         assertTrue(p1.getCoins().contains(c1));
         p1.removeCoin(c1);
         p1.removeCoin(c2);

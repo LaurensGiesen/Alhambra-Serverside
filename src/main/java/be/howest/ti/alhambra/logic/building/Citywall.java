@@ -1,6 +1,4 @@
-package be.howest.ti.alhambra.logic.gamebord;
-
-import be.howest.ti.alhambra.logic.building.WallingDirection;
+package be.howest.ti.alhambra.logic.building;
 
 import java.util.LinkedList;
 import java.util.Objects;

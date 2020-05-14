@@ -1,9 +1,9 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.coin.Coin;
-import be.howest.ti.alhambra.logic.coin.Currency;
-import be.howest.ti.alhambra.logic.coin.Purse;
+import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Currency;
+import be.howest.ti.alhambra.logic.money.Purse;
 
 
 import java.util.*;

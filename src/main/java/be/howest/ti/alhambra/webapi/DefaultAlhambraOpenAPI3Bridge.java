@@ -3,10 +3,10 @@ package be.howest.ti.alhambra.webapi;
 import be.howest.ti.alhambra.logic.AlhambraController;
 import be.howest.ti.alhambra.logic.building.Building;
 import be.howest.ti.alhambra.logic.building.Walling;
-import be.howest.ti.alhambra.logic.coin.Coin;
-import be.howest.ti.alhambra.logic.coin.Purse;
-import be.howest.ti.alhambra.logic.gamebord.Location;
-import be.howest.ti.alhambra.logic.gamebord.Player;
+import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Purse;
+import be.howest.ti.alhambra.logic.building.Location;
+import be.howest.ti.alhambra.logic.game.Player;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -16,6 +16,8 @@ import io.vertx.ext.web.RoutingContext;
 
 
 public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
+    private String parameterGameId = "gameId";
+    private String parameterPlayerName = "playerName";
 
     private final AlhambraController controller;
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultAlhambraOpenAPI3Bridge.class);
@@ -49,8 +51,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
 
         Walling walls = new Walling(north, east, south, west);
 
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
-        String playerName = ctx.request().getParam("playerName");
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
+        String playerName = ctx.request().getParam(parameterPlayerName);
 
 
         return controller.getAvailableLocations(gameId, playerName, walls);
@@ -75,7 +77,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         LOGGER.info("getGames");
         boolean details = Boolean.parseBoolean(ctx.request().getParam("details"));
 
-        if(details){
+        if (details) {
             return controller.getGames().toArray();
         } else {
             return controller.getNotStartedGameIds().toArray();
@@ -101,23 +103,23 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
         Player players = Json.decodeValue(body, Player.class);
         String playerName = players.getPlayerName();
 
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
 
         return controller.joinGame(gameId, playerName);
     }
 
     public Object leaveGame(RoutingContext ctx) {
         LOGGER.info("leaveGame");
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
-        String playerName = ctx.request().getParam("playerName");
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
+        String playerName = ctx.request().getParam(parameterPlayerName);
         return controller.leaveGame(gameId, playerName);
     }
 
     public Object setReady(RoutingContext ctx) {
         LOGGER.info("setReady");
 
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
-        String playerName = ctx.request().getParam("playerName");
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
+        String playerName = ctx.request().getParam(parameterPlayerName);
 
         return controller.setReady(gameId, playerName);
     }
@@ -125,8 +127,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     public Object setNotReady(RoutingContext ctx) {
         LOGGER.info("setNotReady");
 
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
-        String playerName = ctx.request().getParam("playerName");
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
+        String playerName = ctx.request().getParam(parameterPlayerName);
 
         return controller.setNotReady(gameId, playerName);
     }
@@ -134,8 +136,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     public Object takeMoney(RoutingContext ctx) {
         LOGGER.info("takeMoney");
 
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
-        String playerName = ctx.request().getParam("playerName");
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
+        String playerName = ctx.request().getParam(parameterPlayerName);
 
         Purse coins = new Purse();
 
@@ -153,8 +155,8 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     public Object buyBuilding(RoutingContext ctx) {
         LOGGER.info("buyBuilding");
 
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
-        String playerName = ctx.request().getParam("playerName");
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
+        String playerName = ctx.request().getParam(parameterPlayerName);
 
         Purse coins = new Purse();
 
@@ -172,20 +174,20 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     public Object redesign(RoutingContext ctx) {
         LOGGER.info("redesign");
 
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
-        String playerName = ctx.request().getParam("playerName");
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
+        String playerName = ctx.request().getParam(parameterPlayerName);
 
         JsonObject obj = new JsonObject(ctx.getBodyAsString());
         JsonObject jsonBuilding = obj.getJsonObject("building");
         Building building;
-        if(jsonBuilding == null){
+        if (jsonBuilding == null) {
             building = null;
         } else {
             building = jsonBuilding.mapTo(Building.class);
         }
         JsonObject jsonLocation = obj.getJsonObject("location");
         Location location;
-        if(jsonLocation == null){
+        if (jsonLocation == null) {
             location = null;
         } else {
             location = jsonLocation.mapTo(Location.class);
@@ -198,15 +200,15 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     public Object build(RoutingContext ctx) {
         LOGGER.info("build");
 
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
-        String playerName = ctx.request().getParam("playerName");
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
+        String playerName = ctx.request().getParam(parameterPlayerName);
 
         JsonObject obj = new JsonObject(ctx.getBodyAsString());
         JsonObject jsonBuilding = obj.getJsonObject("building");
         Building building = jsonBuilding.mapTo(Building.class);
         JsonObject jsonLocation = obj.getJsonObject("location");
         Location location;
-        if(jsonLocation == null){
+        if (jsonLocation == null) {
             location = null;
         } else {
             location = jsonLocation.mapTo(Location.class);
@@ -221,7 +223,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     public Object getGame(RoutingContext ctx) {
         LOGGER.info("getGame");
 
-        int gameId = Integer.parseInt(ctx.request().getParam("gameId"));
+        int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
         return controller.getGame(gameId);
     }
 }

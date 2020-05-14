@@ -1,7 +1,6 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
-import be.howest.ti.alhambra.logic.gamebord.Player;
 
 public class TurnManager {
 
@@ -27,14 +26,8 @@ public class TurnManager {
     public static void endTurn(Game game) {
         Populator.populateBank(game.getCoinStack(), game.getBank());
 
-        if (game.getCoinStack().size() < game.getScoringRound()[0]) {
-            ScoreCalculator.score(game.getPlayers(), 1);
-            game.getScoringRound()[0] = -1;
-        }
-        if (game.getCoinStack().size() < game.getScoringRound()[1]) {
-            ScoreCalculator.score(game.getPlayers(), 2);
-            game.getScoringRound()[1] = -1;
-        }
+        endOfTurnScore(game, 1);
+        endOfTurnScore(game, 2);
 
         if (!Populator.populateMarket(game.getBuildingStack(), game.getMarket())) {
             TurnManager.endGame(game);
@@ -81,6 +74,13 @@ public class TurnManager {
             game.setCurrentPlayer(game.getPlayers().get(0).getPlayerName());
         } else {
             game.setCurrentPlayer(game.getPlayers().get(posCurrPlayer + 1).getPlayerName());
+        }
+    }
+
+    private static void endOfTurnScore(Game game, int round) {
+        if (game.getCoinStack().size() < game.getScoringRound()[round-1]) {
+            ScoreCalculator.score(game.getPlayers(), round);
+            game.getScoringRound()[round-1] = -1;
         }
     }
 

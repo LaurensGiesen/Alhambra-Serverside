@@ -1,8 +1,6 @@
-package be.howest.ti.alhambra.logic.gamebord;
+package be.howest.ti.alhambra.logic.building;
 
-import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.building.Buildingtype;
-import be.howest.ti.alhambra.logic.building.Walling;
+import be.howest.ti.alhambra.logic.building.*;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
 import org.junit.jupiter.api.Test;

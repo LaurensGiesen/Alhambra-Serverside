@@ -1,13 +1,12 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.coin.Coin;
-import be.howest.ti.alhambra.logic.coin.Currency;
-import be.howest.ti.alhambra.logic.coin.Purse;
+import be.howest.ti.alhambra.logic.money.Coin;
+import be.howest.ti.alhambra.logic.money.Currency;
+import be.howest.ti.alhambra.logic.money.Purse;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
-import be.howest.ti.alhambra.logic.gamebord.Location;
-import be.howest.ti.alhambra.logic.gamebord.Player;
+import be.howest.ti.alhambra.logic.building.Location;
 
 import java.util.Map;
 
@@ -15,8 +14,7 @@ public class MoveManager {
 
     /* ------------ CONSTRUCTOR ------------ */
 
-    private MoveManager() {
-    }
+    private MoveManager() {}
 
 
     /* ------------ PUBLIC METHODS ------------ */
