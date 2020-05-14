@@ -126,7 +126,9 @@ public class Player {
         this.score += amount;
     }
 
-    public static String randomAlphaNumeric(int count) {
+
+    /* ------------ PRIVATE METHODS ------------ */
+    private static String randomAlphaNumeric(int count) {
         StringBuilder builder = new StringBuilder();
         while (count-- != 0) {
             int character = (r.nextInt(ALPHA_NUMERIC_STRING.length()));

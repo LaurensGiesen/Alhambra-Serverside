@@ -56,10 +56,6 @@ public class Game {
         return gameId;
     }
 
-    public static int getNumberOfGames() {
-        return numberOfGames;
-    }
-
     public Purse getBank() {
         return bank;
     }
@@ -120,14 +116,6 @@ public class Game {
     }
 
     /* ------------ SETTERS ------------ */
-    public void setCoinStack(Queue<Coin> coinStack) {
-        this.coinStack = coinStack;
-    }
-
-    public void setBuildingStack(Queue<Building> buildingStack) {
-        this.buildingStack = buildingStack;
-    }
-
     public void setStarted(boolean started) {
         this.started = started;
     }
@@ -139,11 +127,6 @@ public class Game {
     public void setCurrentPlayer(String currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
-
-    public void setScoringRound(int[] rounds) {
-        this.scoringRound = rounds;
-    }
-
 
     /* ------------ PUBLIC METHODS ------------ */
     public String addPlayer(String playerName) {
@@ -176,7 +159,6 @@ public class Game {
         return true;
     }
 
-
     /* ------------ EQUALS & HASH ------------ */
     @Override
     public boolean equals(Object o) {
@@ -190,8 +172,5 @@ public class Game {
     public int hashCode() {
         return Objects.hash(gameId);
     }
-
-
-    /* ------------ TO STRING ------------ */
 
 }

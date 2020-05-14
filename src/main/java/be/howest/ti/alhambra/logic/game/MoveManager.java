@@ -14,8 +14,7 @@ public class MoveManager {
 
     /* ------------ CONSTRUCTOR ------------ */
 
-    private MoveManager() {
-    }
+    private MoveManager() {}
 
 
     /* ------------ PUBLIC METHODS ------------ */

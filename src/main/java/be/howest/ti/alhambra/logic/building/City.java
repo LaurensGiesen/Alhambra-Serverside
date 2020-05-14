@@ -18,7 +18,6 @@ public class City {
         locations.add(new Location(0, 0, fountain));
     }
 
-
     /* ------------ GETTERS ------------ */
     public List<Location> getLocations() {
         return locations;
@@ -51,36 +50,6 @@ public class City {
             }
         }
         return maxLength;
-    }
-
-    private int getLengthWallFromWall(Citywall cw, Set<Citywall> prevCitywalls) {
-        if (prevCitywalls == null) {
-            prevCitywalls = new HashSet<>();
-        }
-        if (prevCitywalls.contains(cw)) {
-            return 0;
-        }
-        prevCitywalls.add(cw);
-
-        int maxLength = 0;
-        if (isOuterWall(cw)) {
-            Queue<Citywall> connectedWalls = cw.getConnectedCitywalls();
-            for (Citywall connectedWall : connectedWalls) {
-                maxLength = Math.max(maxLength, getLengthWallFromWall(connectedWall, prevCitywalls) + 1);
-            }
-        }
-
-        return maxLength;
-    }
-
-    private boolean isOuterWall(Citywall cw) {
-        if (this.getLocation(cw.getLocation()).isEmpty()) {
-            return false;
-        }
-        if (Boolean.FALSE.equals(this.getLocation(cw.getLocation()).getBuilding().getWalls().getWalls().get(cw.getDirection()))) {
-            return false;
-        }
-        return this.getLocation(cw.getLocation().getNeighbourLocation(cw.getDirection())).isEmpty();
     }
 
     public List<Location> getAvailableLocations(Walling walls) {
@@ -185,6 +154,36 @@ public class City {
 
 
     /* ------------ PRIVATE METHODS ------------ */
+    private boolean isOuterWall(Citywall cw) {
+        if (this.getLocation(cw.getLocation()).isEmpty()) {
+            return false;
+        }
+        if (Boolean.FALSE.equals(this.getLocation(cw.getLocation()).getBuilding().getWalls().getWalls().get(cw.getDirection()))) {
+            return false;
+        }
+        return this.getLocation(cw.getLocation().getNeighbourLocation(cw.getDirection())).isEmpty();
+    }
+
+    private int getLengthWallFromWall(Citywall cw, Set<Citywall> prevCitywalls) {
+        if (prevCitywalls == null) {
+            prevCitywalls = new HashSet<>();
+        }
+        if (prevCitywalls.contains(cw)) {
+            return 0;
+        }
+        prevCitywalls.add(cw);
+
+        int maxLength = 0;
+        if (isOuterWall(cw)) {
+            Queue<Citywall> connectedWalls = cw.getConnectedCitywalls();
+            for (Citywall connectedWall : connectedWalls) {
+                maxLength = Math.max(maxLength, getLengthWallFromWall(connectedWall, prevCitywalls) + 1);
+            }
+        }
+
+        return maxLength;
+    }
+
     private int getEdgeOfCity(WallingDirection direction) {
         int res = 0;
         for (Location l : locations) {
