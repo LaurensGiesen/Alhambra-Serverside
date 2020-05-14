@@ -44,7 +44,9 @@ public class MoveManager {
 
     public static boolean canBuyBuilding(Game game, Player player, Purse coins, Currency currency) {
         canPlay(game, player);
-
+        if(coins.getNumberOfCoins() == 0){
+            throw new AlhambraGameRuleException("No coins selected");
+        }
         Building building = game.getMarket().get(currency);
         if(coins.getCurrency() != currency) {
             throw new AlhambraGameRuleException("Wrong currency");

@@ -113,6 +113,7 @@ class MoveManagerTest {
         g.getMarket().replace(Currency.BLUE, new Building(Buildingtype.PAVILION, 8, null));
 
         assertThrows(AlhambraGameRuleException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, purse, Currency.BLUE)); //Not enough money
+        assertThrows(AlhambraGameRuleException.class, () -> MoveManager.canBuyBuilding(g, currPlayer, new Purse(), Currency.BLUE)); //No money
 
         Coin c2 = new Coin(Currency.BLUE, 4);
         purse.addCoin(c2);
