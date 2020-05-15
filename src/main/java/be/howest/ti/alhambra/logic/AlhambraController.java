@@ -9,7 +9,6 @@ import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.building.Location;
 import be.howest.ti.alhambra.logic.game.Player;
-
 import java.util.List;
 import java.util.Set;
 

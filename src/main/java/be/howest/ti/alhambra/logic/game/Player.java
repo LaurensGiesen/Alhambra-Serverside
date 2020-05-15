@@ -126,6 +126,9 @@ public class Player {
         this.score += amount;
     }
 
+    public static boolean isValidPlayername(String playerName) {
+        return playerName.matches("[a-z0-9]+");
+    }
 
     /* ------------ PRIVATE METHODS ------------ */
     private static String randomAlphaNumeric(int count) {
