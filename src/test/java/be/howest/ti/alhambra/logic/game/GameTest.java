@@ -13,12 +13,12 @@ class GameTest {
 
     private Game createStartedGame(){
         Game game = new Game();
-        game.addPlayer("A");
-        game.addPlayer("B");
-        game.addPlayer("C");
-        game.getPlayerByName("A").setReady(true);
-        game.getPlayerByName("B").setReady(true);
-        game.getPlayerByName("C").setReady(true);
+        game.addPlayer("a");
+        game.addPlayer("b");
+        game.addPlayer("c");
+        game.getPlayerByName("a").setReady(true);
+        game.getPlayerByName("b").setReady(true);
+        game.getPlayerByName("c").setReady(true);
         TurnManager.startGame(game);
         return game;
     }
@@ -27,33 +27,33 @@ class GameTest {
     void addPlayer() {
         Game game = createEmptyGame();
 
-        assertDoesNotThrow(()->game.addPlayer("A"));
-        assertEquals(new Player("A"), game.getPlayerByName("A"));
-        assertThrows(AlhambraGameRuleException.class, ()->game.addPlayer("A")); //No unique name
+        assertDoesNotThrow(()->game.addPlayer("a"));
+        assertEquals(new Player("a"), game.getPlayerByName("a"));
+        assertThrows(AlhambraGameRuleException.class, ()->game.addPlayer("a")); //No unique name
 
-        game.addPlayer("B");
-        game.addPlayer("C");
-        game.addPlayer("D");
-        game.addPlayer("E");
-        game.addPlayer("F");
-        assertThrows(AlhambraGameRuleException.class, ()->game.addPlayer("G")); //Max 6 players
+        game.addPlayer("b");
+        game.addPlayer("c");
+        game.addPlayer("d");
+        game.addPlayer("e");
+        game.addPlayer("f");
+        assertThrows(AlhambraGameRuleException.class, ()->game.addPlayer("g")); //Max 6 players
 
         Game game2 = createStartedGame();
-        assertThrows(AlhambraGameRuleException.class, ()->game2.addPlayer("D")); //No add possible after start
+        assertThrows(AlhambraGameRuleException.class, ()->game2.addPlayer("d")); //No add possible after start
     }
 
     @Test
     void removePlayer() {
         Game g1 = createEmptyGame();
-        g1.addPlayer("A");
-        g1.addPlayer("B");
+        g1.addPlayer("a");
+        g1.addPlayer("b");
 
-        assertThrows(AlhambraEntityNotFoundException.class, ()->g1.removePlayer("D")); //Player not present
-        assertDoesNotThrow(()->g1.removePlayer("A"));
-        assertNull(g1.getPlayerByName("A"));
+        assertThrows(AlhambraEntityNotFoundException.class, ()->g1.removePlayer("d")); //Player not present
+        assertDoesNotThrow(()->g1.removePlayer("a"));
+        assertNull(g1.getPlayerByName("a"));
 
         Game g2 = createStartedGame();
-        assertDoesNotThrow(()->g2.removePlayer("A")); //Remove from started game
+        assertDoesNotThrow(()->g2.removePlayer("a")); //Remove from started game
 
         Game g3 = createStartedGame();
         String currPlayer = g3.getCurrentPlayer();
@@ -61,8 +61,8 @@ class GameTest {
         assertNotEquals(currPlayer, g3.getCurrentPlayer()); //If current player removed, then turn has ended
 
         Game g4 = createStartedGame();
-        assertDoesNotThrow(()->g4.removePlayer("A"));
-        assertDoesNotThrow(()->g4.removePlayer("B"));
+        assertDoesNotThrow(()->g4.removePlayer("a"));
+        assertDoesNotThrow(()->g4.removePlayer("b"));
         assertTrue(g4.isEnded()); //If only 1 player is left of started game, game is finished
 
     }

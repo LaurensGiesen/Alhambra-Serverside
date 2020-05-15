@@ -12,10 +12,10 @@ class TurnManagerTest {
 
     private void getGameReadyToStart() {
         g1 = new Game();
-        g1.addPlayer("A");
-        g1.addPlayer("B");
-        g1.getPlayerByName("A").setReady(true);
-        g1.getPlayerByName("B").setReady(true);
+        g1.addPlayer("a");
+        g1.addPlayer("b");
+        g1.getPlayerByName("a").setReady(true);
+        g1.getPlayerByName("b").setReady(true);
     }
 
     private void getStartedGame() {
@@ -28,12 +28,12 @@ class TurnManagerTest {
     void isReadyToStart() {
         Game g1 = new Game();
         assertFalse(TurnManager.isReadyToStart(g1));
-        g1.addPlayer("A");
-        g1.getPlayerByName("A").setReady(true);
+        g1.addPlayer("a");
+        g1.getPlayerByName("a").setReady(true);
         assertFalse(TurnManager.isReadyToStart(g1));
-        g1.addPlayer("B");
+        g1.addPlayer("b");
         assertFalse(TurnManager.isReadyToStart(g1));
-        g1.getPlayerByName("B").setReady(true);
+        g1.getPlayerByName("b").setReady(true);
         assertTrue(TurnManager.isReadyToStart(g1));
     }
 
@@ -48,8 +48,8 @@ class TurnManagerTest {
         assertNotNull(g1.getMarket().get(Currency.GREEN));
         assertNotNull(g1.getMarket().get(Currency.YELLOW));
         assertNotNull(g1.getCurrentPlayer());
-        assertTrue(g1.getPlayerByName("A").getMoney().getNumberOfCoins() > 0);
-        assertTrue(g1.getPlayerByName("A").getMoney().getTotalAmount() >= 20);
+        assertTrue(g1.getPlayerByName("a").getMoney().getNumberOfCoins() > 0);
+        assertTrue(g1.getPlayerByName("a").getMoney().getTotalAmount() >= 20);
     }
 
     @Test
