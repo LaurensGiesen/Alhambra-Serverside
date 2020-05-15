@@ -27,12 +27,12 @@ class MoveManagerTest {
 
     private void createGame(){
         g = new Game();
-        g.addPlayer("A");
-        g.addPlayer("B");
-        Player pA = g.getPlayerByName("A");
-        Player pB = g.getPlayerByName("B");
-        g.getPlayerByName("A").setReady(true);
-        g.getPlayerByName("B").setReady(true);
+        g.addPlayer("a");
+        g.addPlayer("b");
+        Player pA = g.getPlayerByName("a");
+        Player pB = g.getPlayerByName("b");
+        g.getPlayerByName("a").setReady(true);
+        g.getPlayerByName("b").setReady(true);
         TurnManager.startGame(g);
 
         purse = new Purse();
@@ -62,8 +62,8 @@ class MoveManagerTest {
     void canTakeMoney() {
     Game game = new Game();
     Player player = new Player("michiel");
-    Player player1 = new Player("Quinten");
-    Player player2 = new Player("Laurens");
+    Player player1 = new Player("quinten");
+    Player player2 = new Player("laurens");
     game.addPlayer(player.getPlayerName());
     game.addPlayer(player1.getPlayerName());
     game.addPlayer(player2.getPlayerName());
@@ -102,7 +102,7 @@ class MoveManagerTest {
     @Test
     void canBuyBuilding() {
         createGame();
-        Player pC = new Player("C");
+        Player pC = new Player("c");
 
         assertThrows(AlhambraEntityNotFoundException.class, ()->MoveManager.canBuyBuilding(g, pC, purse, Currency.BLUE)); //Player not in game
         assertThrows(AlhambraGameRuleException.class, ()->MoveManager.canBuyBuilding(g, otherPlayer, purse, Currency.BLUE)); //Player not current player

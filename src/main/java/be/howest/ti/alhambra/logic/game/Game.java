@@ -6,6 +6,7 @@ import be.howest.ti.alhambra.logic.money.Purse;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
+import be.howest.ti.alhambra.webapi.exceptions.UrlTokenFormatException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -130,6 +131,9 @@ public class Game {
 
     /* ------------ PUBLIC METHODS ------------ */
     public String addPlayer(String playerName) {
+        if(!Player.isValidPlayername(playerName)){
+            throw new UrlTokenFormatException("No valid playername!");
+        }
         if(started){
             throw new AlhambraGameRuleException("Players can't join a started game!");
         }

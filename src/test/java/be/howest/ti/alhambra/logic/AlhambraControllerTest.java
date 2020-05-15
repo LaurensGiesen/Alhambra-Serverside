@@ -133,7 +133,7 @@ class AlhambraControllerTest {
     void build() {
         int gameId = controller.server.newGame();
         Player player = new Player("michiel");
-        Player player1 = new Player("Quinten");
+        Player player1 = new Player("quinten");
 
         Game game = controller.server.getGame(gameId);
 
@@ -158,7 +158,7 @@ class AlhambraControllerTest {
     void redesignCity() {
         int gameId = controller.server.newGame();
         Player player = new Player("michiel");
-        Player player1 = new Player("Quinten");
+        Player player1 = new Player("quinten");
 
         Game game = controller.server.getGame(gameId);
 

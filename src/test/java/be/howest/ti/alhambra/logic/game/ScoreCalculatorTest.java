@@ -18,9 +18,9 @@ class ScoreCalculatorTest {
         Building pavilion = new Building(Buildingtype.PAVILION, 1, new Walling(false, false, false, false));
         Building arcade = new Building(Buildingtype.ARCADES, 1, new Walling(false, false, false, false));
 
-        Player p1 = new Player("A");
-        Player p2 = new Player("B");
-        Player p3 = new Player("C");
+        Player p1 = new Player("a");
+        Player p2 = new Player("b");
+        Player p3 = new Player("c");
 
         p1.getCity().addBuilding(pavilion, new Location(0, 1));
         p1.getCity().addBuilding(pavilion, new Location(0, 2));
@@ -58,9 +58,9 @@ class ScoreCalculatorTest {
         Building arcade = new Building(Buildingtype.ARCADES, 1, new Walling(true, true, false, false));
         Building tower = new Building(Buildingtype.TOWER, 1, new Walling(false, true, false, false));
 
-        Player p1 = new Player("A");
-        Player p2 = new Player("B");
-        Player p3 = new Player("C");
+        Player p1 = new Player("a");
+        Player p2 = new Player("b");
+        Player p3 = new Player("c");
 
         //2 pavilion, 1 arcade, 1 tower, wall of 5
         p1.getCity().addBuilding(pavilion, new Location(-1, 0));
