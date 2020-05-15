@@ -1,6 +1,7 @@
 package be.howest.ti.alhambra.logic.game;
 
 import be.howest.ti.alhambra.logic.building.Building;
+import be.howest.ti.alhambra.logic.building.BuildingRepo;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.money.Purse;
@@ -45,7 +46,7 @@ public class Populator {
     }
 
     public static void populateBuildingStack(Queue<Building> buildingStack) {
-        List<Building> allBuildings = new ArrayList<>(Building.allBuilding());
+        List<Building> allBuildings = new ArrayList<>(BuildingRepo.getAllBuildings());
         Collections.shuffle(allBuildings);
         buildingStack.addAll(allBuildings);
 

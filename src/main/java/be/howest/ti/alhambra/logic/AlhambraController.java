@@ -1,13 +1,10 @@
 package be.howest.ti.alhambra.logic;
 
-import be.howest.ti.alhambra.logic.building.Building;
-import be.howest.ti.alhambra.logic.building.Buildingtype;
-import be.howest.ti.alhambra.logic.building.Walling;
+import be.howest.ti.alhambra.logic.building.*;
 import be.howest.ti.alhambra.logic.money.Purse;
 import be.howest.ti.alhambra.logic.game.*;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraEntityNotFoundException;
-import be.howest.ti.alhambra.logic.building.Location;
 import be.howest.ti.alhambra.logic.game.Player;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +37,7 @@ public class AlhambraController {
     }
 
     public List<Building> getBuildings() {
-        return Building.allBuilding();
+        return BuildingRepo.getAllBuildings();
     }
 
     public Buildingtype[] getBuildingTypes() {
