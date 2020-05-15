@@ -32,10 +32,9 @@ public class Populator {
     public static void populateBank(Queue<Coin> coinStack, Purse bank) {
         if (coinStack.isEmpty()) {
             populateCoinStack(coinStack);
-        } else {
-            while (bank.getNumberOfCoins() < 4) {
+        }
+        while (bank.getNumberOfCoins() < 4) {
                 bank.addCoin(coinStack.poll());
-            }
         }
     }
 
