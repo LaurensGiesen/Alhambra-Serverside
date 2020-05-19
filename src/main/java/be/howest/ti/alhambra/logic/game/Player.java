@@ -6,7 +6,6 @@ import be.howest.ti.alhambra.logic.building.City;
 import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Purse;
 import be.howest.ti.alhambra.logic.exceptions.AlhambraGameRuleException;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,7 +17,7 @@ public class Player {
     /* ------------ FIELDS ------------ */
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static Random r = new Random();
-    private String playerName;
+    @JsonProperty("name") private String playerName;
     private int score;
     private boolean ready;
     private Purse money;
@@ -32,8 +31,7 @@ public class Player {
 
 
     /* ------------ CONSTRUCTOR ------------ */
-    @JsonCreator
-    public Player(@JsonProperty("playerName") String playerName) {
+    public Player(String playerName) {
         this.playerName = playerName;
         this.money = new Purse();
         this.reserve = new BuildingPlace();

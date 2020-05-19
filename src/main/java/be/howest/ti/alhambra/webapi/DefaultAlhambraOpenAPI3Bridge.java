@@ -7,8 +7,6 @@ import be.howest.ti.alhambra.logic.money.Coin;
 import be.howest.ti.alhambra.logic.money.Currency;
 import be.howest.ti.alhambra.logic.money.Purse;
 import be.howest.ti.alhambra.logic.building.Location;
-import be.howest.ti.alhambra.logic.game.Player;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -100,10 +98,7 @@ public class DefaultAlhambraOpenAPI3Bridge implements AlhambraOpenAPI3Bridge {
     public Object joinGame(RoutingContext ctx) {
         LOGGER.info("joinGame");
 
-        String body = ctx.getBodyAsString();
-        Player players = Json.decodeValue(body, Player.class);
-        String playerName = players.getPlayerName();
-
+        String playerName = ctx.getBodyAsJson().getString("playerName");
         int gameId = Integer.parseInt(ctx.request().getParam(parameterGameId));
 
         return controller.joinGame(gameId, playerName);
