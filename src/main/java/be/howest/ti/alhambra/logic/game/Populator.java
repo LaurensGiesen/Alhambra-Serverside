@@ -30,7 +30,7 @@ public class Populator {
     }
 
     public static void populateBank(Queue<Coin> coinStack, Purse bank) {
-        if (coinStack.isEmpty()) {
+        if (coinStack.size() < 4) {
             populateCoinStack(coinStack);
         }
         while (bank.getNumberOfCoins() < 4) {
